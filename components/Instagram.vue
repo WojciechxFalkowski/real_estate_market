@@ -8,5 +8,5 @@
   </a>
 </template>
 <script setup lang="ts">
-import { InstagramIcon } from "./Icons";
+import InstagramIcon from "./icons/InstagramIcon.vue";
 </script>

@@ -1,0 +1,9 @@
+version: "3"
+services:
+  vue-front:
+    build:
+      context: .
+      args:
+        - PORT=${PORT}
+    ports:
+      - ${PORT}:${PORT}
