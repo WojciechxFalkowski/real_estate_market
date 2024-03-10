@@ -1,0 +1,10 @@
+export { default as Calculator } from './Calculator.vue';
+export { default as CircleCheck } from './CircleCheck.vue';
+export { default as Clockwise } from './Clockwise.vue';
+export { default as Eye } from './Eye.vue';
+export { default as Home } from './Home.vue';
+export { default as Paintroller } from './Paintroller.vue';
+export { default as Search } from './Search.vue';
+export { default as SheetPen } from './SheetPen.vue';
+export { default as WellRent } from './WellRent.vue';
+export { default as InstagramIcon } from './InstagramIcon.vue';
