@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center lg:justify-between items-center flex-wrap">
     <h2
-      class="uppercase font-bold text-center lg:text-left underline underline-offset-16 decoration-orange decoration-2"
+      class="uppercase font-bold text-center lg:text-left border-b-2 border-orange pb-2 mb-8 lg:mb-0"
     >
       Szukasz doświadczonego opiekuna dla twojej nieruchomości?
     </h2>

@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="flex justify-center mb-8 lg:mb-16">
     <h1
-      class="text-xl text-center mb-16 underline-offset-16 underline decoration-orange"
+      class="text-xl text-center border-b-2 border-orange pb-2"
     >
       Kilka słów o nas
     </h1>

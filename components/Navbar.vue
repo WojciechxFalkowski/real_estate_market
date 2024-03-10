@@ -1,6 +1,6 @@
 <template>
-  <nav class="border-gray-200 mt-5">
-    <div class="flex flex-wrap justify-between items-center mx-auto">
+  <nav class="pt-5 sticky top-0 z-50 bg-white">
+    <div class="flex flex-wrap justify-between items-center mx-auto container">
       <WellRentLogo />
       <!-- Mobile menu button -->
       <Hamburger

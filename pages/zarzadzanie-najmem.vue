@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center items-center min-h-screen">
+  <div class="flex justify-center items-center min-h-screen hidden">
     <div class="relative" ref="circleContainer">
       <!-- Centralny element -->
       <div

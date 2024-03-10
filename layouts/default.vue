@@ -1,5 +1,5 @@
 <template>
-  <Navbar class="container m-auto py-2.5" />
+  <Navbar class="py-2.5" />
 
   <div>
     <slot class="container m-auto" />
