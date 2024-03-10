@@ -1,5 +1,5 @@
 <template>
-  <nav class="border-gray-200 dark:bg-gray-900 mt-5">
+  <nav class="border-gray-200 mt-5">
     <div class="flex flex-wrap justify-between items-center mx-auto">
       <WellRentLogo />
       <!-- Mobile menu button -->
