@@ -1,8 +1,6 @@
 <template>
   <div class="flex justify-center mb-8 lg:mb-16">
-    <h1
-      class="text-xl text-center border-b-2 border-orange pb-2"
-    >
+    <h1 class="text-xl text-center border-b-2 border-orange pb-2">
       Kilka słów o nas
     </h1>
   </div>
@@ -51,7 +49,7 @@
 const image = "/images/michal_krawczycki.jpg";
 const name = "Michał Krawczycki";
 const title = "Pośrednik w obrocie nieruchomościami";
-const subline = "Zespół Better Estates";
+const subline = "Zespół Well Rent";
 const description = `Michał Krawczycki, Warszawski Agent nieruchomości oraz doświadczony Zarządca mieszkań na wynajem, związany z renomowaną firmą Better Estates,
  to prawdziwy profesjonalista w swojej dziedzinie. Specjalizuje się w negocjacjach i&nbsp;sprzedaży. 
   Jego bogate doświadczenie obejmuje pracę jako Pośrednik w obrocie nieruchomościami w Better Estates oraz w TEKTON Capital Sp. z o.o. 

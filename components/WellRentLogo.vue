@@ -1,11 +1,10 @@
 <template>
   <!-- Logo and brand name -->
   <RouterLink to="/">
-    <!-- <WellRent class="icon" /> -->
-    <img
-      src="/wellrent-logo.png"
-      alt="Logo wellrent-nieruchomosci"
-      class="w-20"
-    />
+    <WellRent :style="{ width: '80px' }" />
   </RouterLink>
 </template>
+
+<script lang="ts" setup>
+import WellRent from "./icons/WellRent.vue";
+</script>
