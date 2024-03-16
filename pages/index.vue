@@ -7,16 +7,23 @@
   /> -->
   <!-- <div class="container m-auto"> -->
   <HeroCarousel :pictures="pictures" />
-  <!-- </div> -->
 
-  <div class="container m-auto mt-16">
-    <AboutUs />
+  <div class="container mx-auto mt-4 lg:mt-16">
+    <AnimatedVisibility :isMobileImediate="true">
+      <AboutUs />
+    </AnimatedVisibility>
   </div>
 
-  <ContactUs class="container m-auto my-16" />
+  <div class="container m-auto my-16">
+    <AnimatedVisibility>
+      <ContactUs />
+    </AnimatedVisibility>
+  </div>
 
   <div class="container m-auto">
-    <AddressMap />
+    <AnimatedVisibility>
+      <AddressMap />
+    </AnimatedVisibility>
   </div>
 </template>
 
