@@ -26,8 +26,14 @@ module.exports = {
         },
       },
       colors: {
-        'orange': '#FFC444',
+        orange: "#FFC444",
       },
     },
   },
+  safelist: [
+    "safelisted",
+    {
+      pattern: /bg-(red|green|blue|orange)-(100|200|300)/,
+    },
+  ],
 };

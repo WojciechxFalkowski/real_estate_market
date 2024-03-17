@@ -27,7 +27,6 @@ const isVisible: Ref<boolean> = ref(false);
 let observer: IntersectionObserver | null = null;
 const isMobile = ref(window?.innerWidth < 768);
 
-// Nasłuchiwanie zmian rozmiaru okna, aby dostosować isMobile
 watchEffect(() => {
   if (window) {
     isMobile.value = window.innerWidth < 768;
@@ -38,7 +37,6 @@ onMounted(() => {
   observer = new IntersectionObserver(
     (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
-        console.log(entry);
         if (isMobile.value) {
           if (props.isMobileImediate) {
             isVisible.value = true;

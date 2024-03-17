@@ -1,32 +1,39 @@
 <template>
   <svg
-    viewBox="0 -0.5 21 21"
+    enable-background="new 0 0 50 50"
+    height="50px"
+    id="Layer_1"
     version="1.1"
+    viewBox="0 0 50 50"
+    width="50px"
+    xml:space="preserve"
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
   >
-    <title>home [#1391]</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g
-      id="Page-1"
-      stroke="none"
-      stroke-width="1"
+    <polyline
       fill="none"
-      fill-rule="evenodd"
-    >
-      <g
-        id="Dribbble-Light-Preview"
-        transform="translate(-419.000000, -720.000000)"
-        fill="#000000"
-      >
-        <g id="icons" transform="translate(56.000000, 160.000000)">
-          <path
-            d="M379.79996,578 L376.649968,578 L376.649968,574 L370.349983,574 L370.349983,578 L367.19999,578 L367.19999,568.813 L373.489475,562.823 L379.79996,568.832 L379.79996,578 Z M381.899955,568.004 L381.899955,568 L381.899955,568 L373.502075,560 L363,569.992 L364.481546,571.406 L365.099995,570.813 L365.099995,580 L372.449978,580 L372.449978,576 L374.549973,576 L374.549973,580 L381.899955,580 L381.899955,579.997 L381.899955,570.832 L382.514204,571.416 L384.001,570.002 L381.899955,568.004 Z"
-            id="home-[#1391]"
-          ></path>
-        </g>
-      </g>
-    </g>
+      points="44,21 44,49 6,49   6,21 "
+      stroke="#000000"
+      stroke-linecap="round"
+      stroke-miterlimit="10"
+      stroke-width="2"
+    />
+    <polyline
+      fill="none"
+      points="19,49 19,28 31,28   31,49 "
+      stroke="#000000"
+      stroke-linecap="round"
+      stroke-miterlimit="10"
+      stroke-width="2"
+    />
+    <polyline
+      fill="none"
+      points="  1.11,25.942 25,1.053 48.89,25.943 "
+      stroke="#000000"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-miterlimit="10"
+      stroke-width="2"
+    />
   </svg>
 </template>

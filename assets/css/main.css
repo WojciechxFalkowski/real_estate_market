@@ -13,6 +13,10 @@ body {
   /* overflow: hidden; */
 }
 
+.bg-orange {
+  background-color: #FFC444;
+}
+
 /* Example 1*/
 /* @font-face {
   font-family: "Muli";

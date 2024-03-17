@@ -5,25 +5,27 @@
     </h1>
   </div>
 
-  <div class="md:flex md:items-center md:space-x-6">
-    <!-- Zdjęcie -->
-    <img
-      v-if="image"
-      :src="image"
-      alt="Profile Image"
-      class="w-full md:w-1/3 md:max-w-xs shadow-md"
-    />
+  <AnimatedVisibility :isMobileImediate="true">
+    <div class="md:flex md:items-center md:space-x-6">
+      <!-- Zdjęcie -->
+      <img
+        v-if="image"
+        :src="image"
+        alt="Profile Image"
+        class="w-full md:w-1/3 md:max-w-xs shadow-md"
+      />
 
-    <!-- Imię i nazwisko, tytuł -->
-    <div class="md:flex-1">
-      <h3 class="text-sm text-gray-500 uppercase mt-4">{{ subline }}</h3>
-      <h2 class="text-xl font-semibold my-1 lg:my-2 uppercase">{{ name }}</h2>
-      <h4 class="text-sm text-gray-500 mb-4">{{ title }}</h4>
+      <!-- Imię i nazwisko, tytuł -->
+      <div class="md:flex-1">
+        <h3 class="text-sm text-gray-500 uppercase mt-4">{{ subline }}</h3>
+        <h2 class="text-xl font-semibold my-1 lg:my-2 uppercase">{{ name }}</h2>
+        <h4 class="text-sm text-gray-500 mb-4">{{ title }}</h4>
 
-      <!-- Dłuższy opis -->
-      <p class="text-sm leading-7" v-html="description" />
+        <!-- Dłuższy opis -->
+        <p class="text-sm leading-7" v-html="description" />
+      </div>
     </div>
-  </div>
+  </AnimatedVisibility>
 </template>
 
 <script setup lang="ts">

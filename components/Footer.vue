@@ -17,7 +17,7 @@
         </li>
       </ul>
     </div>
-    <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+    <hr class="my-6 border-orange sm:mx-auto lg:my-8" />
     <p class="block text-sm text-center">
       © 2024
       <RouterLink class="hover:underline" to="/">

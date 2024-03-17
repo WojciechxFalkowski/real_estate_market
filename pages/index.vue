@@ -9,9 +9,7 @@
   <HeroCarousel :pictures="pictures" />
 
   <div class="container mx-auto mt-4 lg:mt-16">
-    <AnimatedVisibility :isMobileImediate="true">
-      <AboutUs />
-    </AnimatedVisibility>
+    <AboutUs />
   </div>
 
   <div class="container m-auto my-16">
