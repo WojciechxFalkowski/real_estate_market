@@ -1,0 +1,16 @@
+<!--
+  NOTE: If your inner svg component (this) has problems with scaling to the parent size
+        or is not resizing with parent, please consider applying **CORRECT** viewBox values.
+        It will provide safe scaling to the parent svg, and will display in expected way.
+-->
+
+<template>
+  <svg viewBox="0 0 64 65" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M31.6929 4.9979C39.071 4.9979 46.0037 7.87185 51.2194 13.088L51.8122 13.6808H43.8952V17.7222H58.7126V2.90349H54.6715V10.8212L54.0787 10.2285C48.1015 4.2507 40.1523 0.956421 31.6965 0.956421C14.2425 0.956421 0.0429688 15.1573 0.0429688 32.6129V34.6318H4.08407V32.6129C4.08407 17.3846 16.4731 4.9943 31.7 4.9943L31.6929 4.9979Z"
+      fill="black" />
+    <path
+      d="M59.3089 30.594V32.613C59.3089 47.8413 46.9198 60.2315 31.6929 60.2315C24.3184 60.2315 17.382 57.3576 12.1663 52.1414L11.5557 51.5307H19.4941V47.4892H4.67676V62.308H8.71786V54.4082L9.3106 55.0009C15.2878 60.9787 23.2372 64.273 31.6929 64.273C49.1469 64.273 63.3464 50.0721 63.3464 32.6165V30.5976H59.3053L59.3089 30.594Z"
+      fill="black" />
+  </svg>
+</template>

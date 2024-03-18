@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center mt-8 lg:mt-16">
+  <div class="flex justify-center mt-16">
     <h1 class="text-xl text-center border-b-2 border-orange pb-2">
       Jak Pracujemy?
     </h1>
@@ -9,7 +9,7 @@
     <p class="text-sm">Poznaj {{ steps.length }} etapów zarządzania najmem</p>
   </div>
 
-  <div class="flex justify-center items-center mb-32">
+  <div class="flex justify-center items-center mt-8 md:mt-16 mb-32">
     <div class="relative" ref="circleContainer">
       <!-- Centralny element -->
       <div
@@ -29,12 +29,12 @@
           <div
             @mouseenter="clearActiveStep(step)"
             @mouseleave="startActiveStepInterval"
-            class="w-10 h-10 md:w-20 md:h-20 bg-white rounded-full shadow-md flex items-center justify-center cursor-pointer"
+            class="w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-white rounded-full shadow-md flex items-center justify-center cursor-pointer"
           >
             <!-- <span class="icon">{{ item.icon }}</span> -->
             <component
               :is="{ ...step.icon }"
-              class="w-5 lg:w-10 abc"
+              class="w-5 lg:w-10"
               :style="isMobile ? {} : step.desktopIconStyles"
             />
           </div>
@@ -44,10 +44,10 @@
           <div
             v-if="activeStep"
             :key="activeStep.id"
-            class="content px-1 lg:px-6"
+            class="content px-1 md:px-3 lg:px-6"
           >
             <h2
-              class="text-sm md:text-xl lg:text-2xl font-semibold mt-4 px-6 mb-3"
+              class="text-sm md:text-xl lg:text-2xl font-semibold mt-4 md:px-3 px-6 mb-3"
             >
               {{ activeStep.title }}
             </h2>
@@ -83,7 +83,7 @@ onMounted(() => {
 });
 
 const checkMobile = () => {
-  isMobile.value = window.innerWidth < 768;
+  isMobile.value = window.innerWidth < 1024;
 };
 
 interface DesktopIconStyles {
@@ -96,7 +96,7 @@ interface Step {
   id: number;
   title: string;
   description: string;
-  icon: string;
+  icon: Component;
   iconActiveClass: string;
   desktopIconStyles: DesktopIconStyles;
 }
@@ -179,13 +179,13 @@ const steps: Step[] = reactive([
 const activeStep = ref(steps[0]);
 const circleContainer = ref(null);
 
-const positionItem = (index) => {
+const positionItem = (index: number) => {
   if (!circleContainer.value) {
     return;
   }
   const shift = 2;
-  const circle = circleContainer.value;
-  const itemSize = 48; // Zakładając, że element ma rozmiar 48px
+  const circle: HTMLElement = circleContainer.value;
+  // const itemSize = 48; // Zakładając, że element ma rozmiar 48px
   const radius = circle.offsetWidth / 2; // Promień to połowa szerokości kontenera minus rozmiar elementu
 
   const angle = ((2 * Math.PI) / steps.length) * (index - shift);
@@ -219,8 +219,10 @@ const startActiveStepInterval = () => {
   intervalId.value = index;
 };
 
-const clearActiveStep = (step) => {
-  clearInterval(intervalId.value);
+const clearActiveStep = (step: Step) => {
+  if (intervalId.value) {
+    clearInterval(intervalId.value);
+  }
   activeStep.value = step;
   activeStepIndex.value = steps.findIndex((s) => s.id === step.id);
 };

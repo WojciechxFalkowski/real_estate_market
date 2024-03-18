@@ -1,7 +1,7 @@
 <template>
   <div
     ref="observerRef"
-    class="duration-600 transition-all transform"
+    class="duration-700 transition-all transform"
     :class="{
       'opacity-0 -translate-y-10': !isVisible,
       'opacity-100 translate-y-0': isVisible,

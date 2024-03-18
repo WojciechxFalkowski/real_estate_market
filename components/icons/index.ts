@@ -8,3 +8,4 @@ export { default as Search } from './Search.vue';
 export { default as SheetPen } from './SheetPen.vue';
 export { default as WellRent } from './WellRent.vue';
 export { default as InstagramIcon } from './InstagramIcon.vue';
+export { default as LoadingIcon } from './LoadingIcon.vue';
