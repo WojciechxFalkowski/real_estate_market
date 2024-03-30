@@ -1,0 +1,92 @@
+<template>
+  <!-- Title -->
+  <div
+    @click="toggle"
+    class="flex gap-5 items-center p-4 cursor-pointer transition-colors duration-200"
+  >
+    <svg
+      :class="isOpen ? 'transform rotate-180' : ''"
+      class="w-4 h-4 text-gray-800 transition-transform duration-200"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M19 9l-7 7-7-7"
+      />
+    </svg>
+
+    <h2 class="text-gray-700 font-bold text-sm md:text-md lg:text-lg">
+      {{ title }}
+    </h2>
+  </div>
+
+  <!-- Content -->
+  <transition name="accordion-content">
+    <div
+      v-if="isOpen"
+      class="ps-12 pe-4 ms-1 rounded-b-lg overflow-hidden text-gray-600"
+    >
+      <p v-if="content" class="py-2 text-sm pb-4">
+        {{ content }}
+      </p>
+
+      <div v-if="list" class="py-2">
+        <h3 class="text-gray-600 font-bold text-sm">
+          {{ list.title }}
+        </h3>
+
+        <ul class="pb-4">
+          <li
+            class="ms-4 list-disc text-gray-600"
+            v-for="listElement of list.elements"
+          >
+            <p class="text-sm">
+              {{ listElement }}
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </transition>
+</template>
+
+<script setup lang="ts">
+import type { List } from "./Accordion.vue";
+
+const props = defineProps<{
+  title: string;
+  content?: string;
+  list?: List;
+}>();
+const isOpen = ref(false);
+
+const toggle = () => {
+  isOpen.value = !isOpen.value;
+};
+</script>
+
+<style lang="scss">
+/* Styles for the transition */
+.accordion-content-enter-active,
+.accordion-content-leave-active {
+  transition: all 0.35s;
+}
+.accordion-content-enter-from,
+.accordion-content-leave-to {
+  /* height: 0; */
+  /* opacity: 0; */
+  max-height: 0;
+}
+.accordion-content-enter-to {
+  /* height: 100%; */
+  /* opacity: 1; */
+  max-height: 30em;
+  @media (min-width: 1024px) {
+    max-height: 20em;
+  }
+}
+</style>
