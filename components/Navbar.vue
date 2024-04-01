@@ -61,7 +61,7 @@ function closeMobileMenu() {
 }
 </script>
 
-<style scoped>
+<style>
 .icon {
   width: 100px;
 }

@@ -135,6 +135,6 @@ const onSubmit = async (values: any) => {
 };
 </script>
 
-<style scoped>
+<style>
 /* Dodatkowe style, jeśli są potrzebne */
 </style>

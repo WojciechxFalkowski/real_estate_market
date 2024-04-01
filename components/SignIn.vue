@@ -8,7 +8,7 @@
       @submit="onSubmit"
       class="w-full max-w-md px-4 py-3 bg-white rounded-lg"
       :validation-schema="schema"
-      :initial-values="formValues"
+      :initial-values="initialValues"
     >
       <div>
         <Field
@@ -58,7 +58,7 @@ import { Theme, ComponentType } from "@/components/Button/Button.props";
 import { userStore } from "~/store/userStore";
 const { setUser, pathBeforeRedirect } = userStore();
 
-const formValues = {
+const initialValues = {
   email: "",
   password: "",
 };

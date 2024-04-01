@@ -46,18 +46,11 @@ onMounted(async () => {
 watch(
   loadingWrapper,
   (_, newValue) => {
-    console.log("restricted.vue watch v1");
     if (!newValue.isLoading) {
-      console.log("restricted.vue watch v2");
-
-      //check if object is empty
       if (Object.keys(user.data ?? {}).length === 0) {
-        console.log("restricted.vue watch v3");
-
         setPathBeforeRedirect(route.path);
         router.push({ name: "logowanie" });
       } else {
-        console.log("restricted.vue watch v4");
         showRestrictedContent.value = true;
       }
     }

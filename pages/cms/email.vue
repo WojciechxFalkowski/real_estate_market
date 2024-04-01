@@ -1,0 +1,3 @@
+<template>
+  <EmailConfiguration />
+</template>

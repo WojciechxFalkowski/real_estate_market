@@ -39,7 +39,7 @@ function closeMenu() {
 }
 </script>
 
-<style scoped>
+<style>
 /* Transition styles */
 .fade-enter-active,
 .fade-leave-active {

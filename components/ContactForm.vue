@@ -10,6 +10,7 @@
       @submit="onSubmit"
       class="w-full max-w-lg space-y-4"
       :validation-schema="schema"
+      :initial-values="initialValues"
     >
       <div class="relative">
         <Field
@@ -104,7 +105,11 @@ import * as yup from "yup";
 import { useNuxtApp } from "#app";
 // import LoadingIcon from "@/components/icons/LoadingIcon.vue";
 import { Theme, ComponentType } from "@/components/Button/Button.props";
-
+const initialValues = {
+  email: "",
+  phone: "",
+  message: "",
+};
 // Definicja schematu walidacji
 const schema = yup.object({
   email: yup
@@ -131,28 +136,27 @@ const { value: message } = useField("message");
 // Dostęp do globalnych instancji Nuxt, np. do $toastify
 const { $toastify }: any = useNuxtApp();
 const isLoading = ref(false);
-// Funkcja obsługująca wysyłanie formularza
-const onSubmit = (values: any) => {
+
+const { sendEmail } = useEmailConfiguration();
+const onSubmit = async (values: any) => {
   isLoading.value = true;
-  console.log(values);
-  // Tutaj możesz wykonać call do API
-  // Na przykład:
-  // await someApiCall(values);
-  setTimeout(() => {
-    isLoading.value = false;
+  try {
+    await sendEmail(values.email, values.phone, values.message);
     $toastify({
-      text: "Wiadomość wysłana pomyślnie!",
+      text: "Wiadomość została wysłana!",
       backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
     }).showToast();
-
-    //clear inputs
-    email.value = "";
-    phone.value = "";
-    message.value = "";
-  }, 3000);
+  } catch (e) {
+    $toastify({
+      text: "Wystąpił błąd podczas wysyłania wiadomości!",
+      backgroundColor: "linear-gradient(to right, #ff416c, #ff4b2b)",
+    }).showToast();
+  } finally {
+    isLoading.value = false;
+  }
 };
 </script>
 
-<style scoped>
+<style>
 /* Dodatkowe style, jeśli są potrzebne */
 </style>

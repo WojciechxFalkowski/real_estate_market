@@ -33,6 +33,6 @@
 // Define your composition functions and reactive variables here
 </script>
 
-<style scoped>
+<style>
 /* You can add extra styles here if needed */
 </style>
