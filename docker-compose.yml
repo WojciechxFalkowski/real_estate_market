@@ -15,5 +15,5 @@ services:
     depends_on:
       - app
     volumes:
-      - ./path/to/certificates:/etc/letsencrypt
+      - /etc/letsencrypt:/etc/letsencrypt:ro
       - /var/www/certbot:/var/www/certbot
