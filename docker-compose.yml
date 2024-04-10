@@ -18,3 +18,8 @@ services:
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - /var/www/certbot:/var/www/certbot
+    networks:
+      - real_estate_network
+networks:
+  real_estate_network:
+    external: true
