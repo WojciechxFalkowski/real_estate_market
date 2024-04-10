@@ -15,6 +15,7 @@ services:
       - "443:443"
     depends_on:
       - app
+      - nest_real_estate_market
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - /var/www/certbot:/var/www/certbot
