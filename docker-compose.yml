@@ -1,6 +1,6 @@
 version: "3"
 services:
-  vue-front:
+  app:
     build:
       context: .
       args:
@@ -13,4 +13,4 @@ services:
     ports:
       - '80:80'
     depends_on:
-      - vue-front
+      - app
