@@ -1,5 +1,5 @@
 <template>
-  <Carousel :autoplay="2000" :wrap-around="true">
+  <Carousel :autoplay="autoplay" :wrap-around="true">
     <Slide v-for="(picture, index) in pictures" :key="index">
       <div class="overflow-hidden relative h-64 sm:h-96 lg:h-600 w-full">
         <div class="absolute inset-0 -translate-y-0">
@@ -33,6 +33,10 @@ defineProps({
     default() {
       return [];
     },
+  },
+  autoplay: {
+    type: undefined as unknown as PropType<number | undefined>,
+    default: 0,
   },
   noIndicators: {
     type: Boolean,
@@ -102,7 +106,9 @@ defineProps({
   justify-content: center;
   list-style: none;
   line-height: 0;
-  margin: 10px 0 0;
+  // margin: 10px 0 0;
+  height: 0;
+  margin: 0;
 }
 
 .carousel__pagination-button {
@@ -112,7 +118,7 @@ defineProps({
   cursor: pointer;
   padding: var(--vc-pgn-margin);
   background: transparent;
-  transform: translateY(-50px);
+  transform: translateY(-40px);
   margin: 0 2px;
 }
 

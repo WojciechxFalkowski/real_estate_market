@@ -6,7 +6,7 @@
     :animation="true"
   /> -->
   <!-- <div class="container m-auto"> -->
-  <HeroCarousel :pictures="pictures" />
+  <HeroCarousel :pictures="pictures"  :autoplay="2000"/>
 
   <div class="container mx-auto mt-4 lg:mt-16">
     <AboutUs />

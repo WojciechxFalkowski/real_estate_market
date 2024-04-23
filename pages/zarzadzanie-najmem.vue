@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center mt-16">
+  <div class="flex justify-center mt-8 md:mt-16">
     <h1 class="text-xl text-center border-b-2 border-orange pb-2">
       Jak Pracujemy?
     </h1>
