@@ -108,10 +108,15 @@ const { $toastify }: any = useNuxtApp();
 const isLoading = ref(false);
 
 const { signUp, signIn } = useAuth();
+
 const router = useRouter();
+
 const navigateToCms = () => {
   router.push({ name: "cms" });
 };
+
+const { showToast } = useToast();
+
 const onSubmit = async (values: any) => {
   isLoading.value = true;
   console.log(values);
@@ -125,10 +130,7 @@ const onSubmit = async (values: any) => {
     }
     navigateToCms();
   } catch (error: any) {
-    $toastify({
-      text: error.message,
-      backgroundColor: "linear-gradient(to right, #ff416c, #ff4b2b)",
-    }).showToast();
+    showToast(error.message, false);
   } finally {
     isLoading.value = false;
   }

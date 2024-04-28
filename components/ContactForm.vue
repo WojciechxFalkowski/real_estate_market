@@ -133,24 +133,19 @@ const { value: email } = useField("email");
 const { value: phone } = useField("phone");
 const { value: message } = useField("message");
 
-// Dostęp do globalnych instancji Nuxt, np. do $toastify
-const { $toastify }: any = useNuxtApp();
 const isLoading = ref(false);
 
 const { sendEmail } = useEmailConfiguration();
+
+const { showToast } = useToast();
+
 const onSubmit = async (values: any) => {
   isLoading.value = true;
   try {
     await sendEmail(values.email, values.phone, values.message);
-    $toastify({
-      text: "Wiadomość została wysłana!",
-      backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-    }).showToast();
+    showToast("Wiadomość została wysłana!");
   } catch (e) {
-    $toastify({
-      text: "Wystąpił błąd podczas wysyłania wiadomości!",
-      backgroundColor: "linear-gradient(to right, #ff416c, #ff4b2b)",
-    }).showToast();
+    showToast("Wystąpił błąd podczas wysyłania wiadomości!", false);
   } finally {
     isLoading.value = false;
   }
