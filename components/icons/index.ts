@@ -15,3 +15,7 @@ export { default as BedroomIcon } from './BedroomIcon.vue';
 export { default as RoomsIcon } from './RoomsIcon.vue';
 export { default as KeysIcon } from './KeysIcon.vue';
 export { default as FlatIcon } from './FlatIcon.vue';
+export { default as TrashIcon } from './TrashIcon.vue';
+export { default as SquaresIcon } from './SquaresIcon.vue';
+export { default as SettingsIcon } from './SettingsIcon.vue';
+export { default as HomeBoldIcon } from './HomeBoldIcon.vue';
