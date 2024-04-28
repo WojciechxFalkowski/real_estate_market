@@ -125,9 +125,13 @@ const fulfillForm = async () => {
     }
   });
 };
+
 onMounted(() => {
   fulfillForm();
 });
+
+const { showToast } = useToast();
+
 const onSubmit = async (values: any) => {
   isLoading.value = true;
   try {
@@ -136,15 +140,9 @@ const onSubmit = async (values: any) => {
       values.password,
       values.serviceType
     );
-    $toastify({
-      text: "Zapisano zmiany",
-      backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-    }).showToast();
+    showToast("Zapisano zmiany!");
   } catch (error: any) {
-    $toastify({
-      text: error.message,
-      backgroundColor: "linear-gradient(to right, #ff416c, #ff4b2b)",
-    }).showToast();
+    showToast(error.message, false);
   } finally {
     isLoading.value = false;
   }
