@@ -4,7 +4,6 @@
 
     <!-- <div class="flex-grow"> -->
     <slot v-if="showRestrictedContent" class="container m-auto" />
-
     <!-- <LoadingIcon v-else class="restricted__loader --loading" /> -->
     <!-- <MobileNavigation /> -->
     <div v-else class="flex-grow flex justify-center items-center">
@@ -12,7 +11,6 @@
         <LoadingIcon name="loading" />
       </span>
     </div>
-    <!-- </div> -->
 
     <Footer class="container mx-auto my-8 lg:mt-16" />
   </div>
@@ -58,4 +56,3 @@ watch(
   { deep: true }
 );
 </script>
-~/store/userStore
