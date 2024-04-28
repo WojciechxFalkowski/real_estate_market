@@ -28,13 +28,13 @@
       class="grid grid-cols-12 gap-8 mt-8"
       name="list"
       tag="ul"
-      key="abcx"
+      key="card-group"
     >
       <FlatCard
         v-for="flat in filteredFlats"
         :title="flat.title"
         :description="flat.description"
-        :img="flat.image"
+        :image="flat.image"
         :url="flat.url"
         :key="flat.id"
         :flatDetails="flat.flatDetails"
@@ -52,7 +52,7 @@ await fetchFlats();
 const ALL = "wszystkie";
 const locations = ref([
   ALL,
-  ...new Set(flatsModel.value?.map((flat: Flat) => flat.location) ?? []),
+  ...new Set(flatsModel.value?.map((flat: FlatModel) => flat.location) ?? []),
 ]);
 
 // const activeLocation = ref<string>(ALL);
@@ -60,25 +60,17 @@ const activeLocation = computed(
   () => router.currentRoute.value.query.location ?? ALL
 );
 
-//new set
 const filteredFlats = computed(() => {
   if (activeLocation.value === ALL) {
     return flatsModel.value;
   }
+
   return flatsModel.value?.filter(
-    (flat: Flat) => flat.location === activeLocation.value
+    (flat: FlatModel) => flat.location === activeLocation.value
   );
 });
 
 const router = useRouter();
-// const generateDescription = (flat: any) => {
-//   const transactionType = flat.transactionType;
-//   const location = flat.location;
-//   const housingType = flat.housingType;
-//   return `${flat.transactionType ? flat.transactionType + " " : ""}${
-//     flat.housingType ? flat.housingType + " " : ""
-//   }${flat.location ? "w " + flat.location : ""}`.trim();
-// };
 </script>
 
 <style lang="scss">

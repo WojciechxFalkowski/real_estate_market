@@ -1,5 +1,5 @@
 <template>
-    <component :is="componentIs" v-bind="linkProperties" class="button bg-orange py-2 px-4 rounded focus:outline-none focus:shadow-outline" :class="[theme, { 'w-100': isFluid }]"
+    <component :is="componentIs" v-bind="linkProperties" class="button bg-orange py-2 px-4 rounded focus:outline-none focus:shadow-outline text-black" :class="[theme, { 'w-100': isFluid }]"
         :disabled="isDisabled || isLoading">
         <slot></slot>
 
@@ -16,26 +16,25 @@ import { ButtonProps, ComponentType } from './Button.props';
 import LoadingIcon from './partials/LoadingIcon.vue';
 
 const props = defineProps(ButtonProps)
-const { theme, isDisabled, componentType, link } = props
 
 const componentIs = computed(() => {
-    if (componentType === ComponentType.Submit) {
+    if (props.componentType === ComponentType.Submit) {
         return 'button'
     }
-    return componentType
+    return props.componentType
 })
 
 const linkProperties = computed(() => {
-    if (componentType === ComponentType.ExternalLink) {
-        return { href: link }
+    if (props.componentType === ComponentType.ExternalLink) {
+        return { href: props.link }
     }
-    if (componentType === ComponentType.InternalLink) {
-        return { to: link }
+    if (props.componentType === ComponentType.InternalLink) {
+        return { to: props.link }
     }
-    if (componentType === ComponentType.Button) {
+    if (props.componentType === ComponentType.Button) {
         return { type: 'button' }
     }
-    if (componentType === ComponentType.Submit) {
+    if (props.componentType === ComponentType.Submit) {
         return { type: 'submit' }
     }
     return {}

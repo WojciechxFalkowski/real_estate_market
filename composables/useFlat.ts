@@ -1,5 +1,6 @@
 import type { DefineComponent } from "vue";
 import type { PictureItem } from "~/components/Carousel";
+import type { ImageUploaderI } from "~/components/ImageUploader/contracts";
 import {
     SquareIcon,
     FloorIcon,
@@ -33,47 +34,117 @@ export interface ExtendedFlatDetail extends FlatDetail {
     icon: Component
 }
 
-export interface Flat {
+export interface FlatModel {
     id: number;
     url: string;
     title: string;
     description: string;
-    image: string;
+    image?: {
+        alt: string,
+        src: string,
+        srcset: string,
+    };
     flatDetails: FlatDetail[];
-    transactionType: string;
     location: string;
-    housingType: string;
-    images: string[];
+    images: {
+        alt: string,
+        src: string,
+        srcset: string,
+    }[] | null;
     price: string;
     currency: string;
     pricePerMeter: string;
     tiptapHTML: string
 }
 
+export interface FlatImageResponse {
+    url: string,
+    imageId?: string
+}
+
+export interface Flat {
+    id: number;
+    url: string;
+    title: string;
+    description: string;
+    image?: string;
+    flatDetails: FlatDetail[];
+    location: string;
+    images: FlatImageResponse[] | null;
+    price: string;
+    currency: string;
+    pricePerMeter: string;
+    tiptapHTML: string
+}
+
+export interface SaveFlat {
+    area: string;
+    bedroom: string;
+    currency: string;
+    description: string;
+    floor: string;
+    location: string;
+    price: string;
+    pricePerMeter: string;
+    rooms: string;
+    title: string;
+    transaction_type: string;
+    url: string;
+    year_of_construction: string;
+    tiptapHTML: string
+}
+
 export const useFlat = () => {
     const flatsData = ref()
     const flatData = ref<Flat | null>()
+    const { call } = useCall()
+    const { getUserToken } = useAuth()
 
-    const fetchFlat = async (flatId: string | string[]) => {
-        const { data } = await useFetch<Flat[]>("/api/flats");
-        const flat = data.value?.find(flat => flat.url === flatId)
-        flatData.value = flat
+    const fetchFlat = async (url: string, isClient: boolean = false, isAuth: boolean = false) => {
+        // const { data } = await useFetch<Flat[]>("/api/flats");
+        const { data } = await call<Flat>({ endpoint: `/flat/${url}`, isAuth, isClient })
+        // const flat = data?.find(flat => flat.url === flatId)
+        console.log('data')
+        console.log(data)
+        flatData.value = data
     }
 
-    const fetchFlats = async () => {
-        const { data } = await useFetch("/api/flats");
-        flatsData.value = data.value
+    const fetchFlats = async ({ isClient, isAuth }: { isClient?: boolean, isAuth: boolean } = { isClient: false, isAuth: false }) => {
+        // const { data, pending } = await useFetch("/api/flats", {});
+        const { data } = await call<Flat[]>({ endpoint: '/flat', isAuth, isClient })
+        flatsData.value = data
+    }
+
+    const saveFlat = async (flatId: number, flatForm: Partial<SaveFlat>) => {
+        console.log('saveFlat')
+        console.log(flatForm)
+        const { data } = await call<Flat[]>({ endpoint: `/flat/${flatId}`, method: 'PATCH', isClient: true, isAuth: true, body: JSON.stringify(flatForm) })
+        console.log('data')
+        console.log(data)
+
+        return data
+    }
+
+    const createNewFlat = async (flatForm: SaveFlat) => {
+        console.log('createNewFlat')
+        console.log(flatForm)
+        const { data } = await call<{ message: string }>({ endpoint: '/flat', method: 'POST', isClient: true, isAuth: true, body: JSON.stringify(flatForm) })
+        console.log('data')
+        console.log(data)
+        return data
     }
 
     const flatModel = computed(() => {
         if (!flatData.value) {
             return;
         }
+        const images = mapImages(flatData.value.images)
 
         return {
             ...flatData.value,
+            image: images ? images[0] : undefined,
             flatDetails: mapDetails(flatData.value.flatDetails),
-            images: mapImages(flatData.value.images)
+            images: images
         };
     });
 
@@ -81,11 +152,13 @@ export const useFlat = () => {
         if (!flatsData.value) {
             return;
         }
-        const data = flatsData.value.map((flat: Flat) => {
+        const data: FlatModel[] = flatsData.value.map((flat: Flat) => {
+            const images = mapImages(flat.images)
             return {
                 ...flat,
+                image: images ? images[0] : undefined,
                 flatDetails: mapDetails(flat.flatDetails).filter(detail => detail.id !== 'transaction_type'),
-                images: mapImages(flat.images),
+                images: images
             };
         })
         return data
@@ -112,12 +185,18 @@ export const useFlat = () => {
         }))
     }
 
-    const mapImages = (images: string[]): PictureItem[] | undefined => {
-        return images.map((image: string) => {
+    const mapImages = (images: FlatImageResponse[] | null): PictureItem[] | undefined => {
+        if (!images) {
+            return undefined
+        }
+
+        return images.map((image: FlatImageResponse) => {
             return {
-                src: image,
+                src: image.url,
                 alt: '',
-                srcset: image,
+                srcset: image.url,
+                imageId: image.imageId,
+                isSaved: Boolean(image.imageId)
             }
         })
     }
@@ -131,9 +210,38 @@ export const useFlat = () => {
     //         ...flatDetails,
     //         icon: iconMapping[flatDetails.id]
     //     }))
-    // })
+    // })l
+
+    const uploadImages = async (flatId: number, images: ImageUploaderI[]) => {
+        console.log("uploadImages");
+        console.log(images);
+        const formData = new FormData();
+
+        // const files = images.map(image => image.file)
+        images.forEach((image) => {
+            if (image.file && !image.isSaved) {
+                formData.append(`files`, image.file);
+            }
+        });
+        // formData.append('files', files);
+        console.log(formData)
+        console.log(ContentType["multipart/form-data"])
+        console.log('ContentType["multipart/form-data"]')
+        const { data } = await call<{ message: string, images: FlatImageResponse[] }>(
+            { endpoint: `/flat/${flatId}/images`, method: 'POST', isClient: true, contentType: ContentType["multipart/form-data"], isAuth: true, body: formData })
+
+        images.forEach((image) => {
+            image.isSaved = true
+        });
+        return data
+    }
+
+    const deleteUploadedImage = async (flatId: number, publicId: string) => {
+        const { data } = await call<{ message: string }>({ endpoint: `/flat/${flatId}/images`, method: 'DELETE', isClient: true, isAuth: true, body: JSON.stringify({ publicId }) })
+        return data
+    }
 
     return {
-        fetchFlat, fetchFlats, flatModel, flatsModel
+        fetchFlat, fetchFlats, flatModel, flatsModel, saveFlat, createNewFlat, uploadImages, deleteUploadedImage,
     }
 }

@@ -45,3 +45,5 @@ export const ButtonProps = {
     default: {},
   }
 };
+
+export type ButtonPropsType = Partial<ExtractPropTypes<typeof ButtonProps>>;

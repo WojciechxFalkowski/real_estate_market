@@ -26,6 +26,7 @@
 </template>
 
 <script setup>
+
 // import Carousel from "@/components/Carousel.vue";
 // import Carousel2 from "@/components/Carousel2.vue";
 const pictures = [
