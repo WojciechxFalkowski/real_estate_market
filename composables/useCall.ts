@@ -15,8 +15,9 @@ export interface CallConfig {
 
 export const useCall = () => {
     const { getUserToken } = useAuth()
+    const runtimeConfig = useRuntimeConfig()
     const call = async<T>({
-        url = 'http://localhost:3101/api',
+        url = runtimeConfig.public.BACKEND_BASE_URL,
         endpoint = '',
         isAuth = false,
         isClient = false,
