@@ -4,8 +4,11 @@
     :style="{ backgroundImage: `url(${image.src})` }"
   >
     <div
-      class="absolute w-full h-full cursor-pointer"
-      @click="() => $emit('setNewIndexOfImage', image.id)"
+      class="absolute w-full h-full"
+      :class="{
+        'cursor-pointer': isChangeOrderAvailable && !isLoadingChangeOrder,
+      }"
+      @click="() => handleSetNewIndexOfImage(image.id)"
     >
       <div
         v-if="image.newId !== null"
@@ -23,7 +26,7 @@
     </div>
 
     <button
-      v-if="!isEditMode"
+      v-if="!isEditMode && !isLoadingChangeOrder"
       class="bg-red-500 text-white w-6 h-6 rounded-full transform translate-y-1 translate-x-1"
       @click="removeImageHandler(image.id)"
     >
@@ -37,7 +40,6 @@
 import { ref, type PropType } from "vue";
 import type { ImageUploaderI } from "./../contracts";
 import { TrashIcon, LoadingIcon } from "~/components/icons";
-// LoadingIcon
 const props = defineProps({
   image: {
     type: Object as PropType<ImageUploaderI>,
@@ -59,6 +61,14 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
+  isChangeOrderAvailable: {
+    type: Boolean,
+    required: true,
+  },
+  isLoadingChangeOrder: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 const emit = defineEmits<{
@@ -72,12 +82,19 @@ const removeImageHandler = async (index: number) => {
     isRemovingImage.value = true;
 
     await props.removeImage(index);
-    console.log("result");
   } catch (error) {
     console.log(error);
   } finally {
     isRemovingImage.value = false;
   }
+};
+
+const handleSetNewIndexOfImage = (id: number) => {
+  if (!props.isChangeOrderAvailable || props.isLoadingChangeOrder) {
+    return;
+  }
+
+  emit("setNewIndexOfImage", id);
 };
 </script>
 

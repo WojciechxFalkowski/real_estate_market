@@ -59,7 +59,8 @@ export interface FlatModel {
 
 export interface FlatImageResponse {
     url: string,
-    imageId?: string
+    imageId?: string,
+    orderId: number,
 }
 
 export interface Flat {
@@ -104,8 +105,6 @@ export const useFlat = () => {
         // const { data } = await useFetch<Flat[]>("/api/flats");
         const { data } = await call<Flat>({ endpoint: `/flat/${url}`, isAuth, isClient })
         // const flat = data?.find(flat => flat.url === flatId)
-        console.log('data')
-        console.log(data)
         flatData.value = data
     }
 
@@ -213,26 +212,30 @@ export const useFlat = () => {
     // })l
 
     const uploadImages = async (flatId: number, images: ImageUploaderI[]) => {
-        console.log("uploadImages");
-        console.log(images);
         const formData = new FormData();
 
-        // const files = images.map(image => image.file)
         images.forEach((image) => {
             if (image.file && !image.isSaved) {
                 formData.append(`files`, image.file);
             }
         });
-        // formData.append('files', files);
-        console.log(formData)
-        console.log(ContentType["multipart/form-data"])
-        console.log('ContentType["multipart/form-data"]')
+
         const { data } = await call<{ message: string, images: FlatImageResponse[] }>(
             { endpoint: `/flat/${flatId}/images`, method: 'POST', isClient: true, contentType: ContentType["multipart/form-data"], isAuth: true, body: formData })
 
         images.forEach((image) => {
             image.isSaved = true
         });
+
+        return data
+    }
+
+    const changeImagesOrder = async (flatId: number, elements: { publicId: string, orderId: number }[]) => {
+        console.log("changeImagesOrder");
+        console.log(flatId);
+        console.log(elements);
+        const { data } = await call<{ message: string }>(
+            { endpoint: `/flat/${flatId}/images/order`, method: 'PUT', isClient: true, isAuth: true, body: JSON.stringify({ flatId, elements }) })
         return data
     }
 
@@ -242,6 +245,6 @@ export const useFlat = () => {
     }
 
     return {
-        fetchFlat, fetchFlats, flatModel, flatsModel, saveFlat, createNewFlat, uploadImages, deleteUploadedImage,
+        fetchFlat, fetchFlats, flatModel, flatsModel, saveFlat, createNewFlat, uploadImages, deleteUploadedImage, changeImagesOrder
     }
 }

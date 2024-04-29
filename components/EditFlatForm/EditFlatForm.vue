@@ -15,13 +15,18 @@
     <ImageUploader
       :images="currentImages"
       :isLoading="isLoadingUploadImages"
+      :flatId="flatId"
       @submit="handleUploadImages"
       :removeImage="removeImage"
     />
   </div>
 
   <div class="mt-8">
-    <Tiptap :tiptapContent="tiptapContent" @submit="handleSubmitTiptap" />
+    <Tiptap
+      :tiptapContent="tiptapContent"
+      @submit="handleSubmitTiptap"
+      :isLoading="isLoadingTiptapContent"
+    />
   </div>
 </template>
 <script setup lang="ts">
@@ -31,6 +36,7 @@ import ImageUploader from "~/components/ImageUploader/ImageUploader.vue";
 import type { SaveFlat } from "~/composables/useFlat";
 import { NEW_FLAT_ROUTE } from "~/components/EditFlatForm/config";
 import type { ImageUploaderI } from "../ImageUploader/contracts";
+import type { PictureItem } from "../Carousel";
 
 const currentImages = ref<ImageUploaderI[]>([]);
 
@@ -46,30 +52,50 @@ const {
 } = useFlat();
 const isLoading = ref(false);
 const isLoadingUploadImages = ref(false);
-
+const flatId = ref<number | undefined>(undefined);
 onMounted(() => {
   fetchFlat(routeId, true, true).then(() => {
     if (!flatModel.value) {
       return;
     }
+    flatId.value = flatModel.value.id;
     tiptapContent.value = flatModel.value?.tiptapHTML;
     const images = flatModel.value.images;
     if (!images) {
       return;
     }
-    const mappedImages: ImageUploaderI[] = images.map((image, index) => {
-      return {
-        src: image.srcset,
-        id: index,
-        publicId: image.imageId || null,
-        newId: null,
-        isSaved: true,
-      };
-    });
+    // console.log(images)
+    // const mappedImages: ImageUploaderI[] = images.map((image, index) => {
+    //   return {
+    //     src: image.srcset,
+    //     id: index,
+    //     publicId: image.imageId || null,
+    //     newId: null,
+    //     isSaved: true,
+    //   };
+    // });
 
-    currentImages.value = mappedImages;
+    currentImages.value = mapImages(images);
   });
 });
+
+const mapImages = (images: PictureItem[]): ImageUploaderI[] => {
+  if (!images) {
+    return [];
+  }
+
+  const mappedImages: ImageUploaderI[] = images.map((image, index) => {
+    return {
+      src: image.srcset,
+      id: index,
+      publicId: image.imageId || null,
+      newId: null,
+      isSaved: true,
+    };
+  });
+
+  return mappedImages;
+};
 
 const isNewFlatRoute = computed(() => {
   return routeId === NEW_FLAT_ROUTE;
@@ -147,23 +173,13 @@ const createNewFlatHandler = async (formData: SaveFlat) => {
 };
 
 const removeImage = async (index: number): Promise<unknown> => {
-  //todo -> zamienić na jedna tablice prawdopodobnie (currentImages / newImages)
-  console.log("removeImage");
-  // const promise = new Promise((resolve) => {
-  //   setTimeout(() => {
-  //     console.log("resolved");
-  //     currentImages.value.splice(index, 1);
-
-  //     resolve("");
-  //   }, 2000);
-  // });
-
   if (!flatModel.value || !flatModel.value.images) {
     return;
   }
-  // const imageToDelete = flatModel.value.images[index];
-  const imageToDelete = currentImages.value[index]
+
+  const imageToDelete = currentImages.value[index];
   const publicId = imageToDelete.publicId;
+
   if (publicId) {
     try {
       const data = await deleteUploadedImage(flatModel.value.id, publicId);
@@ -210,14 +226,22 @@ const createAndEditFormSubmit = async (formData: SaveFlat) => {
   }
 };
 
-const tiptapContent = ref("<p>Test sad saasd das </p>");
-
-const handleSubmitTiptap = (tiptapHTML: string) => {
+const tiptapContent = ref("");
+const isLoadingTiptapContent = ref(false);
+const handleSubmitTiptap = async (tiptapHTML: string) => {
   if (!flatModel.value) {
     return;
   }
 
-  saveFlat(flatModel.value.id, { tiptapHTML });
+  try {
+    isLoadingTiptapContent.value = true;
+    await saveFlat(flatModel.value.id, { tiptapHTML });
+    showToast('Zapisano dane!')
+  } catch (error) {
+    console.log(error);
+  } finally {
+    isLoadingTiptapContent.value = false;
+  }
 };
 
 const handleUploadImages = async () => {
@@ -232,6 +256,17 @@ const handleUploadImages = async () => {
     if (!data || !data.message || !data.images) {
       return;
     }
+
+    currentImages.value = mapImages(
+      data.images.map((image) => {
+        return {
+          alt: undefined,
+          srcset: image.url,
+          src: undefined,
+          imageId: image.imageId,
+        };
+      })
+    );
 
     showToast(data.message);
   } catch (error) {

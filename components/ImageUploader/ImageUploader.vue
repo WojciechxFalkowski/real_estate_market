@@ -40,34 +40,6 @@
     </div>
 
     <div class="grid grid-cols-12 gap-4">
-      <!-- <div
-        v-for="(image, index) in images"
-        :key="index"
-        class="col-span-12 sm:col-span-6 lg:col-span-3 w-full h-40 lg:h-32 xl:h-48 bg-cover rounded-lg shadow-md relative"
-        :style="{ backgroundImage: `url(${image.src})` }"
-      >
-        <div
-          class="absolute w-full h-full cursor-pointer"
-          @click="() => setNewIndexOfImage(image.id)"
-        >
-          <div
-            v-if="image.newId !== null"
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white w-8 h-8 rounded-full flex justify-center items-center"
-          >
-            <div class="text-lg">{{ image.newId }}</div>
-          </div>
-        </div>
-
-        <button
-          v-if="!isEditMode"
-          class="bg-red-500 text-white w-6 h-6 rounded-full transform translate-y-1 translate-x-1"
-          @click="removeImageHandler(index)"
-        >
-          <span v-if="isLoadingUploadImages">Loading</span>
-          <TrashIcon v-else />
-        </button>
-      </div> -->
-
       <ImageUploaderElement
         v-for="(image, index) in images"
         :key="index"
@@ -77,6 +49,8 @@
         :removeImage="removeImage"
         :isEditMode="isEditMode"
         @setNewIndexOfImage="setNewIndexOfImage"
+        :isChangeOrderAvailable="isChangeOrderAvailable"
+        :isLoadingChangeOrder="isLoadingChangeOrder"
         class="col-span-12 sm:col-span-6 lg:col-span-3 w-full h-40 lg:h-32 xl:h-48"
       ></ImageUploaderElement>
     </div>
@@ -84,8 +58,8 @@
     <Button
       class="block mx-auto px-4 py-2 bg-orange rounded shadow"
       @click="uploadImages"
-      :isLoading="isLoading"
-      :isDisabled="isDisableAddFiles"
+      :isLoading="isLoading || isLoadingChangeOrder"
+      :isDisabled="isDisableAddFiles || isLoadingChangeOrder"
     >
       Dodaj
     </Button>
@@ -110,12 +84,16 @@ const props = defineProps({
     type: Function as PropType<(index: number) => Promise<unknown>>,
     required: true,
   },
+  flatId: {
+    type: Number as PropType<number | undefined>,
+  },
 });
 
 const emit = defineEmits<{
   submit: [];
-  // removeImage: [id: number];
 }>();
+
+const { changeImagesOrder } = useFlat();
 
 const images = computed(() => {
   return props.images;
@@ -127,6 +105,10 @@ const isEditMode = computed(() => {
 
 const isDisableAddFiles = computed(() => {
   return props.images.length === 0 || props.isLoading;
+});
+
+const isChangeOrderAvailable = computed(() => {
+  return props.images.every((image) => image.isSaved);
 });
 
 const newIndexNextValue = ref(0);
@@ -143,16 +125,23 @@ function handleFiles(event: Event) {
           id: images.value.length,
           newId: null,
           isSaved: false,
-          publicId: null
+          publicId: null,
         });
       };
       reader.readAsDataURL(file);
     }
+    resetOrderNewOrder();
   }
 }
 
+const resetOrderNewOrder = () => {
+  images.value.forEach((image) => {
+    image.newId = null;
+    newIndexNextValue.value = 0;
+  });
+};
+
 const setNewIndexOfImage = (imageId: number) => {
-  console.log('setNewIndexOfImage')
   const selectedImage = images.value.find((image) => image.id === imageId);
   if (!selectedImage) {
     return;
@@ -182,8 +171,12 @@ const setNewIndexOfImage = (imageId: number) => {
   }
 };
 
-watch(newIndexNextValue, () => {
+const isLoadingChangeOrder = ref(false);
+const { showToast } = useToast();
+
+watch(newIndexNextValue, async () => {
   if (newIndexNextValue.value === images.value.length) {
+    isLoadingChangeOrder.value = true;
     images.value.forEach((image) => {
       if (image.newId === null) {
         return;
@@ -192,7 +185,35 @@ watch(newIndexNextValue, () => {
       image.newId = null;
     });
     newIndexNextValue.value = 0;
-    images.value.sort((imageA, imageB) => imageA.id - imageB.id);
+    const newOrder = images.value.map((image) => {
+      return {
+        publicId: image.publicId as string,
+        orderId: image.id,
+      };
+    });
+
+    // await new Promise((resolve) => {
+    //   setTimeout(() => {
+    //     console.log("call");
+    //     resolve("");
+    //   }, 2000);
+    // });
+    if (!props.flatId) {
+      return;
+    }
+    try {
+      const data = await changeImagesOrder(props.flatId, newOrder);
+      images.value.sort((imageA, imageB) => imageA.id - imageB.id);
+
+      if (!data || !data.message) {
+        return;
+      }
+      showToast(data?.message);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      isLoadingChangeOrder.value = false;
+    }
   }
 });
 

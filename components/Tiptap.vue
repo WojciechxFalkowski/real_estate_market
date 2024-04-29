@@ -123,13 +123,16 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  isLoading: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 const emit = defineEmits<{
   submit: [value: string];
 }>();
 
-const isLoading = ref(false);
 const editor = ref<Editor>();
 
 onMounted(() => {
@@ -157,16 +160,8 @@ const saveData = async () => {
   if (!editor.value) {
     return;
   }
-  console.log("saveData");
-  // console.log();
+
   emit("submit", editor.value.getHTML());
-  // isLoading.value = true;
-  // await new Promise((resolve) => {
-  //   setTimeout(() => {
-  //     isLoading.value = false;
-  //     resolve("");
-  //   }, 1000);
-  // });
 };
 
 onBeforeUnmount(() => {
