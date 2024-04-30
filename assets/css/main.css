@@ -5,7 +5,7 @@
   src: url("/fonts/roboto-regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  /* font-display: swap; */
 }
 html,
 body {
@@ -14,7 +14,7 @@ body {
 }
 
 .bg-orange {
-  background-color: #FFC444;
+  background-color: #ffc444;
 }
 
 /* Example 1*/
