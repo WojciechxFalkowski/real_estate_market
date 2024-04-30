@@ -19,3 +19,4 @@ export { default as TrashIcon } from './TrashIcon.vue';
 export { default as SquaresIcon } from './SquaresIcon.vue';
 export { default as SettingsIcon } from './SettingsIcon.vue';
 export { default as HomeBoldIcon } from './HomeBoldIcon.vue';
+export { default as PlusIcon } from './PlusIcon.vue';

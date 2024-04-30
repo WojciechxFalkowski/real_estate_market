@@ -69,7 +69,6 @@
 <script setup lang="ts">
 import { ref, type PropType } from "vue";
 import type { ImageUploaderI } from "./contracts";
-import TrashIcon from "~/components/icons/TrashIcon.vue";
 import ImageUploaderElement from "./partials/ImageUploaderElement.vue";
 const props = defineProps({
   images: {

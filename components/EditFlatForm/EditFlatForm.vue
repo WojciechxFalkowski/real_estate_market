@@ -54,6 +54,10 @@ const isLoading = ref(false);
 const isLoadingUploadImages = ref(false);
 const flatId = ref<number | undefined>(undefined);
 onMounted(() => {
+  if (isNewFlatRoute.value || typeof routeId !== "string") {
+    return;
+  }
+
   fetchFlat(routeId, true, true).then(() => {
     if (!flatModel.value) {
       return;
@@ -64,16 +68,6 @@ onMounted(() => {
     if (!images) {
       return;
     }
-    // console.log(images)
-    // const mappedImages: ImageUploaderI[] = images.map((image, index) => {
-    //   return {
-    //     src: image.srcset,
-    //     id: index,
-    //     publicId: image.imageId || null,
-    //     newId: null,
-    //     isSaved: true,
-    //   };
-    // });
 
     currentImages.value = mapImages(images);
   });
@@ -236,7 +230,7 @@ const handleSubmitTiptap = async (tiptapHTML: string) => {
   try {
     isLoadingTiptapContent.value = true;
     await saveFlat(flatModel.value.id, { tiptapHTML });
-    showToast('Zapisano dane!')
+    showToast("Zapisano dane!");
   } catch (error) {
     console.log(error);
   } finally {

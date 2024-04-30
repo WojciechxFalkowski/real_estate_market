@@ -44,7 +44,7 @@ export interface FlatModel {
         src: string,
         srcset: string,
     };
-    flatDetails: FlatDetail[];
+    flatDetails: ExtendedFlatDetail[];
     location: string;
     images: {
         alt: string,
