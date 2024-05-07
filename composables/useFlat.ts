@@ -36,6 +36,7 @@ export interface ExtendedFlatDetail extends FlatDetail {
 
 export interface FlatModel {
     id: number;
+    isActive: boolean;
     url: string;
     title: string;
     description: string;
@@ -65,6 +66,7 @@ export interface FlatImageResponse {
 
 export interface Flat {
     id: number;
+    isActive: boolean;
     url: string;
     title: string;
     description: string;
@@ -79,6 +81,7 @@ export interface Flat {
 }
 
 export interface SaveFlat {
+    isActive: boolean;
     area: string;
     bedroom: string;
     currency: string;
@@ -125,11 +128,7 @@ export const useFlat = () => {
     }
 
     const createNewFlat = async (flatForm: SaveFlat) => {
-        console.log('createNewFlat')
-        console.log(flatForm)
         const { data } = await call<{ message: string }>({ endpoint: '/flat', method: 'POST', isClient: true, isAuth: true, body: JSON.stringify(flatForm) })
-        console.log('data')
-        console.log(data)
         return data
     }
 
@@ -138,7 +137,6 @@ export const useFlat = () => {
             return;
         }
         const images = mapImages(flatData.value.images)
-
         return {
             ...flatData.value,
             image: images ? images[0] : undefined,
@@ -244,7 +242,12 @@ export const useFlat = () => {
         return data
     }
 
+    const deleteFlat = async (flatUrl: string) => {
+        const { data } = await call<{ message: string }>({ endpoint: `/flat/${flatUrl}`, method: 'DELETE', isClient: true, isAuth: true, body: undefined })
+        return data
+    }
+
     return {
-        fetchFlat, fetchFlats, flatModel, flatsModel, saveFlat, createNewFlat, uploadImages, deleteUploadedImage, changeImagesOrder
+        fetchFlat, fetchFlats, flatModel, flatsModel, saveFlat, createNewFlat, uploadImages, deleteUploadedImage, changeImagesOrder, deleteFlat
     }
 }

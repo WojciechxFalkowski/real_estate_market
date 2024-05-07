@@ -10,23 +10,55 @@
     :formClass="editTableFormConfiguration.formClass"
   />
 
-  <div clas="my-8">
-    <!-- :newImages="newImages" -->
-    <ImageUploader
-      :images="currentImages"
-      :isLoading="isLoadingUploadImages"
-      :flatId="flatId"
-      @submit="handleUploadImages"
-      :removeImage="removeImage"
-    />
-  </div>
+  <div class="h-0.5 bg-gray-300 my-16"></div>
 
-  <div class="mt-8">
-    <Tiptap
-      :tiptapContent="tiptapContent"
-      @submit="handleSubmitTiptap"
-      :isLoading="isLoadingTiptapContent"
-    />
+  <div class="relative py-3">
+    <div :class="{ 'absolute inset-0 bg-white/70 z-10': isNewFlatRoute }"></div>
+
+    <div class="grid grid-cols-12 gap-4">
+      <ToggleCheckbox
+        class="col-span-12 lg:col-span-4"
+        label="Widoczność na stronie"
+        :value="isFlatActive"
+        @change="toggleFlatStatus"
+        :isLoading="isChangingStatusOfFlat"
+      />
+
+      <!-- <Button
+        class="col-span-12 lg:col-span-3"
+        :componentType="ComponentType.Button"
+        :theme="Theme.Danger"
+        :isLoading="isLoading"
+      >
+        Usuń mieszkanie
+      </Button> -->
+      <div class="col-span-12 lg:col-span-3">
+        <DeleteFlatButton :flatUrl="flatModel?.url" />
+      </div>
+    </div>
+
+    <div class="h-0.5 bg-gray-300 my-16"></div>
+
+    <div clas="my-8">
+      <!-- :newImages="newImages" -->
+      <ImageUploader
+        :images="currentImages"
+        :isLoading="isLoadingUploadImages"
+        :flatId="flatId"
+        @submit="handleUploadImages"
+        :removeImage="removeImage"
+      />
+    </div>
+
+    <div class="h-0.5 bg-gray-300 my-16"></div>
+
+    <div class="mt-8">
+      <Tiptap
+        :tiptapContent="tiptapContent"
+        @submit="handleSubmitTiptap"
+        :isLoading="isLoadingTiptapContent"
+      />
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -37,9 +69,9 @@ import type { SaveFlat } from "~/composables/useFlat";
 import { NEW_FLAT_ROUTE } from "~/components/EditFlatForm/config";
 import type { ImageUploaderI } from "../ImageUploader/contracts";
 import type { PictureItem } from "../Carousel";
+import { Theme, ComponentType } from "@/components/Button/Button.props";
 
 const currentImages = ref<ImageUploaderI[]>([]);
-
 const route = useRoute();
 const routeId = route.params.id;
 const {
@@ -65,6 +97,7 @@ onMounted(() => {
     flatId.value = flatModel.value.id;
     tiptapContent.value = flatModel.value?.tiptapHTML;
     const images = flatModel.value.images;
+    isFlatActive.value = flatModel.value.isActive;
     if (!images) {
       return;
     }
@@ -194,7 +227,7 @@ const removeImage = async (index: number): Promise<unknown> => {
   }
 };
 
-const EditFlatHandler = async (formData: SaveFlat) => {
+const editFlatHandler = async (formData: Partial<SaveFlat>) => {
   if (!flatModel.value) {
     return;
   }
@@ -216,7 +249,7 @@ const createAndEditFormSubmit = async (formData: SaveFlat) => {
   if (isNewFlatRoute.value) {
     await createNewFlatHandler(formData);
   } else {
-    await EditFlatHandler(formData);
+    await editFlatHandler(formData);
   }
 };
 
@@ -271,4 +304,19 @@ const handleUploadImages = async () => {
     isLoadingUploadImages.value = false;
   }
 };
+
+const isFlatActive = ref(false);
+const isChangingStatusOfFlat = ref(false);
+
+async function toggleFlatStatus(newStatus: boolean) {
+  isChangingStatusOfFlat.value = true;
+  try {
+    await editFlatHandler({ isActive: newStatus });
+    isFlatActive.value = newStatus;
+  } catch (error) {
+    console.error("Błąd podczas zmiany statusu mieszkania", error);
+  } finally {
+    isChangingStatusOfFlat.value = false;
+  }
+}
 </script>
