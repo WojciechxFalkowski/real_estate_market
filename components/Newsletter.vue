@@ -100,6 +100,17 @@ const onSubmit = async (values: any) => {
 };
 </script>
 
-<style>
-/* Styl może pozostać pusty lub można dodać dodatkowe style specyficzne dla tego komponentu */
+<style lang="scss">
+#email {
+  &:-webkit-autofill {
+    background-color: transparent !important;
+    color: inherit !important;
+  }
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+  }
+}
 </style>
