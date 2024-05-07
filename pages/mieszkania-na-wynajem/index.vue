@@ -41,7 +41,10 @@
         class="col-span-12 md:col-span-6 xl:col-span-4"
       />
     </TransitionGroup>
-    <div class="grid grid-cols-12 gap-8 mt-8"></div>
+  </div>
+
+  <div class="container m-auto mt-32 my-16">
+    <Newsletter />
   </div>
   <!-- <pre>{{ data }}</pre> -->
 </template>

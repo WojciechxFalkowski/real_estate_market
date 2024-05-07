@@ -1,47 +1,54 @@
 <template>
-  <div class="flex justify-center mb-8">
-    <h1 class="text-xl text-center border-b-2 border-orange pb-2">
-      Zapisz się na nasz newsletter
-    </h1>
+  <div class="flex flex-col items-center space-y-2">
+    <span class="text-sm uppercase tracking-widest text-gray-400"
+      >Zapisz się do newslettera</span
+    >
+    <h2 class="text-2xl font-light uppercase tracking-wide text-gray-800">
+      Bądź na bieżąco
+    </h2>
   </div>
 
-  <div class="flex justify-center items-center bg-white">
+  <div class="flex justify-center items-center bg-white mt-8">
     <Form
       @submit="onSubmit"
-      class="w-full max-w-lg space-y-4"
+      class="w-full max-w-lg"
       :validation-schema="schema"
       :initial-values="initialValues"
     >
-      <div class="relative">
-        <Field
-          name="email"
-          id="email"
-          type="email"
-          v-slot="{ field }"
-          class="block px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-orange peer"
-          placeholder=""
-        />
-        <label
-          for="email"
-          class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
-        >
-          E-mail
-        </label>
-
-        <div class="text-red-500 text-xs min-h-4 min-w-full">
-          <ErrorMessage name="email" />
+      <div
+        class="flex border-0 border-b-2 border-black dark:border-black focus:border-orange"
+      >
+        <div class="relative grow">
+          <Field
+            name="email"
+            id="email"
+            type="email"
+            v-slot="{ field }"
+            class="block pe-2.5 pb-2.5 pt-5 w-full text-sm text-black dark:bg-gray-700 appearance-none dark:text-white peer focus:outline-none focus:ring-0"
+            placeholder=""
+          />
+          <label
+            for="email"
+            class="absolute text-sm text-black dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
+          >
+            Twój e-mail
+          </label>
         </div>
+
+        <Button
+          class="block m-auto uppercase"
+          type="submit"
+          :componentType="ComponentType.Button"
+          :theme="Theme.Outline"
+          :isLoading="isLoading"
+        >
+          Zapisz
+        </Button>
       </div>
 
-      <Button
-        class="block m-auto"
-        type="submit"
-        :componentType="ComponentType.Button"
-        :theme="Theme.Primary"
-        :isLoading="isLoading"
-      >
-        Zapisz się
-      </Button>
+      <div class="text-red-500 text-xs min-h-4 min-w-full">
+        <ErrorMessage name="email" />
+      </div>
     </Form>
   </div>
 </template>
