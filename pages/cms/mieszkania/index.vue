@@ -14,7 +14,7 @@
       <LoadingIcon />
     </div>
 
-    <div v-else class="col-span-12 md:col-span-6 xl:col-span-4">
+    <slot v-else>
       <FlatCard
         v-for="flat in flatsModel"
         :title="flat.title"
@@ -25,8 +25,9 @@
         :flatDetails="flat.flatDetails"
         :isDetailsVisible="false"
         :routerName="'cms-mieszkania-id'"
+        class="col-span-12 md:col-span-6 xl:col-span-4"
       />
-    </div>
+    </slot>
   </div>
 </template>
 
