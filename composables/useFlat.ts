@@ -106,21 +106,21 @@ export const useFlat = () => {
 
     const fetchFlat = async (url: string, isClient: boolean = false, isAuth: boolean = false) => {
         // const { data } = await useFetch<Flat[]>("/api/flats");
-        const { data } = await call<Flat>({ endpoint: `/flat/${url}`, isAuth, isClient })
+        const { data } = await call<Flat>({ endpoint: `/flats/${url}`, isAuth, isClient })
         // const flat = data?.find(flat => flat.url === flatId)
         flatData.value = data
     }
 
     const fetchFlats = async ({ isClient, isAuth }: { isClient?: boolean, isAuth: boolean } = { isClient: false, isAuth: false }) => {
         // const { data, pending } = await useFetch("/api/flats", {});
-        const { data } = await call<Flat[]>({ endpoint: '/flat', isAuth, isClient })
+        const { data } = await call<Flat[]>({ endpoint: '/flats', isAuth, isClient })
         flatsData.value = data
     }
 
     const saveFlat = async (flatId: number, flatForm: Partial<SaveFlat>) => {
         console.log('saveFlat')
         console.log(flatForm)
-        const { data } = await call<Flat[]>({ endpoint: `/flat/${flatId}`, method: 'PATCH', isClient: true, isAuth: true, body: JSON.stringify(flatForm) })
+        const { data } = await call<Flat[]>({ endpoint: `/flats/${flatId}`, method: 'PATCH', isClient: true, isAuth: true, body: JSON.stringify(flatForm) })
         console.log('data')
         console.log(data)
 
@@ -128,7 +128,7 @@ export const useFlat = () => {
     }
 
     const createNewFlat = async (flatForm: SaveFlat) => {
-        const { data } = await call<{ message: string }>({ endpoint: '/flat', method: 'POST', isClient: true, isAuth: true, body: JSON.stringify(flatForm) })
+        const { data } = await call<{ message: string }>({ endpoint: '/flats', method: 'POST', isClient: true, isAuth: true, body: JSON.stringify(flatForm) })
         return data
     }
 
@@ -219,7 +219,7 @@ export const useFlat = () => {
         });
 
         const { data } = await call<{ message: string, images: FlatImageResponse[] }>(
-            { endpoint: `/flat/${flatId}/images`, method: 'POST', isClient: true, contentType: ContentType["multipart/form-data"], isAuth: true, body: formData })
+            { endpoint: `/flats/${flatId}/images`, method: 'POST', isClient: true, contentType: ContentType["multipart/form-data"], isAuth: true, body: formData })
 
         images.forEach((image) => {
             image.isSaved = true
@@ -233,17 +233,17 @@ export const useFlat = () => {
         console.log(flatId);
         console.log(elements);
         const { data } = await call<{ message: string }>(
-            { endpoint: `/flat/${flatId}/images/order`, method: 'PUT', isClient: true, isAuth: true, body: JSON.stringify({ flatId, elements }) })
+            { endpoint: `/flats/${flatId}/images/order`, method: 'PUT', isClient: true, isAuth: true, body: JSON.stringify({ flatId, elements }) })
         return data
     }
 
     const deleteUploadedImage = async (flatId: number, publicId: string) => {
-        const { data } = await call<{ message: string }>({ endpoint: `/flat/${flatId}/images`, method: 'DELETE', isClient: true, isAuth: true, body: JSON.stringify({ publicId }) })
+        const { data } = await call<{ message: string }>({ endpoint: `/flats/${flatId}/images`, method: 'DELETE', isClient: true, isAuth: true, body: JSON.stringify({ publicId }) })
         return data
     }
 
     const deleteFlat = async (flatUrl: string) => {
-        const { data } = await call<{ message: string }>({ endpoint: `/flat/${flatUrl}`, method: 'DELETE', isClient: true, isAuth: true, body: undefined })
+        const { data } = await call<{ message: string }>({ endpoint: `/flats/${flatUrl}`, method: 'DELETE', isClient: true, isAuth: true, body: undefined })
         return data
     }
 
