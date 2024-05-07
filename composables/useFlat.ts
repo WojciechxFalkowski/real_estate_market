@@ -117,6 +117,12 @@ export const useFlat = () => {
         flatsData.value = data
     }
 
+    const fetchActiveFlats = async ({ isClient, isAuth }: { isClient?: boolean, isAuth: boolean } = { isClient: false, isAuth: false }) => {
+        // const { data, pending } = await useFetch("/api/flats", {});
+        const { data } = await call<Flat[]>({ endpoint: '/flats/active', isAuth, isClient })
+        flatsData.value = data
+    }
+
     const saveFlat = async (flatId: number, flatForm: Partial<SaveFlat>) => {
         console.log('saveFlat')
         console.log(flatForm)
@@ -248,6 +254,6 @@ export const useFlat = () => {
     }
 
     return {
-        fetchFlat, fetchFlats, flatModel, flatsModel, saveFlat, createNewFlat, uploadImages, deleteUploadedImage, changeImagesOrder, deleteFlat
+        fetchFlat, fetchFlats, flatModel, flatsModel, saveFlat, createNewFlat, uploadImages, deleteUploadedImage, changeImagesOrder, deleteFlat, fetchActiveFlats
     }
 }

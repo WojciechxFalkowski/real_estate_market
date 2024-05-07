@@ -50,8 +50,8 @@
 </template>
 
 <script setup lang="ts">
-const { fetchFlats, flatsModel } = useFlat();
-await fetchFlats();
+const { fetchActiveFlats, flatsModel } = useFlat();
+await fetchActiveFlats();
 const ALL = "wszystkie";
 const locations = ref([
   ALL,
