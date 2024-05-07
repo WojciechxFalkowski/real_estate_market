@@ -58,6 +58,8 @@ import { useForm, useField, Field, Form, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 import { Theme, ComponentType } from "@/components/Button/Button.props";
 
+const { addEmailToNewsletter } = useNewsletter();
+
 const initialValues = {
   email: "",
 };
@@ -74,16 +76,27 @@ const { handleSubmit, isSubmitting } = useForm({
 });
 
 const { value: email } = useField("email");
+const { showToast } = useToast();
 
 const isLoading = ref(false);
 
 const onSubmit = async (values: any) => {
   isLoading.value = true;
-  // Tutaj można dodać logikę wysyłania informacji do backendu
-  alert(
-    `Dziękujemy za zapisanie się do newslettera! Twoje dane: ${values.email}`
-  );
-  isLoading.value = false;
+  const email = values.email;
+  try {
+    const response = await addEmailToNewsletter(email);
+    if (!response?.message) {
+      return;
+    }
+    showToast(response?.message);
+  } catch (error) {
+    console.log(error);
+    if (error instanceof Error) {
+      showToast(error.message, false);
+    }
+  } finally {
+    isLoading.value = false;
+  }
 };
 </script>
 
