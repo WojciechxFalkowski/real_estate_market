@@ -40,6 +40,7 @@ import {
   Home,
   HomeBoldIcon,
   NewsletterIcon,
+  FaqIcon,
 } from "~/components/icons";
 definePageMeta({
   layout: "restricted",
@@ -65,6 +66,11 @@ const links = [
     to: { name: "cms-newsletter" },
     icon: NewsletterIcon,
     name: "Newsletter",
+  },
+  {
+    to: { name: "cms-faq" },
+    icon: FaqIcon,
+    name: "FAQ",
   },
 ];
 </script>

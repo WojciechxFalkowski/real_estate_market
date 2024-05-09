@@ -36,14 +36,11 @@
 
       <div v-if="list" class="py-2">
         <h3 class="text-gray-600 font-bold text-sm">
-          {{ list.title }}
+          {{ listTitle }}
         </h3>
 
         <ul class="pb-4">
-          <li
-            class="ms-4 list-disc text-gray-600"
-            v-for="listElement of list.elements"
-          >
+          <li class="ms-4 list-disc text-gray-600" v-for="listElement of list">
             <p class="text-sm">
               {{ listElement }}
             </p>
@@ -58,9 +55,10 @@
 import type { List } from "./Accordion.vue";
 
 const props = defineProps<{
-  title: string;
+  title?: string;
   content?: string;
-  list?: List;
+  listTitle?: string;
+  list?: string[];
 }>();
 const isOpen = ref(false);
 

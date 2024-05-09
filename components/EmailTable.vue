@@ -20,8 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from "vue";
-
 interface Email {
   id: number;
   email: string;

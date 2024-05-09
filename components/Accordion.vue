@@ -7,7 +7,8 @@
     >
       <AccordionElement
         :title="section.title"
-        :content="section.content"
+        :content="section.description"
+        :listTitle="section.listTitle"
         :list="section.list"
       />
     </div>
@@ -15,15 +16,5 @@
 </template>
 
 <script setup lang="ts">
-export type List = {
-  title: string;
-  elements: string[];
-};
-export type AccordionI = {
-  title: string;
-  content?: string;
-  list?: List;
-};
-
-const props = defineProps<{ sections: AccordionI[] }>();
+const props = defineProps<{ sections: FaqElement[] }>();
 </script>

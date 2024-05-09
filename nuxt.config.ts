@@ -13,5 +13,11 @@ export default defineNuxtConfig({
 			BACKEND_BASE_URL: process.env.BACKEND_BASE_URL,
 		},
 	},
-
+	components: [
+		{
+			path: '~/components',
+			pathPrefix: false,
+			extensions: ['.vue']
+		},
+	],
 })

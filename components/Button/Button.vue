@@ -2,7 +2,7 @@
   <component
     :is="componentIs"
     v-bind="linkProperties"
-    class="button py-2 px-4 rounded focus:outline-none focus:shadow-outlin"
+    class="button py-2 px-4 rounded focus:outline-none focus:shadow-outline"
     :class="[theme, { 'w-100': isFluid }]"
     :disabled="isDisabled || isLoading"
   >
@@ -10,7 +10,7 @@
 
     <slot name="loader">
       <span v-if="isLoading" class="--loading-icon">
-        <LoadingIcon name="loading" :class="{ '--loading': isLoading }" />
+        <ButtonLoadingIcon name="loading" :class="{ '--loading': isLoading }" />
       </span>
     </slot>
   </component>
@@ -18,7 +18,6 @@
 
 <script setup lang="ts">
 import { ButtonProps, ComponentType } from "./Button.props";
-import LoadingIcon from "./partials/LoadingIcon.vue";
 
 const props = defineProps(ButtonProps);
 
@@ -94,6 +93,16 @@ const linkProperties = computed(() => {
 
   &.btn-grey {
     background-color: grey;
+    color: white;
+  }
+
+  &.btn-info {
+    background-color: #007bff;
+    color: white;
+  }
+
+  &.button:disabled {
+    background-color: #ccc;
     color: white;
   }
 }

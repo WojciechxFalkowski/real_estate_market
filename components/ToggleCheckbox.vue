@@ -23,7 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from "vue";
 import { LoadingIcon } from "~/components/icons";
 
 const props = defineProps({

@@ -5,6 +5,7 @@ export enum Theme {
   Success = "btn-success",
   Outline = "btn-outline-dark",
   Grey = "btn-grey",
+  Info = "btn-info",
 }
 
 export enum ComponentType {

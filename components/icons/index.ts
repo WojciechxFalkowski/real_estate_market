@@ -21,3 +21,4 @@ export { default as SettingsIcon } from './SettingsIcon.vue';
 export { default as HomeBoldIcon } from './HomeBoldIcon.vue';
 export { default as PlusIcon } from './PlusIcon.vue';
 export { default as NewsletterIcon } from './NewsletterIcon.vue';
+export { default as FaqIcon } from './FaqIcon.vue';
