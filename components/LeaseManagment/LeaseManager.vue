@@ -1,0 +1,90 @@
+<template>
+  <div class="icon-manager space-y-4">
+    <div v-for="(item, index) in leaseItems" :key="item.id" class="mb-2">
+      <LeaseItem
+        :item="item"
+        @removeItem="removeItem"
+        @moveListItemUp="moveLeaseItemUp"
+        @moveListItemDown="moveLeaseItemDown"
+        :listIndex="index"
+        class="p-2 border rounded shadow mb-8"
+        :registerForm="registerForm"
+        :unregisterForm="unregisterForm"
+      />
+    </div>
+
+    <Button @click="addItem" class="rounded me-2"> Dodaj element </Button>
+
+    <Button @click="updateItems" :isLoading="isLoadingLease"> Zapisz </Button>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { onMounted } from "vue";
+import LeaseItem from "./LeaseItem.vue";
+
+const {
+  leaseItems,
+  fetchLeaseItems,
+  addLeaseItem,
+  updateLeaseItems,
+  removeLeaseItem,
+  moveLeaseItemUp,
+  moveLeaseItemDown,
+  isLoadingLease,
+} = useLeaseManager();
+
+const leaseItemForms = ref<(() => Promise<boolean>)[]>([]);
+
+const registerForm = (formSubmit: () => Promise<boolean>) => {
+  leaseItemForms.value.push(formSubmit);
+};
+
+onMounted(() => {
+  fetchLeaseItems({ isAuth: true, isClient: true });
+});
+
+const addItem = () => {
+  addLeaseItem({
+    title: "",
+    description: "",
+    icon: "",
+    classIcon: "",
+  });
+};
+
+const updateItems = async () => {
+  // Wywołaj wszystkie funkcje walidacji
+  const validationResults = await Promise.all(
+    leaseItemForms.value.map((formSubmit) => formSubmit())
+  );
+
+  // Sprawdź, czy wszystkie wyniki są prawidłowe
+  const allValid = validationResults.every((result) => {
+    // console.log("result");
+    // console.log(result);
+    return result === true;
+  });
+
+  if (allValid) {
+    console.log("Wszystkie formularze są poprawne.");
+    await updateLeaseItems(leaseItems.value); // Zaaktualizuj wszystkie elementy na serwerze
+  } else {
+    console.log("Niektóre formularze zawierają błędy.");
+  }
+};
+
+const removeItem = (index: number) => {
+  const id = leaseItems.value[index].id;
+  if (id) {
+    removeLeaseItem(id); // Usuń element z serwera
+  }
+};
+
+const unregisterForm = (formSubmit: () => Promise<boolean>) => {
+  const index = leaseItemForms.value.indexOf(formSubmit);
+  if (index !== -1) {
+    leaseItemForms.value.splice(index, 1);
+  }
+};
+</script>

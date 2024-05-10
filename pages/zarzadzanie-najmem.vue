@@ -17,7 +17,7 @@
       >
         <!-- Elementy dookoła -->
         <div
-          v-for="(step, index) in steps"
+          v-for="(step, index) in apiSteps"
           :key="step.id"
           class="absolute step opacity-0 transition-all duration-300 ease-in-out"
           :class="{
@@ -31,12 +31,12 @@
             @mouseleave="startActiveStepInterval"
             class="w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-white rounded-full shadow-md flex items-center justify-center cursor-pointer"
           >
-            <!-- <span class="icon">{{ item.icon }}</span> -->
-            <component
+            <!-- <component
               :is="{ ...step.icon }"
               class="w-5 lg:w-10"
               :style="isMobile ? {} : step.desktopIconStyles"
-            />
+            /> -->
+            <div class="w-5 lg:w-10" v-html="step.icon" :style="isMobile ? {} : step.desktopIconStyles"></div>
           </div>
         </div>
 
@@ -77,6 +77,8 @@ import {
 const activeStepIndex = ref(0);
 const intervalId = ref(null);
 const isMobile = ref(false);
+const { leaseItems, fetchLeaseItems } = useLeaseManager();
+await fetchLeaseItems({ isAuth: false, isClient: false });
 
 onMounted(() => {
   checkMobile();
@@ -100,6 +102,19 @@ interface Step {
   iconActiveClass: string;
   desktopIconStyles: DesktopIconStyles;
 }
+
+const apiSteps = computed(() =>
+  leaseItems.value.map((leaseItem, index) => {
+    return {
+      id: index,
+      title: leaseItem.title,
+      description: leaseItem.description,
+      icon: leaseItem.icon,
+      iconActiveClass: leaseItem.classIcon,
+      desktopIconStyles: {},
+    };
+  })
+);
 
 const steps: Step[] = reactive([
   // Dane dla kroków

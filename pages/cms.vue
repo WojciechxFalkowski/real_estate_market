@@ -72,5 +72,10 @@ const links = [
     icon: FaqIcon,
     name: "FAQ",
   },
+  {
+    to: { name: "cms-zarzadzanie-najmem" },
+    icon: FaqIcon,
+    name: "Zarzadzanie najmem",
+  },
 ];
 </script>
