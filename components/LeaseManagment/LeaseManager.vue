@@ -10,6 +10,7 @@
         class="p-2 border rounded shadow mb-8"
         :registerForm="registerForm"
         :unregisterForm="unregisterForm"
+        :lastIndex="leaseItems.length"
       />
     </div>
 
@@ -50,6 +51,7 @@ const addItem = () => {
     description: "",
     icon: "",
     classIcon: "",
+    desktopSize: 40,
   });
 };
 

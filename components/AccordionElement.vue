@@ -1,33 +1,21 @@
 <template>
-  <!-- Title -->
   <div
     @click="toggle"
     class="flex gap-5 items-center p-4 cursor-pointer transition-colors duration-200"
   >
-    <svg
+    <ArrowIcon
       :class="isOpen ? 'transform rotate-180' : ''"
       class="w-4 h-4 text-gray-800 transition-transform duration-200"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M19 9l-7 7-7-7"
-      />
-    </svg>
+    />
 
     <h2 class="text-gray-700 font-bold text-sm md:text-md lg:text-lg">
       {{ title }}
     </h2>
   </div>
 
-  <!-- Content -->
   <transition name="accordion-content">
     <div
-      v-if="isOpen"
+      v-show="isOpen"
       class="ps-12 pe-4 ms-1 rounded-b-lg overflow-hidden text-gray-600"
     >
       <p v-if="content" class="py-2 text-sm pb-4">

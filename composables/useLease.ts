@@ -4,6 +4,8 @@ export interface LeaseItem {
     description: string;
     icon: string;
     classIcon: string;
+    desktopSize: number;
+    isActive: boolean;
 }
 
 import { useCall } from '@/composables/useCall';
@@ -15,10 +17,21 @@ export const useLeaseManager = () => {
     const isLoadingLease = ref(false)
     const { call } = useCall();
 
-    const fetchLeaseItems = async  ({ isClient, isAuth }: { isClient?: boolean, isAuth: boolean } = { isClient: false, isAuth: false }) => {
+    const fetchLeaseItems = async ({ isClient, isAuth }: { isClient?: boolean, isAuth: boolean } = { isClient: false, isAuth: false }) => {
         isLoadingLease.value = true
         const { data } = await call<LeaseItem[]>({
             endpoint: `/lease`,
+            isAuth: isClient,
+            isClient: isAuth,
+        });
+        isLoadingLease.value = false
+        leaseItems.value = data || [];
+    };
+
+    const getAllActiveLease = async ({ isClient, isAuth }: { isClient?: boolean, isAuth: boolean } = { isClient: false, isAuth: false }) => {
+        isLoadingLease.value = true
+        const { data } = await call<LeaseItem[]>({
+            endpoint: `/lease/activeLease`,
             isAuth: isClient,
             isClient: isAuth,
         });
@@ -45,7 +58,7 @@ export const useLeaseManager = () => {
 
         }
         catch (error) {
-
+            console.log(error)
         }
         finally {
             isLoadingLease.value = false
@@ -84,6 +97,7 @@ export const useLeaseManager = () => {
         removeLeaseItem,
         moveLeaseItemUp,
         moveLeaseItemDown,
-        isLoadingLease
+        isLoadingLease,
+        getAllActiveLease,
     };
 };
