@@ -13,7 +13,9 @@
           {{ index + 1 }}
         </td>
         <td class="border border-gray-400 px-2">{{ email.email }}</td>
-        <td class="border border-gray-400 px-2">{{ email.createdAt }}</td>
+        <td class="border border-gray-400 px-2">
+          {{ formattedDate(email.createdAt) }}
+        </td>
       </tr>
     </tbody>
   </table>
@@ -29,4 +31,19 @@ interface Email {
 const props = defineProps<{
   emails: Email[];
 }>();
+
+const formattedDate = (isoDate: string) => {
+  const date = new Date(isoDate);
+  const formattedDate = date.toLocaleString("sv-SE", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  });
+
+  return formattedDate;
+};
 </script>

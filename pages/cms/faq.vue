@@ -1,5 +1,5 @@
 <template>
-  <DynamicList />
+  <FAQEditor />
 </template>
 
 <script setup lang="ts"></script>

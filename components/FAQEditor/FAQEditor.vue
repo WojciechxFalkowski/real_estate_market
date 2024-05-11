@@ -1,5 +1,9 @@
 <template>
-  <div>
+  <div v-if="isFetchingFaq" class="flex justify-center h-full items-center">
+    <LoadingIcon />
+  </div>
+
+  <div v-else>
     <div
       v-for="(item, index) in faqCollection"
       :key="index"
@@ -116,11 +120,13 @@
 
 <script setup lang="ts">
 import { Theme } from "@/components/Button/Button.props";
-import type { FaqElement } from "~/composables/useFaq";
 const { updateFaq, getFaq, faqCollection } = useFaq();
+const isFetchingFaq = ref(false);
 
-onMounted(() => {
-  getFaq();
+onMounted(async () => {
+  isFetchingFaq.value = true;
+  await getFaq();
+  isFetchingFaq.value = false;
 });
 
 // const faqCollection = ref<FaqElement[]>([

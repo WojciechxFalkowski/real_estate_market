@@ -18,24 +18,20 @@ export const useLeaseManager = () => {
     const { call } = useCall();
 
     const fetchLeaseItems = async ({ isClient, isAuth }: { isClient?: boolean, isAuth: boolean } = { isClient: false, isAuth: false }) => {
-        isLoadingLease.value = true
         const { data } = await call<LeaseItem[]>({
             endpoint: `/lease`,
             isAuth: isClient,
             isClient: isAuth,
         });
-        isLoadingLease.value = false
         leaseItems.value = data || [];
     };
 
     const getAllActiveLease = async ({ isClient, isAuth }: { isClient?: boolean, isAuth: boolean } = { isClient: false, isAuth: false }) => {
-        isLoadingLease.value = true
         const { data } = await call<LeaseItem[]>({
             endpoint: `/lease/activeLease`,
             isAuth: isClient,
             isClient: isAuth,
         });
-        isLoadingLease.value = false
         leaseItems.value = data || [];
     };
 

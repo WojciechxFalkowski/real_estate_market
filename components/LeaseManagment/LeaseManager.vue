@@ -1,5 +1,9 @@
 <template>
-  <div class="icon-manager space-y-4">
+  <div v-if="isFetchingLeases" class="flex justify-center h-full items-center">
+    <LoadingIcon />
+  </div>
+
+  <div v-else class="icon-manager space-y-4">
     <div v-for="(item, index) in leaseItems" :key="item.id" class="mb-2">
       <LeaseItem
         :item="item"
@@ -35,14 +39,18 @@ const {
   isLoadingLease,
 } = useLeaseManager();
 
+const isFetchingLeases = ref(false);
+
 const leaseItemForms = ref<(() => Promise<boolean>)[]>([]);
 
 const registerForm = (formSubmit: () => Promise<boolean>) => {
   leaseItemForms.value.push(formSubmit);
 };
 
-onMounted(() => {
-  fetchLeaseItems({ isAuth: true, isClient: true });
+onMounted(async () => {
+  isFetchingLeases.value = true;
+  await fetchLeaseItems({ isAuth: true, isClient: true });
+  isFetchingLeases.value = false;
 });
 
 const addItem = () => {
@@ -52,6 +60,7 @@ const addItem = () => {
     icon: "",
     classIcon: "",
     desktopSize: 40,
+    isActive: false,
   });
 };
 
