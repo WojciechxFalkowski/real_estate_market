@@ -37,37 +37,8 @@ export const usePageConfiguration = () => {
             isClient: isAuth,
             body: JSON.stringify(configurationData)
         });
-        // pageConfiguration.value = data;
         return data
     };
-
-    // const updateLeaseItems = async (items: LeaseItem[], header: { title: string, description: string }) => {
-    //     try {
-    //         isLoadingLease.value = true
-    //         console.log(JSON.stringify({ leaseItems: items, header }))
-    //         const { data } = await call<{ message: string }>({
-    //             endpoint: `/lease`,
-    //             method: 'PUT',
-    //             isAuth: true,
-    //             isClient: true,
-    //             body: JSON.stringify({ leaseItems: items, header })
-    //         });
-
-    //         if (!data) {
-    //             return;
-    //         }
-    //         showToast(data.message);
-    //         return data;
-
-    //     }
-    //     catch (error) {
-    //         console.log(error)
-    //     }
-    //     finally {
-    //         isLoadingLease.value = false
-    //     }
-    // };
-
 
     return {
         pageConfiguration,
