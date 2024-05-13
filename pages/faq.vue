@@ -1,9 +1,5 @@
 <template>
-  <div class="flex justify-center mt-8 lg:mt-16">
-    <h1 class="text-xl text-center border-b-2 border-orange pb-2">
-      {{ pageConfiguration?.title }}
-    </h1>
-  </div>
+  <PageTitle :title="pageConfiguration?.title" class="mt-8 lg:mt-16" />
 
   <div class="container mx-auto mb-32 mt-8 lg:mt-16">
     <Accordion :sections="faqCollection" />

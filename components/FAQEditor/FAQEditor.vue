@@ -11,65 +11,170 @@
       :class="`mb-${faqCollection.length - 1 === index ? '16' : '8'}`"
     >
       <div v-if="item.type === 'section'">
-        <input
-          v-model="item.title"
+        <!-- <input
+          
           placeholder="Tytuł sekcji"
           class="p-2 mb-2 w-full border"
-        />
-        <textarea
+        /> -->
+
+        <div class="relative col-span-12">
+          <Field
+            name="title"
+            id="title"
+            type="text"
+            v-model="item.title"
+            class="block px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-orange peer"
+            placeholder=""
+          />
+          <label
+            for="title"
+            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+          >
+            Tytuł sekcji
+          </label>
+
+          <div class="text-red-500 text-xs min-h-4 min-w-full">
+            <ErrorMessage name="title" />
+          </div>
+        </div>
+
+        <!-- <textarea
           v-model="item.description"
           placeholder="Opis"
           class="p-2 w-full border min-h-64 md:min-h-32"
-        ></textarea>
+        ></textarea> -->
+        <div class="relative mt-4">
+          <Field
+            name="description"
+            id="description"
+            as="textarea"
+            v-model="item.description"
+            v-slot="{ field }"
+            class="block px-2.5 pb-2.5 pt-5 w-full h-32 text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-orange peer"
+            placeholder=""
+          />
+          <label
+            for="description"
+            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+          >
+            Opis
+          </label>
+
+          <div class="text-red-500 text-xs min-h-4 min-w-full">
+            <ErrorMessage name="description" />
+          </div>
+        </div>
       </div>
 
       <div v-else-if="item.type === 'list'">
-        <input
+        <div class="relative col-span-12">
+          <Field
+            name="title"
+            id="title"
+            type="text"
+            v-model="item.title"
+            class="block px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-orange peer"
+            placeholder=""
+          />
+          <label
+            for="title"
+            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+          >
+            Tytuł sekcji
+          </label>
+
+          <div class="text-red-500 text-xs min-h-4 min-w-full">
+            <ErrorMessage name="title" />
+          </div>
+        </div>
+        <!-- <input
           v-model="item.title"
           placeholder="Tytuł sekcji"
           class="p-2 mb-2 w-full border"
-        />
+        /> -->
+        <div class="relative col-span-12">
+          <Field
+            name="title"
+            id="title"
+            type="text"
+            v-model="item.listTitle"
+            class="block px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-orange peer"
+            placeholder=""
+          />
+          <label
+            for="title"
+            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+          >
+            Tytuł listy
+          </label>
 
-        <input
+          <div class="text-red-500 text-xs min-h-4 min-w-full">
+            <ErrorMessage name="title" />
+          </div>
+        </div>
+        <!-- <input
           v-model="item.listTitle"
           placeholder="Tytuł listy"
           class="p-2 w-full border"
-        />
-        <ul class="space-y-2 my-4">
+        /> -->
+        <ul class="space-y-2 my-4 col-span-12">
+          <!-- flex-wrap -->
           <li
             v-for="(listItem, listIndex) in item.list"
             :key="listIndex"
-            class="flex faqCollection-center space-x-2"
+            class="flex faqCollection-center flex-wrap items-baseline sm:space-x-2"
           >
-            <input
+            <div class="relative flex-grow">
+              <Field
+                name="title"
+                id="title"
+                type="text"
+                :value="listItem"
+                @input="updateListItem(index, listIndex, $event)"
+                class="block px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-orange peer"
+                placeholder=""
+              />
+              <label
+                for="title"
+                class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+              >
+                {{ listIndex + 1 }}. Element listy
+              </label>
+
+              <div class="text-red-500 text-xs min-h-4 min-w-full">
+                <ErrorMessage name="title" />
+              </div>
+            </div>
+            <!-- <input
               :value="listItem"
               @input="updateListItem(index, listIndex, $event)"
               class="p-2 w-full border"
-            />
+            /> -->
+            <div class="flex gap-2">
+              <Button
+                @click="removeListItem(index, listIndex)"
+                :theme="Theme.Danger"
+              >
+                <TrashIcon />
+              </Button>
 
-            <Button
-              @click="removeListItem(index, listIndex)"
-              :theme="Theme.Danger"
-            >
-              <TrashIcon />
-            </Button>
+              <Button
+                @click="moveListItemUp(index, listIndex)"
+                :theme="Theme.Info"
+                :disabled="listIndex === 0"
+              >
+                ↑
+              </Button>
 
-            <Button
-              @click="moveListItemUp(index, listIndex)"
-              :theme="Theme.Info"
-              :disabled="listIndex === 0"
-            >
-              ↑
-            </Button>
-
-            <Button
-              v-if="item.list"
-              @click="moveListItemDown(index, listIndex)"
-              :theme="Theme.Info"
-              :disabled="listIndex === item.list.length - 1"
-            >
-              ↓
-            </Button>
+              <Button
+                v-if="item.list"
+                @click="moveListItemDown(index, listIndex)"
+                :theme="Theme.Info"
+                :disabled="listIndex === item.list.length - 1"
+              >
+                ↓
+              </Button>
+            </div>
           </li>
         </ul>
         <Button @click="addItemToList(index)" :theme="Theme.Info">
@@ -77,9 +182,9 @@
         </Button>
       </div>
 
-      <div class="space-x-2 my-4 flex">
+      <div class="gap-2 my-4 flex flex-wrap">
         <Button :theme="Theme.Danger" @click="removeItem(index)">
-          Usuń sekcję/listę
+          <TrashIcon />
         </Button>
 
         <Button
@@ -99,7 +204,7 @@
         </Button>
 
         <ToggleCheckbox
-          class="col-span-12 lg:col-span-4"
+          class=""
           label="Widoczność na stronie"
           :value="item.isActive"
           @change="() => toggleFaqStatus(index)"
@@ -125,7 +230,7 @@ const isFetchingFaq = ref(false);
 
 onMounted(async () => {
   isFetchingFaq.value = true;
-  await getFaq();
+  await getFaq({ isAuth: false, isClient: true });
   isFetchingFaq.value = false;
 });
 

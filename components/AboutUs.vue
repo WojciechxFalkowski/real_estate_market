@@ -1,9 +1,5 @@
 <template>
-  <div class="flex justify-center mb-8 lg:mb-16">
-    <h1 class="text-xl text-center border-b-2 border-orange pb-2">
-      Kilka słów o nas
-    </h1>
-  </div>
+  <PageTitle :title="'Kilka słów o nas'" class="mb-8 lg:mb-16" />
 
   <AnimatedVisibility :isMobileImediate="true">
     <div class="md:flex md:items-center md:space-x-6">

@@ -1,9 +1,5 @@
 <template>
-  <div class="flex justify-center mb-8">
-    <h1 class="text-xl text-center border-b-2 border-orange pb-2">
-      {{ pageConfiguration?.title }}
-    </h1>
-  </div>
+  <PageTitle :title="pageConfiguration?.title" class="mb-8 lg:mb-16" />
 
   <div class="flex justify-center items-center bg-white">
     <Form

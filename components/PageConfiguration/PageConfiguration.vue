@@ -1,17 +1,25 @@
 <template>
-  <LoadingIcon v-if="isFetchingPageConfiguration" class="m-auto" />
+  <div>
+    <PageTitle
+      title="Konfiguracja Strony"
+      class="mb-8"
+      headingTag="h2"
+    ></PageTitle>
 
-  <GenericForm
-    v-else
-    :fields="formConfiguration.fields"
-    :initialValues="[]"
-    :submitButton="{
-      ...formConfiguration.submitButton,
-      isLoading: isUpdatingPageConfiguration,
-    }"
-    :onSubmit="editPageConfiguration"
-    :formClass="formConfiguration.formClass"
-  />
+    <LoadingIcon v-if="isFetchingPageConfiguration" class="m-auto" />
+
+    <GenericForm
+      v-else
+      :fields="formConfiguration.fields"
+      :initialValues="[]"
+      :submitButton="{
+        ...formConfiguration.submitButton,
+        isLoading: isUpdatingPageConfiguration,
+      }"
+      :onSubmit="editPageConfiguration"
+      :formClass="formConfiguration.formClass"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">

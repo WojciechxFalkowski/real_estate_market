@@ -2,7 +2,7 @@
   <div class="container mx-auto">
     <div class="md:flex mt-4 lg:mt-16">
       <ul
-        class="flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 lg:me-8 mb-4 md:mb-0"
+        class="flex-column space-y space-y-4 text-sm font-medium md:me-4 lg:me-8 mb-4 md:mb-0"
       >
         <li v-for="link in links" :key="link.name">
           <RouterLink
@@ -15,7 +15,7 @@
             <component
               :is="link.icon"
               :isActive="isExactActive"
-              class="w-4 h-4 me-2 text-gray-500 dark:text-gray-400 group-hover:fill-white fill-gray-500"
+              class="w-4 h-4 me-2 dark:text-gray-400 group-hover:fill-white fill-gray-500"
               :class="{ 'fill-white': isExactActive }"
             />
 
@@ -25,7 +25,7 @@
       </ul>
 
       <div
-        class="text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full min-h-96"
+        class="text-medium dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full min-h-96"
       >
         <NuxtPage />
       </div>
@@ -43,6 +43,8 @@ import {
   FaqIcon,
   ContactIcon,
 } from "~/components/icons";
+
+import { homePageConfiguration } from "./cms/cms/homeConfiguration";
 definePageMeta({
   layout: "restricted",
 });

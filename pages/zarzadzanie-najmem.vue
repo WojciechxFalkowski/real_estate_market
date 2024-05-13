@@ -1,15 +1,15 @@
 <template>
-  <div class="flex justify-center mt-8 md:mt-16">
-    <h1 class="text-xl text-center border-b-2 border-orange pb-2">
-      {{ pageConfiguration?.title }}
-    </h1>
-  </div>
+  <PageTitle
+    :title="pageConfiguration?.title"
+    :description="pageConfiguration?.description"
+    class="mt-8 md:mt-16"
+  />
 
-  <div class="flex justify-center mt-2 mb-8 lg:mb-16">
+  <!-- <div class="flex justify-center mt-2 mb-8 lg:mb-16">
     <p class="text-sm">
       {{ pageConfiguration?.description }}
     </p>
-  </div>
+  </div> -->
 
   <div class="flex justify-center items-center mt-8 md:mt-16 mb-32">
     <div class="relative" ref="circleContainer">

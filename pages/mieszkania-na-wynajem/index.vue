@@ -1,11 +1,7 @@
 <template>
-  <div class="flex justify-center mt-8 md:mt-16">
-    <h1 class="text-xl text-center border-b-2 border-orange pb-2">
-      {{ pageConfiguration?.title }}
-    </h1>
-  </div>
+  <PageTitle :title="pageConfiguration?.title" class="mt-8 md:mt-16 mb-2" />
 
-  <div class="container m-auto mt-8">
+  <div class="container m-auto">
     <div class="grid grid-cols-12 gap-8">
       <div class="col-span-12 flex justify-center">
         <ul class="flex gap-8 overflow-x-auto pb-3" v-if="locations">
