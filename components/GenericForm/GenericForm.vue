@@ -99,7 +99,7 @@ const formData = reactive(
   fields.reduce((acc, field) => {
     acc[field.id] = field.initialValue ?? "";
     return acc;
-  }, {} as Record<string, string>)
+  }, {} as Record<string, string | number>)
 );
 
 const initialValues = computed(() => {

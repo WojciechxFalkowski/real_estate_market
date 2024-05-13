@@ -39,6 +39,8 @@ const {
   isLoadingLease,
 } = useLeaseManager();
 
+const { showToast } = useToast();
+
 const isFetchingLeases = ref(false);
 
 const leaseItemForms = ref<(() => Promise<boolean>)[]>([]);
@@ -65,30 +67,25 @@ const addItem = () => {
 };
 
 const updateItems = async () => {
-  // Wywołaj wszystkie funkcje walidacji
   const validationResults = await Promise.all(
     leaseItemForms.value.map((formSubmit) => formSubmit())
   );
 
-  // Sprawdź, czy wszystkie wyniki są prawidłowe
   const allValid = validationResults.every((result) => {
-    // console.log("result");
-    // console.log(result);
     return result === true;
   });
 
   if (allValid) {
-    console.log("Wszystkie formularze są poprawne.");
-    await updateLeaseItems(leaseItems.value); // Zaaktualizuj wszystkie elementy na serwerze
+    await updateLeaseItems(leaseItems.value);
   } else {
-    console.log("Niektóre formularze zawierają błędy.");
+    showToast("Niektóre formularze zawierają błędy.", false);
   }
 };
 
 const removeItem = (index: number) => {
   const id = leaseItems.value[index].id;
   if (id) {
-    removeLeaseItem(id); // Usuń element z serwera
+    removeLeaseItem(id);
   }
 };
 

@@ -102,33 +102,25 @@ export const useFlat = () => {
     const flatsData = ref()
     const flatData = ref<Flat | null>()
     const { call } = useCall()
-    const { getUserToken } = useAuth()
 
     const fetchFlat = async (url: string, isClient: boolean = false, isAuth: boolean = false) => {
         // const { data } = await useFetch<Flat[]>("/api/flats");
         const { data } = await call<Flat>({ endpoint: `/flats/${url}`, isAuth, isClient })
-        // const flat = data?.find(flat => flat.url === flatId)
         flatData.value = data
     }
 
     const fetchFlats = async ({ isClient, isAuth }: { isClient?: boolean, isAuth: boolean } = { isClient: false, isAuth: false }) => {
-        // const { data, pending } = await useFetch("/api/flats", {});
         const { data } = await call<Flat[]>({ endpoint: '/flats', isAuth, isClient })
         flatsData.value = data
     }
 
     const fetchActiveFlats = async ({ isClient, isAuth }: { isClient?: boolean, isAuth: boolean } = { isClient: false, isAuth: false }) => {
-        // const { data, pending } = await useFetch("/api/flats", {});
         const { data } = await call<Flat[]>({ endpoint: '/flats/active', isAuth, isClient })
         flatsData.value = data
     }
 
     const saveFlat = async (flatId: number, flatForm: Partial<SaveFlat>) => {
-        console.log('saveFlat')
-        console.log(flatForm)
         const { data } = await call<Flat[]>({ endpoint: `/flats/${flatId}`, method: 'PATCH', isClient: true, isAuth: true, body: JSON.stringify(flatForm) })
-        console.log('data')
-        console.log(data)
 
         return data
     }

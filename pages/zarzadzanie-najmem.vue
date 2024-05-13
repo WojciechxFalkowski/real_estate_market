@@ -1,13 +1,13 @@
 <template>
   <div class="flex justify-center mt-8 md:mt-16">
     <h1 class="text-xl text-center border-b-2 border-orange pb-2">
-      Jak Pracujemy?
+      {{ pageConfiguration?.title }}
     </h1>
   </div>
 
   <div class="flex justify-center mt-2 mb-8 lg:mb-16">
     <p class="text-sm">
-      Poznaj {{ apiSteps.length }} etapów zarządzania najmem
+      {{ pageConfiguration?.description }}
     </p>
   </div>
 
@@ -79,7 +79,9 @@ const activeStepIndex = ref(0);
 const intervalId = ref();
 const isMobile = ref(false);
 const { leaseItems, getAllActiveLease } = useLeaseManager();
+const { getPageConfiguration, pageConfiguration } = usePageConfiguration();
 await getAllActiveLease({ isAuth: false, isClient: false });
+await getPageConfiguration({ pageUrl: "/zarzadzanie-najmem" });
 
 onMounted(() => {
   checkMobile();

@@ -35,7 +35,7 @@ export const useLeaseManager = () => {
         leaseItems.value = data || [];
     };
 
-    const updateLeaseItems = async (items: LeaseItem[]) => {
+    const updateLeaseItems = async (leaseItems: LeaseItem[]) => {
         try {
             isLoadingLease.value = true
             const { data } = await call<{ message: string }>({
@@ -43,7 +43,7 @@ export const useLeaseManager = () => {
                 method: 'PUT',
                 isAuth: true,
                 isClient: true,
-                body: JSON.stringify(items)
+                body: JSON.stringify(leaseItems)
             });
 
             if (!data) {

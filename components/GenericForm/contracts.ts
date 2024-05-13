@@ -18,7 +18,7 @@ export enum TransactionType {
 
 export interface InitialFieldConfig {
     id: string;
-    initialValue: string;
+    initialValue: string | number;
 }
 
 export interface FieldConfig {
@@ -29,7 +29,7 @@ export interface FieldConfig {
     validation: yup.StringSchema<string | undefined>;
     class?: string
     options?: SelectOption[];
-    initialValue?: string
+    initialValue?: string | number
 }
 
 export type ExtendedButtonProps = ButtonPropsType & {
@@ -37,10 +37,13 @@ export type ExtendedButtonProps = ButtonPropsType & {
     class: string
 };
 
-export interface FormConfig {
+
+export interface GenericFormObject {
     fields: FieldConfig[];
     submitButton: ExtendedButtonProps;
-    onSubmit: (values: any) => void;
     formClass: string;
+}
+export interface FormConfig extends GenericFormObject {
     initialValues: InitialFieldConfig[]
+    onSubmit: (values: any) => void;
 }

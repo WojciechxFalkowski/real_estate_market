@@ -49,7 +49,7 @@
     </div>
 
     <div
-      @click="toggle"
+      @click="toggleAccordion"
       class="col-span-12 flex gap-5 items-center py-2 cursor-pointer transition-colors duration-200 bg-gray-50 mb-2 px-2.5"
     >
       <ArrowIcon
@@ -237,7 +237,7 @@ onUnmounted(() => {
 
 const isOpen = ref(false);
 
-const toggle = () => {
+const toggleAccordion = () => {
   isOpen.value = !isOpen.value;
 };
 
