@@ -23,3 +23,4 @@ export { default as PlusIcon } from './PlusIcon.vue';
 export { default as NewsletterIcon } from './NewsletterIcon.vue';
 export { default as FaqIcon } from './FaqIcon.vue';
 export { default as ArrowIcon } from './ArrowIcon.vue';
+export { default as ContactIcon } from './ContactIcon.vue';

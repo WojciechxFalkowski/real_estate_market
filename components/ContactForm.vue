@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center mb-8">
     <h1 class="text-xl text-center border-b-2 border-orange pb-2">
-      Skontaktuj się z nami
+      {{ pageConfiguration?.title }}
     </h1>
   </div>
 
@@ -105,6 +105,10 @@ import * as yup from "yup";
 import { useNuxtApp } from "#app";
 // import LoadingIcon from "@/components/icons/LoadingIcon.vue";
 import { Theme, ComponentType } from "@/components/Button/Button.props";
+
+const { getPageConfiguration, pageConfiguration } = usePageConfiguration();
+await getPageConfiguration();
+
 const initialValues = {
   email: "",
   phone: "",

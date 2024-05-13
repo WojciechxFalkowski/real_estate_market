@@ -79,9 +79,10 @@ const activeStepIndex = ref(0);
 const intervalId = ref();
 const isMobile = ref(false);
 const { leaseItems, getAllActiveLease } = useLeaseManager();
-const { getPageConfiguration, pageConfiguration } = usePageConfiguration();
 await getAllActiveLease({ isAuth: false, isClient: false });
-await getPageConfiguration({ pageUrl: "/zarzadzanie-najmem" });
+
+const { getPageConfiguration, pageConfiguration } = usePageConfiguration();
+await getPageConfiguration();
 
 onMounted(() => {
   checkMobile();

@@ -54,7 +54,7 @@ function confirmDelete() {
 }
 
 const goBack = () => {
-  router.replace({ name: "cms-mieszkania" });
+  router.replace({ name: "cms-mieszkania-na-wynajem" });
 };
 
 const deleteFlatHandler = async () => {

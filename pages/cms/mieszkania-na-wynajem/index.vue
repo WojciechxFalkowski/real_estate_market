@@ -1,8 +1,10 @@
 <template>
+  <PageConfiguration :formConfiguration="flatPageConfiguration" class="mb-16" />
+
   <div class="grid grid-cols-12 gap-4" name="list" tag="ul" key="abcx">
-    <div class="col-span-12">
+    <div class="col-span-12" v-if="!isLoadingFetchFlats">
       <router-link
-        :to="{ name: 'cms-mieszkania-id', params: { id: NEW_FLAT_ROUTE } }"
+        :to="{ name: 'cms-mieszkania-na-wynajem-id', params: { id: NEW_FLAT_ROUTE } }"
         class="p-4 bg-gray-700 hover:bg-gray-600 text-white flex justify-center items-center rounded"
         aria-label="Dodaj nowe mieszkanie"
       >
@@ -24,7 +26,7 @@
         :key="flat.id"
         :flatDetails="flat.flatDetails"
         :isDetailsVisible="false"
-        :routerName="'cms-mieszkania-id'"
+        :routerName="'cms-mieszkania-na-wynajem-id'"
         class="col-span-12 md:col-span-6 xl:col-span-4"
       />
     </slot>
@@ -35,6 +37,7 @@
 const { fetchFlats, flatsModel } = useFlat();
 import { NEW_FLAT_ROUTE } from "~/components/EditFlatForm/config";
 import { PlusIcon, LoadingIcon } from "~/components/icons";
+import { flatPageConfiguration } from "./flatConfiguration";
 
 const isLoadingFetchFlats = ref(false);
 

@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center mt-8 md:mt-16">
     <h1 class="text-xl text-center border-b-2 border-orange pb-2">
-      Mieszkania na wynajem
+      {{ pageConfiguration?.title }}
     </h1>
   </div>
 
@@ -50,6 +50,9 @@
 </template>
 
 <script setup lang="ts">
+const { getPageConfiguration, pageConfiguration } = usePageConfiguration();
+await getPageConfiguration();
+
 const { fetchActiveFlats, flatsModel } = useFlat();
 await fetchActiveFlats();
 const ALL = "wszystkie";

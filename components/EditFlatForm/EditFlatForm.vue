@@ -166,7 +166,7 @@ const router = useRouter();
 
 const navigateToNewFlatPage = async (newFlatUrl: string) => {
   router.push({
-    name: "cms-mieszkania-id",
+    name: "cms-mieszkania-na-wynajem-id",
     params: { id: newFlatUrl },
   });
   await fetchFlat(newFlatUrl, true);

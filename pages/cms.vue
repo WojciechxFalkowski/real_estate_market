@@ -41,6 +41,7 @@ import {
   HomeBoldIcon,
   NewsletterIcon,
   FaqIcon,
+  ContactIcon,
 } from "~/components/icons";
 definePageMeta({
   layout: "restricted",
@@ -53,7 +54,12 @@ const links = [
     name: "Home",
   },
   {
-    to: { name: "cms-mieszkania" },
+    to: { name: "cms-zarzadzanie-najmem" },
+    icon: FaqIcon,
+    name: "Zarządzanie najmem",
+  },
+  {
+    to: { name: "cms-mieszkania-na-wynajem" },
     icon: SquaresIcon,
     name: "Mieszkania",
   },
@@ -73,9 +79,9 @@ const links = [
     name: "FAQ",
   },
   {
-    to: { name: "cms-zarzadzanie-najmem" },
-    icon: FaqIcon,
-    name: "Zarzadzanie najmem",
+    to: { name: "cms-kontakt" },
+    icon: ContactIcon,
+    name: "Kontakt",
   },
 ];
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center mt-8 lg:mt-16">
     <h1 class="text-xl text-center border-b-2 border-orange pb-2">
-      Najczęściej zadawane pytania
+      {{ pageConfiguration?.title }}
     </h1>
   </div>
 
@@ -14,4 +14,7 @@
 const { getActiveFaq, faqCollection } = useFaq();
 
 await getActiveFaq();
+
+const { getPageConfiguration, pageConfiguration } = usePageConfiguration();
+await getPageConfiguration();
 </script>
