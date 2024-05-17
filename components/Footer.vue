@@ -25,7 +25,9 @@
       <RouterLink class="hover:underline" to="/">
         wellrent-nieruchomosci.pl
       </RouterLink>
+
       <span class="hidden sm:inline mx-1">|</span>
+
       <span class="block sm:inline">Wszelkie Prawa Zastrzeżone.</span>
     </p>
   </footer>
