@@ -6,10 +6,18 @@
     :animation="true"
   /> -->
   <!-- <div class="container m-auto"> -->
-  <HeroCarousel :pictures="pictures"  :autoplay="2000"/>
+  <HeroCarousel :pictures="pictures" :autoplay="2000" />
 
-  <div class="container mx-auto mt-4 lg:mt-16">
-    <AboutUs />
+  <div v-if="teamMembers.length" class="container mx-auto mt-4 lg:mt-16">
+    <PageTitle :title="pageConfiguration?.title" class="mb-8 lg:mb-16" />
+
+    <AboutUs
+      class="mt-8"
+      v-for="(teamMember, index) of teamMembers"
+      :teamMember="teamMember"
+      :key="index"
+      :isReversed="index % 2 === 1"
+    />
   </div>
 
   <div class="container m-auto my-16">
@@ -26,7 +34,6 @@
 </template>
 
 <script setup>
-
 // import Carousel from "@/components/Carousel.vue";
 // import Carousel2 from "@/components/Carousel2.vue";
 const pictures = [
@@ -73,4 +80,10 @@ const pictures = [
     alt: "Image 4",
   },
 ];
+
+const { teamMembers, getTeamMembers } = useTeamMember();
+await getTeamMembers();
+
+const { getPageConfiguration, pageConfiguration } = usePageConfiguration();
+await getPageConfiguration();
 </script>

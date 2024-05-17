@@ -8,7 +8,8 @@ interface SelectOption {
 
 export enum FieldType {
     select = 'select',
-    input = 'input'
+    input = 'input',
+    textarea = 'textarea'
 }
 
 export enum TransactionType {
@@ -27,7 +28,8 @@ export interface FieldConfig {
     type: string;
     as: FieldType;
     validation: yup.StringSchema<string | undefined>;
-    class?: string
+    class?: string;
+    inputClass?: string;
     options?: SelectOption[];
     initialValue?: string | number
 }

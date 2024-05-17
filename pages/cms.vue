@@ -44,7 +44,6 @@ import {
   ContactIcon,
 } from "~/components/icons";
 
-import { homePageConfiguration } from "./cms/cms/homeConfiguration";
 definePageMeta({
   layout: "restricted",
 });

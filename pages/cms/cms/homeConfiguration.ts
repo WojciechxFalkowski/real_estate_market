@@ -25,3 +25,8 @@ export const homePageConfiguration: GenericFormObject = {
         }
     ],
 };
+
+export const NEW_TEAM_MEMBER_ROUTE = 'new'
+export const TEAM_MEMBER_ROUTE = 'cms-zespol-id'
+export const TEAM_MEMBERS_ROUTE = 'cms-zespol'
+export const HOME_ROUTE = 'cms'
