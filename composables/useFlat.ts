@@ -191,7 +191,6 @@ export const useFlat = () => {
                 alt: '',
                 srcset: image.url,
                 imageId: image.imageId,
-                isSaved: Boolean(image.imageId)
             }
         })
     }
@@ -211,7 +210,7 @@ export const useFlat = () => {
         const formData = new FormData();
 
         images.forEach((image) => {
-            if (image.file && !image.isSaved) {
+            if (image.file && !image.publicId) {
                 formData.append(`files`, image.file);
             }
         });
@@ -219,17 +218,10 @@ export const useFlat = () => {
         const { data } = await call<{ message: string, images: FlatImageResponse[] }>(
             { endpoint: `/flats/${flatId}/images`, method: 'POST', isClient: true, contentType: ContentType["multipart/form-data"], isAuth: true, body: formData })
 
-        images.forEach((image) => {
-            image.isSaved = true
-        });
-
         return data
     }
 
     const changeImagesOrder = async (flatId: number, elements: { publicId: string, orderId: number }[]) => {
-        console.log("changeImagesOrder");
-        console.log(flatId);
-        console.log(elements);
         const { data } = await call<{ message: string }>(
             { endpoint: `/flats/${flatId}/images/order`, method: 'PUT', isClient: true, isAuth: true, body: JSON.stringify({ flatId, elements }) })
         return data

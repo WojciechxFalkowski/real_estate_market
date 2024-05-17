@@ -6,7 +6,6 @@ export interface ImageUploaderI extends FileImage {
     id: number;
     newId: number | null;
     publicId: string | null;
-    isSaved: boolean;
 }
 export interface NewOrderI {
     publicId: string;

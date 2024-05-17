@@ -35,8 +35,8 @@
       <ImageUploader
         :images="currentImages"
         :isLoading="isLoadingUploadImages"
-        :flatId="flatId"
         @submit="handleUploadImages"
+        @addImage="addImage"
         :changeImagesOrder="handleChangeImagesOrder"
         :removeImage="removeImage"
       />
@@ -112,7 +112,6 @@ const mapImages = (images: PictureItem[]): ImageUploaderI[] => {
       id: index,
       publicId: image.imageId || null,
       newId: null,
-      isSaved: true,
     };
   });
 
@@ -148,6 +147,20 @@ const handleChangeImagesOrder = async (newOrder: NewOrderI[]) => {
   const data = await changeImagesOrder(flatId.value, newOrder);
 
   return data;
+};
+
+const addImage = (image: ImageUploaderI) => {
+  if (!currentImages.value) {
+    return;
+  }
+
+  currentImages.value.push({
+    id: image.id,
+    publicId: null,
+    newId: null,
+    src: image.src,
+    file: image.file,
+  });
 };
 
 // const mappedFields = computed(() => {
@@ -204,18 +217,21 @@ const createNewFlatHandler = async (formData: SaveFlat) => {
   }
 };
 
-const removeImage = async (index: number): Promise<unknown> => {
+const removeImage = async (imageId: number): Promise<unknown> => {
   if (!flatModel.value || !flatModel.value.images) {
     return;
   }
 
-  const imageToDelete = currentImages.value[index];
+  const imageIndexToDelete = currentImages.value.findIndex(
+    (currentImage) => currentImage.id === imageId
+  );
+  const imageToDelete = currentImages.value[imageIndexToDelete];
   const publicId = imageToDelete.publicId;
 
   if (publicId) {
     try {
       const data = await deleteUploadedImage(flatModel.value.id, publicId);
-      currentImages.value.splice(index, 1);
+      currentImages.value.splice(imageIndexToDelete, 1);
       if (!data) {
         return;
       }
@@ -227,8 +243,7 @@ const removeImage = async (index: number): Promise<unknown> => {
       }
     }
   } else {
-    console.log("Nie ma zdjęcia w bazie danych tylko lokalnie!");
-    currentImages.value.splice(index, 1);
+    currentImages.value.splice(imageIndexToDelete, 1);
   }
 };
 

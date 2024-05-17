@@ -83,19 +83,17 @@ const props = defineProps({
     type: Function as PropType<(index: number) => Promise<unknown>>,
     required: true,
   },
-  flatId: {
-    type: Number as PropType<number | undefined>,
-  },
   changeImagesOrder: {
     type: Function as PropType<
-      (newOrder: NewOrderI[]) => Promise<{ message: string }>
+      (newOrder: NewOrderI[]) => Promise<{ message: string } | null | undefined>
     >,
     required: true,
   },
 });
 
 const emit = defineEmits<{
-  submit: [];
+  (event: "submit"): void;
+  (event: "addImage", image: ImageUploaderI): void;
 }>();
 
 const images = computed(() => {
@@ -111,7 +109,7 @@ const isDisableAddFiles = computed(() => {
 });
 
 const isChangeOrderAvailable = computed(() => {
-  return props.images.every((image) => image.isSaved);
+  return props.images.every((image) => image.publicId);
 });
 
 const newIndexNextValue = ref(0);
@@ -122,12 +120,11 @@ function handleFiles(event: Event) {
     for (const file of target.files) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        images.value.push({
+        emit("addImage", {
           src: e.target!.result as string,
           file,
           id: images.value.length,
           newId: null,
-          isSaved: false,
           publicId: null,
         });
       };
@@ -194,10 +191,6 @@ watch(newIndexNextValue, async () => {
         orderId: image.id,
       };
     });
-
-    if (!props.flatId) {
-      return;
-    }
 
     try {
       const data = await props.changeImagesOrder(newOrder);

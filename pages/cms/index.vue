@@ -1,6 +1,8 @@
 <template>
   <PageConfiguration :formConfiguration="homePageConfiguration" />
 
+  <ManageHomeCarousel />
+
   <PageTitle title="Konfiguracja zespołu" headingTag="h2" class="mt-16 mb-8" />
 
   <router-link

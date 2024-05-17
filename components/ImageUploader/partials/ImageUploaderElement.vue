@@ -19,7 +19,7 @@
     </div>
 
     <div
-      v-if="!image.isSaved"
+      v-if="!image.publicId"
       class="bg-white w-full h-6 absolute bottom-0 left-0 opacity-70 text-center"
     >
       Do dodania
@@ -77,11 +77,11 @@ const emit = defineEmits<{
 
 const isRemovingImage = ref(false);
 
-const removeImageHandler = async (index: number) => {
+const removeImageHandler = async (id: number) => {
   try {
     isRemovingImage.value = true;
 
-    await props.removeImage(index);
+    await props.removeImage(id);
   } catch (error) {
     console.log(error);
   } finally {

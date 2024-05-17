@@ -36,7 +36,6 @@ export interface UpdateTeamMemberResponse extends CreateTeamMemberResponse {
 export interface ImageI {
     src: string;
     file: any;
-    isSaved: boolean;
     publicId: any;
 }
 

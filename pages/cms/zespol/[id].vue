@@ -145,7 +145,6 @@ const updateImage = () => {
     image.value = {
       src: teamMember.value?.image.url,
       file: null,
-      isSaved: true,
       publicId: teamMember.value.id,
     };
   }
@@ -243,7 +242,6 @@ function handleFiles(event: Event) {
         image.value = {
           src: e.target!.result as string,
           file,
-          isSaved: false,
           publicId: null,
         };
       };
