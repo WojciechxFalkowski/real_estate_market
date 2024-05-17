@@ -68,7 +68,7 @@
 
 <script setup lang="ts">
 import { ref, type PropType } from "vue";
-import type { ImageUploaderI } from "./contracts";
+import type { ImageUploaderI, NewOrderI } from "./contracts";
 import ImageUploaderElement from "./partials/ImageUploaderElement.vue";
 const props = defineProps({
   images: {
@@ -86,13 +86,17 @@ const props = defineProps({
   flatId: {
     type: Number as PropType<number | undefined>,
   },
+  changeImagesOrder: {
+    type: Function as PropType<
+      (newOrder: NewOrderI[]) => Promise<{ message: string }>
+    >,
+    required: true,
+  },
 });
 
 const emit = defineEmits<{
   submit: [];
 }>();
-
-const { changeImagesOrder } = useFlat();
 
 const images = computed(() => {
   return props.images;
@@ -191,22 +195,18 @@ watch(newIndexNextValue, async () => {
       };
     });
 
-    // await new Promise((resolve) => {
-    //   setTimeout(() => {
-    //     console.log("call");
-    //     resolve("");
-    //   }, 2000);
-    // });
     if (!props.flatId) {
       return;
     }
+
     try {
-      const data = await changeImagesOrder(props.flatId, newOrder);
+      const data = await props.changeImagesOrder(newOrder);
       images.value.sort((imageA, imageB) => imageA.id - imageB.id);
 
       if (!data || !data.message) {
         return;
       }
+
       showToast(data?.message);
     } catch (error) {
       console.log(error);

@@ -24,14 +24,6 @@
         :isLoading="isChangingStatusOfFlat"
       />
 
-      <!-- <Button
-        class="col-span-12 lg:col-span-3"
-        :componentType="ComponentType.Button"
-        :theme="Theme.Danger"
-        :isLoading="isLoading"
-      >
-        Usuń mieszkanie
-      </Button> -->
       <div class="col-span-12 lg:col-span-3">
         <DeleteFlatButton :flatUrl="flatModel?.url" />
       </div>
@@ -40,12 +32,12 @@
     <div class="h-0.5 bg-gray-300 my-16"></div>
 
     <div clas="my-8">
-      <!-- :newImages="newImages" -->
       <ImageUploader
         :images="currentImages"
         :isLoading="isLoadingUploadImages"
         :flatId="flatId"
         @submit="handleUploadImages"
+        :changeImagesOrder="handleChangeImagesOrder"
         :removeImage="removeImage"
       />
     </div>
@@ -67,7 +59,7 @@ import { editTableFormConfiguration } from "./config";
 import ImageUploader from "~/components/ImageUploader/ImageUploader.vue";
 import type { SaveFlat } from "~/composables/useFlat";
 import { NEW_FLAT_ROUTE } from "~/components/EditFlatForm/config";
-import type { ImageUploaderI } from "../ImageUploader/contracts";
+import type { ImageUploaderI, NewOrderI } from "../ImageUploader/contracts";
 import type { PictureItem } from "../Carousel";
 import { Theme, ComponentType } from "@/components/Button/Button.props";
 
@@ -81,10 +73,13 @@ const {
   createNewFlat,
   uploadImages,
   deleteUploadedImage,
+  changeImagesOrder,
 } = useFlat();
+
 const isLoading = ref(false);
 const isLoadingUploadImages = ref(false);
 const flatId = ref<number | undefined>(undefined);
+
 onMounted(() => {
   if (isNewFlatRoute.value || typeof routeId !== "string") {
     return;
@@ -144,6 +139,16 @@ const initialValues = computed(() => {
     return { id: field.id, initialValue: flatModalValue };
   });
 });
+
+const handleChangeImagesOrder = async (newOrder: NewOrderI[]) => {
+  if (!flatId.value) {
+    return;
+  }
+
+  const data = await changeImagesOrder(flatId.value, newOrder);
+
+  return data;
+};
 
 // const mappedFields = computed(() => {
 //   return editTableFormConfiguration.fields.map((field, index) => {

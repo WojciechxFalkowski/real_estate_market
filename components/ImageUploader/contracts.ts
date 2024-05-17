@@ -8,3 +8,7 @@ export interface ImageUploaderI extends FileImage {
     publicId: string | null;
     isSaved: boolean;
 }
+export interface NewOrderI {
+    publicId: string;
+    orderId: number
+}
