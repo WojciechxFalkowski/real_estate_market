@@ -86,4 +86,18 @@ await getTeamMembers();
 
 const { getPageConfiguration, pageConfiguration } = usePageConfiguration();
 await getPageConfiguration();
+
+useHead({
+  title: "wellrent-nieruchomosci.pl | Mieszkania na wynajem Warszawa",
+  meta: [
+    {
+      property: "og:title",
+      content: "wellrent-nieruchomosci.pl | Mieszkania na wynajem Warszawa",
+    },
+    {
+      property: "robots",
+      content: "index, follow",
+    },
+  ],
+});
 </script>

@@ -4,6 +4,8 @@
   </div>
 
   <div v-else class="icon-manager space-y-4">
+    <PageTitle title="Konfiguracja etapów" headingTag="h2" class="mt-16 mb-8" />
+    
     <div v-for="(item, index) in leaseItems" :key="item.id" class="mb-2">
       <LeaseItem
         :item="item"

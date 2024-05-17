@@ -31,6 +31,38 @@ const route = useRoute();
 const id = route.params.id;
 const { fetchFlat, flatModel } = useFlat();
 await fetchFlat(id);
+
+const mainImage = flatModel.value?.images ? flatModel.value?.images[0] : null;
+useHead({
+  title: flatModel.value?.title ?? "",
+  meta: [
+    {
+      property: "og:title",
+      content:
+        `${flatModel.value?.title} ${flatModel.value?.description}` ?? "",
+    },
+    {
+      property: "og:description",
+      content: flatModel.value?.description ?? "",
+    },
+    {
+      property: "robots",
+      content: "index, follow",
+    },
+    {
+      property: "og:image",
+      content: mainImage ? mainImage.src : "",
+    },
+    {
+      property: "og:image:secure_url",
+      content: mainImage ? mainImage.src : "",
+    },
+    {
+      property: "og:url",
+      content: route.fullPath,
+    },
+  ],
+});
 </script>
 
 <style lang="scss">

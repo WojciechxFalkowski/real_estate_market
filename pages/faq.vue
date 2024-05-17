@@ -13,4 +13,18 @@ await getActiveFaq();
 
 const { getPageConfiguration, pageConfiguration } = usePageConfiguration();
 await getPageConfiguration();
+
+useHead({
+  title: pageConfiguration.value?.title?.toString() ?? "",
+  meta: [
+    {
+      property: "og:title",
+      content: pageConfiguration.value?.title?.toString() ?? "",
+    },
+    {
+      property: "robots",
+      content: "index, follow",
+    },
+  ],
+});
 </script>

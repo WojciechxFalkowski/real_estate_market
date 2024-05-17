@@ -11,7 +11,6 @@
 </template>
 
 <script setup lang="ts">
-
 type MenuItem = {
   name: string;
   href: string;
@@ -25,7 +24,7 @@ const props = defineProps<{
 <style>
 .link-underline {
   position: relative;
-  display: inline-block;
+  display: block;
   color: #4b5563; /* Tailwind's gray-600 */
   overflow: hidden;
 }
@@ -40,7 +39,7 @@ const props = defineProps<{
   transform-origin: center;
   width: 100%;
   height: 2px;
-  background-color: #FFC444; /* Tailwind's gray-600 */
+  background-color: #ffc444; /* Tailwind's gray-600 */
   transition: transform 0.3s ease;
 }
 

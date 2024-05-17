@@ -71,17 +71,6 @@
         </div>
       </div>
 
-      <!-- <button
-        type="submit"
-        class="bg-orange text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        :disabled="isSubmitting"
-      >
-        <span v-if="!isLoading">Wyślij</span>
-        <span v-if="isLoading" class="--loading-icon">
-          <LoadingIcon name="loading" :class="{ '--loading': isLoading }" />
-        </span>
-      </button> -->
-
       <Button
         class="block m-auto"
         type="submit"
@@ -98,12 +87,16 @@
 <script setup lang="ts">
 import { useForm, useField, Field, Form } from "vee-validate";
 import * as yup from "yup";
-import { useNuxtApp } from "#app";
 // import LoadingIcon from "@/components/icons/LoadingIcon.vue";
 import { Theme, ComponentType } from "@/components/Button/Button.props";
+import type { PropType } from "vue";
 
-const { getPageConfiguration, pageConfiguration } = usePageConfiguration();
-await getPageConfiguration();
+const props = defineProps({
+  pageConfiguration: {
+    type: Object as PropType<PageConfiguration | null | undefined>,
+    required: true,
+  },
+});
 
 const initialValues = {
   email: "",

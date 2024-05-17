@@ -1,10 +1,15 @@
 <template>
-  <PageConfiguration :formConfiguration="flatPageConfiguration" class="mb-16" />
+  <PageConfiguration :formConfiguration="flatPageConfiguration" />
 
   <div class="grid grid-cols-12 gap-4" name="list" tag="ul" key="abcx">
+    <PageTitle title="Konfiguracja mieszkań" headingTag="h2" class="col-span-12 mt-16 mb-8" />
+
     <div class="col-span-12" v-if="!isLoadingFetchFlats">
       <router-link
-        :to="{ name: 'cms-mieszkania-na-wynajem-id', params: { id: NEW_FLAT_ROUTE } }"
+        :to="{
+          name: 'cms-mieszkania-na-wynajem-id',
+          params: { id: NEW_FLAT_ROUTE },
+        }"
         class="p-4 bg-gray-700 hover:bg-gray-600 text-white flex justify-center items-center rounded"
         aria-label="Dodaj nowe mieszkanie"
       >

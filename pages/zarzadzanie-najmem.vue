@@ -74,6 +74,24 @@ await getAllActiveLease({ isAuth: false, isClient: false });
 const { getPageConfiguration, pageConfiguration } = usePageConfiguration();
 await getPageConfiguration();
 
+useHead({
+  title: pageConfiguration.value?.title?.toString() ?? "",
+  meta: [
+    {
+      property: "og:title",
+      content: pageConfiguration.value?.title?.toString() ?? "",
+    },
+    {
+      property: "og:description",
+      content: pageConfiguration.value?.description?.toString() ?? "",
+    },
+    {
+      property: "robots",
+      content: "index, follow",
+    },
+  ],
+});
+
 onMounted(() => {
   checkMobile();
 });

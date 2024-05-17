@@ -9,18 +9,20 @@
         :class="{ 'order-1': isReversed }"
       />
 
-      <div class="md:flex-1">
-        <h3 class="text-sm text-gray-500 uppercase mt-4">
-          {{ teamMember.teamName }}
-        </h3>
-        <h2 class="text-xl font-semibold my-1 lg:my-2 uppercase">
+      <div class="flex flex-col md:flex-1">
+        <h2 class="text-xl font-semibold my-1 lg:my-2 uppercase order-1">
           {{ teamMemberName }}
         </h2>
-        <h4 class="text-sm text-gray-500 mb-4">
+
+        <h3 class="text-sm text-gray-500 mb-4 order-1">
           {{ teamMember.specialization }}
+        </h3>
+
+        <h4 class="text-sm text-gray-500 uppercase mt-4">
+          {{ teamMember.teamName }}
         </h4>
 
-        <p class="text-sm leading-7">
+        <p class="text-sm leading-7 order-1">
           {{ teamMember.biography }}
         </p>
       </div>

@@ -1,10 +1,10 @@
 <template>
   <div class="bg-white">
-    <div class="flex justify-center mb-8">
-      <h1 class="text-xl text-center border-b-2 border-orange pt-4 pb-2">
-        Konfiguracja skrzynki e-mail
-      </h1>
-    </div>
+    <PageTitle
+      title="Konfiguracja skrzynki e-mail"
+      headingTag="h1"
+      class="mb-8"
+    />
 
     <div class="flex justify-center items-center">
       <Form

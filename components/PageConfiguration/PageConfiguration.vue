@@ -1,7 +1,7 @@
 <template>
   <div>
     <PageTitle
-      title="Konfiguracja Strony"
+      title="Konfiguracja strony"
       class="mb-8"
       headingTag="h2"
     ></PageTitle>

@@ -1,7 +1,7 @@
 <template>
   <PageConfiguration :formConfiguration="homePageConfiguration" />
 
-  <PageTitle title="Zespół" headingTag="h2" class="mt-16 mb-8" />
+  <PageTitle title="Konfiguracja zespołu" headingTag="h2" class="mt-16 mb-8" />
 
   <router-link
     :to="{

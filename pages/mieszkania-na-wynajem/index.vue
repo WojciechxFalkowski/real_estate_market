@@ -42,12 +42,25 @@
   <div class="container m-auto mt-32 my-16">
     <Newsletter />
   </div>
-  <!-- <pre>{{ data }}</pre> -->
 </template>
 
 <script setup lang="ts">
 const { getPageConfiguration, pageConfiguration } = usePageConfiguration();
 await getPageConfiguration();
+
+useHead({
+  title: pageConfiguration.value?.title?.toString() ?? "",
+  meta: [
+    {
+      property: "og:title",
+      content: pageConfiguration.value?.title?.toString() ?? "",
+    },
+    {
+      property: "robots",
+      content: "index, follow",
+    },
+  ],
+});
 
 const { fetchActiveFlats, flatsModel } = useFlat();
 await fetchActiveFlats();
