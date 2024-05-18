@@ -18,12 +18,12 @@ useHead({
   title: pageConfiguration.value?.title?.toString() ?? "",
   meta: [
     {
-      property: "og:title",
+      name: "description",
       content: pageConfiguration.value?.title?.toString() ?? "",
     },
     {
-      property: "robots",
-      content: "index, follow",
+      property: "og:title",
+      content: pageConfiguration.value?.title?.toString() ?? "",
     },
   ],
 });
