@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center space-y-2">
-    <span class="text-sm uppercase tracking-widest text-gray-400"
+    <span class="text-sm uppercase tracking-widest text-gray-500"
       >Zapisz się do newslettera</span
     >
     <h2 class="text-2xl font-light uppercase tracking-wide text-gray-800">

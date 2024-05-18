@@ -10,7 +10,7 @@
               :to="{ query: { location } }"
               class="capitalize"
               :class="{
-                'text-orange': location === activeLocation,
+                'text-black': location === activeLocation,
                 'text-gray-500': location !== activeLocation,
               }"
             >
@@ -52,12 +52,12 @@ useHead({
   title: pageConfiguration.value?.title?.toString() ?? "",
   meta: [
     {
-      property: "og:title",
-      content: pageConfiguration.value?.title?.toString() ?? "",
+      name: "description",
+      content: "Mieszkania na wynajem",
     },
     {
-      property: "robots",
-      content: "index, follow",
+      property: "og:title",
+      content: pageConfiguration.value?.title?.toString() ?? "",
     },
   ],
 });
