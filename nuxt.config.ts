@@ -4,6 +4,10 @@ export default defineNuxtConfig({
 		'@nuxtjs/tailwindcss',
 		'@vee-validate/nuxt',
 		'@pinia/nuxt',
+		// https://nuxtseo.com/sitemap/getting-started/installation
+		'@nuxtjs/sitemap',
+		// https://nuxtseo.com/robots/getting-started/features
+		'nuxt-simple-robots'
 	],
 	devtools: { enabled: true },
 	css: ['~/assets/css/main.css'],
@@ -20,4 +24,17 @@ export default defineNuxtConfig({
 			extensions: ['.vue']
 		},
 	],
+	site: {
+		indexable: true,
+		url: 'https://wellrent-nieruchomosci.pl',
+	},
+	sitemap: {
+		exclude: ['/cms/**', '/logowanie/**', '/rejestracja/**'],
+	},
+	robots: {
+		allow: ['', '/zarzadzanie-najmem', '/mieszkania-na-wynajem', '/faq', '/kontakt'],
+		disallow: ['/cms', '/logowanie', '/rejestracja'],
+		enabled: true,
+		sitemap: 'https://wellrent-nieruchomosci.pl/sitemap.xml'
+	},
 })
