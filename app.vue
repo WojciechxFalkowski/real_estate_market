@@ -5,11 +5,11 @@
 </template>
 
 <script setup lang="ts">
+const route = useRoute();
+
 useHead({
   titleTemplate: (titleChunk) => {
-    return titleChunk
-      ? `${titleChunk} | Well Rent`
-      : "Well Rent";
+    return titleChunk ? `${titleChunk} | Well Rent` : "Well Rent";
   },
   // titleTemplate: (titleChunk) => {
   //   return titleChunk
@@ -26,12 +26,28 @@ useHead({
       content: "website",
     },
     {
+      property: "og:site_name",
+      content: "http://wellrent-nieruchomosci.pl",
+    },
+    {
+      name: "og:site_name",
+      content: "http://wellrent-nieruchomosci.pl",
+    },
+    {
       property: "lang",
       content: "pl",
     },
+    {
+      name: "og:url",
+      content: route.fullPath,
+    },
+    {
+      property: "og:url",
+      content: route.fullPath,
+    },
   ],
   htmlAttrs: {
-    lang: "pl_PL",
+    lang: "pl",
   },
 });
 </script>

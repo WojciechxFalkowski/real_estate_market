@@ -2,7 +2,7 @@
   <footer>
     <div class="sm:flex sm:items-center sm:justify-between">
       <div class="mb-6 md:mb-0 flex justify-center">
-        <WellRentLogo />
+        <WellRentLogo/>
       </div>
       <ul
         class="flex flex-wrap items-center mb-6 text-sm sm:mb-0 mt-3 font-medium sm:mt-0 flex flex-wrap mb-6 text-sm sm:mb-0 justify-between"

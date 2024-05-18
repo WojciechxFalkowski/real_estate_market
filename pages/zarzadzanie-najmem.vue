@@ -78,17 +78,17 @@ useHead({
   title: pageConfiguration.value?.title?.toString() ?? "",
   meta: [
     {
+      name: "description",
+      content: pageConfiguration.value?.description?.toString() ?? "",
+    },
+    {
       property: "og:title",
       content: pageConfiguration.value?.title?.toString() ?? "",
     },
     {
       property: "og:description",
       content: pageConfiguration.value?.description?.toString() ?? "",
-    },
-    {
-      property: "robots",
-      content: "index, follow",
-    },
+    }
   ],
 });
 

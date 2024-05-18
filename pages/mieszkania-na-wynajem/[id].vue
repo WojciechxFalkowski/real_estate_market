@@ -33,21 +33,25 @@ const { fetchFlat, flatModel } = useFlat();
 await fetchFlat(id);
 
 const mainImage = flatModel.value?.images ? flatModel.value?.images[0] : null;
+const metaDescription =
+  flatModel.value?.title && flatModel.value?.description
+    ? `${flatModel.value?.title} ${flatModel.value?.description}`
+    : "Mieszkanie na wynajem";
+
 useHead({
   title: flatModel.value?.title ?? "",
   meta: [
     {
+      name: "description",
+      content: metaDescription,
+    },
+    {
       property: "og:title",
-      content:
-        `${flatModel.value?.title} ${flatModel.value?.description}` ?? "",
+      content: metaDescription,
     },
     {
       property: "og:description",
       content: flatModel.value?.description ?? "",
-    },
-    {
-      property: "robots",
-      content: "index, follow",
     },
     {
       property: "og:image",
@@ -56,10 +60,6 @@ useHead({
     {
       property: "og:image:secure_url",
       content: mainImage ? mainImage.src : "",
-    },
-    {
-      property: "og:url",
-      content: route.fullPath,
     },
   ],
 });
