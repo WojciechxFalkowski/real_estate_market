@@ -7,7 +7,9 @@ export default defineNuxtConfig({
 		// https://nuxtseo.com/sitemap/getting-started/installation
 		'@nuxtjs/sitemap',
 		// https://nuxtseo.com/robots/getting-started/features
-		'nuxt-simple-robots'
+		'nuxt-simple-robots',
+		// https://image.nuxt.com/get-started/installation
+		'@nuxt/image',
 	],
 	devtools: { enabled: true },
 	css: ['~/assets/css/main.css'],

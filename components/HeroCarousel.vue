@@ -3,7 +3,7 @@
     <Slide v-for="(picture, index) in pictures" :key="index">
       <div class="overflow-hidden relative h-64 sm:h-96 lg:h-600 w-full">
         <div class="absolute inset-0 -translate-y-0">
-          <img
+          <NuxtImg
             :alt="picture.alt"
             :src="picture.src"
             :srcset="picture.srcset"
@@ -11,6 +11,7 @@
             class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
             author="wellrent-nieruchomosci.pl"
             :caption="picture.alt"
+            :loading="index === 0 ? 'eager' : 'lazy'"
           />
         </div>
       </div>

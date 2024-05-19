@@ -1,12 +1,13 @@
 <template>
   <AnimatedVisibility :isMobileImediate="true">
     <div class="md:flex md:items-center md:gap-6">
-      <img
+      <NuxtImg
         v-if="teamMember.image.url"
         :src="teamMember.image.url"
         alt="Profile Image"
         class="w-full md:w-1/3 md:max-w-xs shadow-md"
         :class="{ 'order-1': isReversed }"
+        loading="lazy"
       />
 
       <div class="flex flex-col md:flex-1">

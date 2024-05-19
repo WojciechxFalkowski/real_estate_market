@@ -6,7 +6,9 @@
     :animation="true"
   /> -->
   <!-- <div class="container m-auto"> -->
-  <HeroCarousel :pictures="homeCarouselImages" :autoplay="2000" />
+  <div v-if="teamMembers.length" class="2xl:container md:mx-auto md:mt-4">
+    <HeroCarousel :pictures="homeCarouselImages" :autoplay="2000" />
+  </div>
 
   <div v-if="teamMembers.length" class="container mx-auto mt-4 lg:mt-16">
     <PageTitle :title="pageConfiguration?.title" class="mb-8 lg:mb-16" />
