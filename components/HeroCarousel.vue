@@ -12,6 +12,7 @@
             author="wellrent-nieruchomosci.pl"
             :caption="picture.alt"
             :loading="index === 0 ? 'eager' : 'lazy'"
+            :fetchpriority="index === 0 ? 'high' : 'low'"
           />
         </div>
       </div>

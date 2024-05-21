@@ -80,6 +80,7 @@
 </template>
 
 <script setup lang="ts">
+//https://digitalpatio.hashnode.dev/build-better-forms-with-vuejs-3-composition-api-a-practical-guide
 import { reactive } from "vue";
 import * as yup from "yup";
 import type { FormConfig } from "./contracts";
