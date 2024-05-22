@@ -10,7 +10,8 @@ export interface CallConfig {
     isClient?: boolean
     method?: string
     body?: string | undefined | FormData
-    contentType?: ContentType
+    contentType?: ContentType | null
+    requestOptions?: any
 }
 
 export const useCall = () => {
@@ -23,22 +24,30 @@ export const useCall = () => {
         isClient = false,
         method = 'GET',
         body = undefined,
-        contentType = ContentType["application/json"],
+        contentType = null,
+        requestOptions = {}
     }: CallConfig) => {
-
+        const headers = {
+            ...requestOptions,
+        }
+        if (contentType) {
+            headers['Content-Type'] = contentType
+        }
 
         if (isClient) {
             try {
                 const data = await $fetch<T>(`${url}${endpoint}`, {
+                    headers,
                     onRequest({ request, options }) {
-                        options.headers = options.headers || { authorization: '' }
                         options.method = method
                         options.body = body
-                        //todo Content-Type i u góry isAuth
-                        //@ts-ignore
-                        // options.headers['Content-Type'] = contentType
-                        //@ts-ignore
-                        options.headers.authorization = isAuth ? getUserToken() : ''
+                        if (isAuth && options.headers) {
+                            const userToken = getUserToken()
+                            if (userToken) {
+                                //@ts-ignore
+                                options.headers.authorization = userToken
+                            }
+                        }
                     }
                 });
                 return { data }
@@ -55,18 +64,17 @@ export const useCall = () => {
 
         try {
             const { data, pending } = await useFetch<T>(`${url}${endpoint}`, {
+                headers,
                 onRequest({ request, options }) {
-                    options.headers = options.headers || { authorization: '' }
                     options.method = method
                     options.body = body
-                    //@ts-ignore
-                    // options.headers['Content-Type'] = contentType
-                    //@ts-ignore
-                    options.headers.authorization = isAuth ? getUserToken() : ''
-                },
-                onResponseError({ request, response, options }) {
-                    console.log('error')
-                    console.log(response)
+                    if (isAuth && options.headers) {
+                        const userToken = getUserToken()
+                        if (userToken) {
+                            //@ts-ignore
+                            options.headers.authorization = userToken
+                        }
+                    }
                 }
             });
 

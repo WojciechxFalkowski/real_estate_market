@@ -50,4 +50,11 @@ useHead({
     lang: "pl",
   },
 });
+
+const { setVisitorId } = useAnalytics();
+
+onMounted(() => {
+  console.log("mounted");
+  setVisitorId();
+});
 </script>
