@@ -1,6 +1,6 @@
 version: "3"
 services:
-  app:
+  app-wellrent:
     build:
       context: .
       args:
@@ -16,7 +16,7 @@ services:
       - '80:80'
       - "443:443"
     depends_on:
-      - app
+      - app-wellrent
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - /var/www/certbot:/var/www/certbot
