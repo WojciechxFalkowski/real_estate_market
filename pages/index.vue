@@ -72,5 +72,5 @@ const homeCarouselImages = computed(() => {
   });
 });
 
-const {} = useAnalytics();
+// const {} = useAnalytics();
 </script>

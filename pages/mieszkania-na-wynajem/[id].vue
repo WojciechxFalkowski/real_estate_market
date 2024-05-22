@@ -64,7 +64,7 @@ useHead({
   ],
 });
 
-const {} = useAnalytics();
+// const {} = useAnalytics();
 </script>
 
 <style lang="scss">

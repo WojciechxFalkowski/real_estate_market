@@ -24,4 +24,4 @@ services:
       - real_estate_network
 networks:
   real_estate_network:
-    external: true
+    external: false
