@@ -71,4 +71,12 @@ const homeCarouselImages = computed(() => {
     };
   });
 });
+
+const { trackPageView } = useAnalytics();
+const visitorStore = useVisitorStore();
+const route = useRoute();
+
+onMounted(() => {
+  trackPageView(visitorStore.visitorId, route.fullPath);
+});
 </script>

@@ -55,7 +55,6 @@
 import { useForm, useField, Field, Form } from "vee-validate";
 import * as yup from "yup";
 import { Theme, ComponentType } from "@/components/Button/Button.props";
-import { userStore } from "~/store/userStore";
 const { setUser, pathBeforeRedirect } = userStore();
 
 const initialValues = {

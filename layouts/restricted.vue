@@ -20,7 +20,6 @@
 import { useRoute, useRouter } from "vue-router";
 import { ref, watch } from "vue";
 import LoadingIcon from "~/components/icons/LoadingIcon.vue";
-import { userStore } from "~/store/userStore";
 
 const { user, loadingWrapper, setUser, setPathBeforeRedirect } = userStore();
 

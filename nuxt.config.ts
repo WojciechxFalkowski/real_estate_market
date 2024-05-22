@@ -26,6 +26,9 @@ export default defineNuxtConfig({
 			extensions: ['.vue']
 		},
 	],
+	pinia: {
+		storesDirs: ['./stores/**'],//, './custom-folder/stores/**'
+	},
 	site: {
 		indexable: true,
 		url: 'https://wellrent-nieruchomosci.pl',

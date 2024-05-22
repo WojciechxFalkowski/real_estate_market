@@ -1,39 +1,72 @@
-import DeviceDetector from "device-detector-js";
-import { visitorStore } from "~/store/visitorStore";
+// composables/useAnalytics.ts
+import { useCall } from './useCall';
 
-export const LocalStorageVisitorID = Symbol.for('LocalStorageVisitorID')
+export enum EventType {
+    PAGE_VIEW = 'page_view',
+    CLICK = 'click',
+    FORM_SUBMIT = 'form_submit',
+    MOUSE_OVER = 'mouse_over',
+    SCROLL = 'scroll',
+    VISIBILITY = 'visibility',
+    CUSTOM_EVENT = 'custom_event',
+}
 
 export const useAnalytics = () => {
-    // const visitorId = ref<string | null>(null)
-    const { visitorId, setVisitor } = visitorStore()
-    const { getLocalStorageValueByKey, setLocalStorageValueByKey, removeLocalStorageValueByKey } = useLocalStorage()
-    const { call } = useCall()
+    const { call } = useCall();
 
-    const setVisitorId = async () => {
-        const deviceDetector = new DeviceDetector();
-        setVisitor(getLocalStorageValueByKey(LocalStorageVisitorID.toString()));
-
-        console.log('visitorId')
-        if (!visitorId) {
-            const userAgent = window.navigator.userAgent
-            const device = deviceDetector.parse(userAgent);
-
-
-            try {
-                const ipResponsee = await call<{ ip: string }>({ url: 'https://api.ipify.org?format=json', endpoint: ``, method: 'GET', isAuth: false, isClient: true })
-
-                console.log('ipResponsee')
-                console.log(ipResponsee.data?.ip)
-                // const { data } = await call<{ visitorId: string }>({ endpoint: ``, method: 'POST', isAuth: false, isClient: true, body: JSON.stringify({ device, ipAddress: ipResponse.data?.ip }) })
-                // setVisitor(data?.visitorId ?? null)
-            }
-            catch (error) {
-                console.error('Error creating visitor:', error);
-            }
+    const sendEvent = async (visitorId: string, type: EventType, data: any) => {
+        try {
+            await call({
+                endpoint: '/analytics-events/event',
+                method: 'POST',
+                isAuth: false,
+                isClient: true,
+                body: JSON.stringify({
+                    visitorId,
+                    type,
+                    data,
+                }),
+            });
+        } catch (error) {
+            console.error('Error sending event:', error);
         }
-    }
+    };
+
+    const trackPageView = async (visitorId: string, url: string) => {
+        await sendEvent(visitorId, EventType.PAGE_VIEW, { url });
+    };
+
+    const trackClick = async (visitorId: string, elementId: string) => {
+        await sendEvent(visitorId, EventType.CLICK, { elementId });
+    };
+
+    const trackFormSubmit = async (visitorId: string, formId: string, formData: any) => {
+        await sendEvent(visitorId, EventType.FORM_SUBMIT, { formId, formData });
+    };
+
+    const trackMouseOver = async (visitorId: string, elementId: string) => {
+        await sendEvent(visitorId, EventType.MOUSE_OVER, { elementId });
+    };
+
+    const trackScroll = async (visitorId: string, scrollPosition: number) => {
+        await sendEvent(visitorId, EventType.SCROLL, { scrollPosition });
+    };
+
+    const trackVisibility = async (visitorId: string, elementId: string, isVisible: boolean) => {
+        await sendEvent(visitorId, EventType.VISIBILITY, { elementId, isVisible });
+    };
+
+    const trackCustomEvent = async (visitorId: string, eventName: string, eventData: any) => {
+        await sendEvent(visitorId, EventType.CUSTOM_EVENT, { eventName, eventData });
+    };
 
     return {
-        setVisitorId
-    }
-}
+        trackPageView,
+        trackClick,
+        trackFormSubmit,
+        trackMouseOver,
+        trackScroll,
+        trackVisibility,
+        trackCustomEvent,
+    };
+};

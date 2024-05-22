@@ -51,10 +51,8 @@ useHead({
   },
 });
 
-const { setVisitorId } = useAnalytics();
-
-onMounted(() => {
-  console.log("mounted");
-  setVisitorId();
+const { setVisitorId } = useVisitor();
+onMounted(async () => {
+  await setVisitorId();
 });
 </script>

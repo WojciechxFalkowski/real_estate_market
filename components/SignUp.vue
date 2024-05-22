@@ -72,7 +72,7 @@ import { useForm, useField, Field, Form } from "vee-validate";
 import * as yup from "yup";
 import { Theme, ComponentType } from "@/components/Button/Button.props";
 import SignIn from "./SignIn.vue";
-import { userStore } from "~/store/userStore";
+import { userStore } from "~/stores/userStore";
 
 const { setUser, pathBeforeRedirect } = userStore();
 

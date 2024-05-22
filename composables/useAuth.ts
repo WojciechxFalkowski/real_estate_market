@@ -5,17 +5,17 @@ export interface IToken {
 export const useAuth = () => {
   const runtimeConfig = useRuntimeConfig()
   const router = useRouter();
-
+  const { getLocalStorageValueByKey, setLocalStorageValueByKey, removeLocalStorageValueByKey } = useLocalStorage()
   const getUserToken = () => {
-    return localStorage.getItem(UserStorageKey.token)
+    return getLocalStorageValueByKey(UserStorageKey.token)
   }
 
   const removeUserToken = () => {
-    localStorage.removeItem(UserStorageKey.token)
+    removeLocalStorageValueByKey(UserStorageKey.token)
   }
 
   const setUserToken = (token: string) => {
-    localStorage.setItem(UserStorageKey.token, token)
+    setLocalStorageValueByKey(UserStorageKey.token, token)
   }
 
   const verifyToken = async (tokenWithBearer: string): Promise<{ isValid: boolean }> => {
@@ -46,7 +46,8 @@ export const useAuth = () => {
       })
       const token = `Bearer ${response.access_token}`;
       setUserToken(token);
-      return;
+      const { setVisitorEmail } = useVisitor()
+      setVisitorEmail(email)
     } catch (error: any) {
       throw new Error(error.response._data.message);
     }
