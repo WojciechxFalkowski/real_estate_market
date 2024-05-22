@@ -27,4 +27,6 @@ useHead({
     },
   ],
 });
+const {} = useAnalytics();
+
 </script>

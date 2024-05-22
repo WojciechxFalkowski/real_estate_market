@@ -45,6 +45,9 @@
 </template>
 
 <script setup lang="ts">
+const { fetchActiveFlats, flatsModel } = useFlat();
+await fetchActiveFlats();
+
 const { getPageConfiguration, pageConfiguration } = usePageConfiguration();
 await getPageConfiguration();
 
@@ -62,8 +65,8 @@ useHead({
   ],
 });
 
-const { fetchActiveFlats, flatsModel } = useFlat();
-await fetchActiveFlats();
+const {} = useAnalytics();
+
 const ALL = "wszystkie";
 const locations = ref([
   ALL,

@@ -50,9 +50,4 @@ useHead({
     lang: "pl",
   },
 });
-
-const { setVisitorId } = useVisitor();
-onMounted(async () => {
-  await setVisitorId();
-});
 </script>

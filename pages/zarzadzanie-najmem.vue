@@ -91,6 +91,7 @@ useHead({
     }
   ],
 });
+const {} = useAnalytics();
 
 onMounted(() => {
   checkMobile();

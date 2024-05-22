@@ -13,6 +13,14 @@ export enum EventType {
 
 export const useAnalytics = () => {
     const { call } = useCall();
+    const { setVisitorId } = useVisitor();
+    const visitorStore = useVisitorStore();
+    const route = useRoute();
+
+    onMounted(async () => {
+        await setVisitorId();
+        await trackPageView(route.fullPath);
+    });
 
     const sendEvent = async (visitorId: string, type: EventType, data: any) => {
         try {
@@ -32,8 +40,14 @@ export const useAnalytics = () => {
         }
     };
 
-    const trackPageView = async (visitorId: string, url: string) => {
-        await sendEvent(visitorId, EventType.PAGE_VIEW, { url });
+    const trackPageView = async (url: string) => {
+        console.log('trackPageView')
+        if (!visitorStore.visitorId) {
+            return
+        }
+        console.log('trackPageView -> 2')
+
+        await sendEvent(visitorStore.visitorId, EventType.PAGE_VIEW, { url });
     };
 
     const trackClick = async (visitorId: string, elementId: string) => {
