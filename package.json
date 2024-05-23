@@ -12,13 +12,13 @@
   "dependencies": {
     "@nuxt/image": "^1.7.0",
     "@nuxtjs/sitemap": "^5.1.5",
-    "@nuxtjs/tailwindcss": "6.11.4",
     "@pinia/nuxt": "^0.5.1",
     "@tiptap/extension-underline": "^2.3.0",
     "@tiptap/pm": "^2.3.0",
     "@tiptap/starter-kit": "^2.3.0",
     "@tiptap/vue-3": "^2.3.0",
     "@vee-validate/nuxt": "^4.12.6",
+    "@vee-validate/yup": "^4.12.6",
     "device-detector-js": "^3.0.3",
     "nuxt": "^3.10.3",
     "nuxt-simple-robots": "^4.0.0-rc.17",
@@ -27,10 +27,10 @@
     "toastify-js": "^1.12.0",
     "vue": "^3.4.19",
     "vue-router": "^4.3.0",
-    "vue3-carousel": "^0.3.1",
-    "@vee-validate/yup": "^4.12.6"
+    "vue3-carousel": "^0.3.1"
   },
   "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.12.0",
     "typescript": "^5.4.5"
   }
 }
