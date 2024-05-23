@@ -17,10 +17,10 @@ export const useAnalytics = () => {
     const visitorStore = useVisitorStore();
     const route = useRoute();
 
-    // onMounted(async () => {
-    //     await setVisitorId();
-    //     await trackPageView(route.fullPath);
-    // });
+    onMounted(async () => {
+        await setVisitorId();
+        await trackPageView(route.fullPath);
+    });
 
     const sendEvent = async (visitorId: string, type: EventType, data: any) => {
         try {

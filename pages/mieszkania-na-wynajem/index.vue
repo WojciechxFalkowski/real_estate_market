@@ -65,7 +65,7 @@ useHead({
   ],
 });
 
-// const {} = useAnalytics();
+const {} = useAnalytics();
 
 const ALL = "wszystkie";
 const locations = ref([
