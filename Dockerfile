@@ -1,8 +1,8 @@
 # syntax = docker/dockerfile:1
 
-ARG NODE_VERSION=18.14.2
+ARG NODE_VERSION=20.11.1-alpine
 
-FROM node:${NODE_VERSION}-alpine as base
+FROM node:${NODE_VERSION} as base
 
 ARG PORT
 
@@ -13,35 +13,25 @@ WORKDIR /src
 # Build
 FROM base as build
 
-# Install build dependencies
 COPY --link package.json package-lock.json ./
-RUN npm install
+RUN npm install --production=false
 
-# Copy all files and build the project
 COPY --link . .
 
-# Increase Node.js memory limit for the build step
+# Increase Node.js memory limit
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 
 RUN npm run build
-
-# Prune dev dependencies to save space
-RUN npm prune --production
+RUN npm prune
 
 # Run
-FROM node:${NODE_VERSION}-alpine as runtime
+FROM base
 
-ENV NODE_ENV=production
 ENV PORT=$PORT
 
-WORKDIR /src
-
-# Copy the built output and necessary dependencies
 COPY --from=build /src/.output /src/.output
-COPY --from=build /src/node_modules /src/node_modules
-COPY --from=build /src/package.json /src/package.json
+# Optional, only needed if you rely on unbundled dependencies
+# COPY --from=build /src/node_modules /src/node_modules
 
-EXPOSE $PORT
-
-# Use CMD to run the application
+# CMD [ "node", "--require", "reflect-metadata", ".output/server/index.mjs" ]
 CMD [ "node", ".output/server/index.mjs" ]
