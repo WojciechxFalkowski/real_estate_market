@@ -18,6 +18,9 @@ RUN npm install --production=false
 
 COPY --link . .
 
+# Increase Node.js memory limit
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+
 RUN npm run build
 RUN npm prune
 
