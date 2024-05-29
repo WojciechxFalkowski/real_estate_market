@@ -5,5 +5,13 @@
     <slot class="container m-auto" />
   </div>
 
-  <Footer class="container mx-auto my-8 lg:mt-16" />
+  <AnimatedVisibility @sendIsVisibleEvent="sendIsVisibleFooter">
+    <Footer class="container mx-auto my-8 lg:mt-16" />
+  </AnimatedVisibility>
 </template>
+<script setup lang="ts">
+const { trackVisibility } = useAnalytics();
+const sendIsVisibleFooter = async () => {
+  await trackVisibility("Footer");
+};
+</script>

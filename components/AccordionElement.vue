@@ -40,18 +40,25 @@
 </template>
 
 <script setup lang="ts">
-import type { List } from "./Accordion.vue";
-
 const props = defineProps<{
   title?: string;
   content?: string;
   listTitle?: string;
   list?: string[];
 }>();
-const isOpen = ref(false);
 
+const emit = defineEmits<{
+  (event: "isOpenFirstTimeAccordionElement"): void;
+}>();
+const isOpen = ref(false);
+const isOpenFirstTime = ref(false);
 const toggle = () => {
   isOpen.value = !isOpen.value;
+
+  if (isOpen.value && !isOpenFirstTime.value) {
+    isOpenFirstTime.value = true;
+    emit("isOpenFirstTimeAccordionElement");
+  }
 };
 </script>
 

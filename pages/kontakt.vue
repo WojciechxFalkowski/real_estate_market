@@ -18,9 +18,11 @@ useHead({
     {
       property: "og:title",
       content: pageConfiguration.value?.title?.toString() ?? "",
-    }
+    },
   ],
 });
-const {} = useAnalytics();
-
+const { sendOnMountedEvent } = useAnalytics();
+onMounted(async () => {
+  await sendOnMountedEvent();
+});
 </script>

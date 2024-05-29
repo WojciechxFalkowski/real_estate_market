@@ -88,10 +88,14 @@ useHead({
     {
       property: "og:description",
       content: pageConfiguration.value?.description?.toString() ?? "",
-    }
+    },
   ],
 });
-const {} = useAnalytics();
+
+const { sendOnMountedEvent } = useAnalytics();
+onMounted(async () => {
+  await sendOnMountedEvent();
+});
 
 onMounted(() => {
   checkMobile();
@@ -158,6 +162,8 @@ const positionItem = (index: number) => {
 onMounted(() => {
   setFirstStep();
   startActiveStepInterval();
+
+  sendIsVisibleStep(activeStep.value.id, activeStep.value.title);
 });
 
 const setFirstStep = () => {
@@ -176,9 +182,28 @@ const clearActiveStep = (step: Step) => {
   if (intervalId.value) {
     clearInterval(intervalId.value);
   }
+
   activeStep.value = step;
   activeStepIndex.value = apiSteps.value.findIndex((s) => s.id === step.id);
 };
+
+const { trackVisibility } = useAnalytics();
+const seenSteps = ref<string[]>([]);
+
+const sendIsVisibleStep = (index: number, stepTitle: string) => {
+  const seenStepIndex = seenSteps.value.findIndex(
+    (seenStep) => seenStep === stepTitle
+  );
+  if (seenStepIndex !== -1) {
+    return;
+  }
+  seenSteps.value.push(stepTitle);
+  trackVisibility("krok", `${index}. ${stepTitle}`);
+};
+
+watch(activeStep, () => {
+  sendIsVisibleStep(activeStep.value.id, activeStep.value.title);
+});
 </script>
 
 <style lang="scss">

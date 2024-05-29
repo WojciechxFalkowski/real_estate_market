@@ -13,13 +13,17 @@
 
 <script setup lang="ts">
 const props = defineProps({
-  isMobileImediate: {
+  isMobileImmediate: {
     type: Boolean as PropType<boolean>,
     default() {
       return false;
     },
   },
 });
+
+const emit = defineEmits<{
+  (event: "sendIsVisibleEvent"): void;
+}>();
 
 const observerRef: Ref<HTMLElement | null> = ref(null);
 const isVisible: Ref<boolean> = ref(false);
@@ -38,7 +42,7 @@ onMounted(() => {
     (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
         if (isMobile.value) {
-          if (props.isMobileImediate) {
+          if (props.isMobileImmediate) {
             isVisible.value = true;
           } else {
             if (entry.intersectionRatio > 0.5) {
@@ -61,6 +65,10 @@ onMounted(() => {
   if (observerRef.value) {
     observer.observe(observerRef.value);
   }
+});
+
+watch(isVisible, () => {
+  emit("sendIsVisibleEvent");
 });
 
 onUnmounted(() => {

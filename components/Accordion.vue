@@ -10,6 +10,9 @@
         :content="section.description"
         :listTitle="section.listTitle"
         :list="section.list"
+        @isOpenFirstTimeAccordionElement="
+          $emit('isOpenFirstTimeAccordionElement', index)
+        "
       />
     </div>
   </div>
@@ -17,4 +20,7 @@
 
 <script setup lang="ts">
 const props = defineProps<{ sections: FaqElement[] }>();
+const emit = defineEmits<{
+  (event: "isOpenFirstTimeAccordionElement", index: number): void;
+}>();
 </script>

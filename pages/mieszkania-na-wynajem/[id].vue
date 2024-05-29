@@ -64,7 +64,10 @@ useHead({
   ],
 });
 
-const {} = useAnalytics();
+const { sendOnMountedEvent } = useAnalytics();
+onMounted(async () => {
+  await sendOnMountedEvent();
+});
 </script>
 
 <style lang="scss">

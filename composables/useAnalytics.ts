@@ -17,12 +17,19 @@ export const useAnalytics = () => {
     const visitorStore = useVisitorStore();
     const route = useRoute();
 
-    onMounted(async () => {
-        await setVisitorId();
+    const sendOnMountedEvent = async () => {
         await trackPageView(route.fullPath);
-    });
+    }
 
-    const sendEvent = async (visitorId: string, type: EventType, data: any) => {
+    const sendEvent = async (type: EventType, data: any) => {
+        await setVisitorId();
+        const visitorId = visitorStore.visitorId
+
+        if (!visitorId) {
+            console.log("??")
+            return
+        }
+
         try {
             await call({
                 endpoint: '/analytics-events/event',
@@ -41,35 +48,31 @@ export const useAnalytics = () => {
     };
 
     const trackPageView = async (url: string) => {
-        if (!visitorStore.visitorId) {
-            return
-        }
-
-        await sendEvent(visitorStore.visitorId, EventType.PAGE_VIEW, { url });
+        await sendEvent(EventType.PAGE_VIEW, { url });
     };
 
-    const trackClick = async (visitorId: string, elementId: string) => {
-        await sendEvent(visitorId, EventType.CLICK, { elementId });
+    const trackClick = async (elementName: string, elementDescription?: string) => {
+        await sendEvent(EventType.CLICK, { elementName, elementDescription });
     };
 
-    const trackFormSubmit = async (visitorId: string, formId: string, formData: any) => {
-        await sendEvent(visitorId, EventType.FORM_SUBMIT, { formId, formData });
+    const trackFormSubmit = async (formId: string, formData: any) => {
+        await sendEvent(EventType.FORM_SUBMIT, { formId, formData });
     };
 
-    const trackMouseOver = async (visitorId: string, elementId: string) => {
-        await sendEvent(visitorId, EventType.MOUSE_OVER, { elementId });
+    const trackMouseOver = async (elementName: string) => {
+        await sendEvent(EventType.MOUSE_OVER, { elementName });
     };
 
-    const trackScroll = async (visitorId: string, scrollPosition: number) => {
-        await sendEvent(visitorId, EventType.SCROLL, { scrollPosition });
+    const trackScroll = async (scrollPosition: number) => {
+        await sendEvent(EventType.SCROLL, { scrollPosition });
     };
 
-    const trackVisibility = async (visitorId: string, elementId: string, isVisible: boolean) => {
-        await sendEvent(visitorId, EventType.VISIBILITY, { elementId, isVisible });
+    const trackVisibility = async (elementName: string, elementDescription?: string) => {
+        await sendEvent(EventType.VISIBILITY, { elementName, elementDescription });
     };
 
-    const trackCustomEvent = async (visitorId: string, eventName: string, eventData: any) => {
-        await sendEvent(visitorId, EventType.CUSTOM_EVENT, { eventName, eventData });
+    const trackCustomEvent = async (eventName: string, eventData: any) => {
+        await sendEvent(EventType.CUSTOM_EVENT, { eventName, eventData });
     };
 
     return {
@@ -80,5 +83,6 @@ export const useAnalytics = () => {
         trackScroll,
         trackVisibility,
         trackCustomEvent,
+        sendOnMountedEvent,
     };
 };

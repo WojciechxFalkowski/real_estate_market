@@ -7,7 +7,11 @@
   /> -->
   <!-- <div class="container m-auto"> -->
   <div v-if="teamMembers.length" class="2xl:container md:mx-auto md:mt-4">
-    <HeroCarousel :pictures="homeCarouselImages" :autoplay="2000" />
+    <HeroCarousel
+      :pictures="homeCarouselImages"
+      :autoplay="2000"
+      @sendIsVisibleCarouselElement="sendIsVisibleCarouselElement"
+    />
   </div>
 
   <div v-if="teamMembers.length" class="container mx-auto mt-4 lg:mt-16">
@@ -23,13 +27,13 @@
   </div>
 
   <div class="container m-auto my-16">
-    <AnimatedVisibility>
+    <AnimatedVisibility @sendIsVisibleEvent="sendIsVisibleContactUs">
       <ContactUs />
     </AnimatedVisibility>
   </div>
 
   <div class="container m-auto">
-    <AnimatedVisibility>
+    <AnimatedVisibility @sendIsVisibleEvent="sendIsVisibleAddressMap">
       <AddressMap />
     </AnimatedVisibility>
   </div>
@@ -72,5 +76,20 @@ const homeCarouselImages = computed(() => {
   });
 });
 
-const {} = useAnalytics();
+const { sendOnMountedEvent, trackVisibility } = useAnalytics();
+onMounted(async () => {
+  await sendOnMountedEvent();
+});
+
+const sendIsVisibleContactUs = async () => {
+  await trackVisibility("contact_us");
+};
+
+const sendIsVisibleAddressMap = async () => {
+  await trackVisibility("address_map");
+};
+
+const sendIsVisibleCarouselElement = (currentSlideIndex) => {
+  trackVisibility(`karuzela strona główna zdjęcie ${currentSlideIndex}`);
+};
 </script>

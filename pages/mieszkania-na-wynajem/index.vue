@@ -65,15 +65,23 @@ useHead({
   ],
 });
 
-const {} = useAnalytics();
+const { sendOnMountedEvent } = useAnalytics();
+onMounted(async () => {
+  await sendOnMountedEvent();
+});
 
 const ALL = "wszystkie";
-const locations = ref([
-  ALL,
-  ...new Set(flatsModel.value?.map((flat: FlatModel) => flat.location) ?? []),
-]);
+const locations = computed(() => {
+  if (!Array.isArray(flatsModel.value) || flatsModel.value.length < 2) {
+    return [];
+  }
 
-// const activeLocation = ref<string>(ALL);
+  return [
+    ALL,
+    ...new Set(flatsModel.value?.map((flat: FlatModel) => flat.location) ?? []),
+  ];
+});
+
 const activeLocation = computed(
   () => router.currentRoute.value.query.location ?? ALL
 );

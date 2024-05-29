@@ -1,5 +1,8 @@
 <template>
-  <AnimatedVisibility :isMobileImediate="true">
+  <AnimatedVisibility
+    :isMobileImmediate="true"
+    @sendIsVisibleEvent="sendIsVisibleAboutUs"
+  >
     <div class="md:flex md:items-center md:gap-6">
       <NuxtImg
         v-if="teamMember.image.url"
@@ -46,6 +49,12 @@ const props = defineProps({
     required: false,
   },
 });
+
+const { trackVisibility } = useAnalytics();
+
+const sendIsVisibleAboutUs = async () => {
+  await trackVisibility("about_us");
+};
 
 const teamMemberName = computed(() => {
   return `${props.teamMember.firstName} ${props.teamMember.lastName}`;

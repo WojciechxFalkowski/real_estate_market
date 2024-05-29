@@ -2,7 +2,10 @@
   <PageTitle :title="pageConfiguration?.title" class="mt-8 lg:mt-16" />
 
   <div class="container mx-auto mb-32 mt-8 lg:mt-16">
-    <Accordion :sections="faqCollection" />
+    <Accordion
+      :sections="faqCollection"
+      @isOpenFirstTimeAccordionElement="isOpenFirstTimeAccordionElement"
+    />
   </div>
 </template>
 
@@ -27,6 +30,21 @@ useHead({
     },
   ],
 });
-const {} = useAnalytics();
+const { sendOnMountedEvent, trackClick } = useAnalytics();
+onMounted(async () => {
+  await sendOnMountedEvent();
+});
 
+const isOpenFirstTimeAccordionElement = (accordionElementIndex: number) => {
+  console.log("isOpenFirstTimeAccordionElement");
+  console.log(accordionElementIndex);
+  const accordionElement = faqCollection.value[accordionElementIndex];
+  if (!accordionElement || !accordionElement.title) {
+    return;
+  }
+  console.log(accordionElement);
+
+  trackClick("FAQ", accordionElement.title);
+  //
+};
 </script>

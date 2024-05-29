@@ -1,5 +1,10 @@
 <template>
-  <Carousel :autoplay="autoplay" :wrap-around="true">
+  <Carousel
+    :autoplay="autoplay"
+    :wrap-around="true"
+    @init="handleInit"
+    @slide-end="handleSlideEnd"
+  >
     <Slide v-for="(picture, index) in pictures" :key="index">
       <div class="overflow-hidden relative h-64 sm:h-96 lg:h-600 w-full">
         <div class="absolute inset-0 -translate-y-0">
@@ -61,6 +66,37 @@ defineProps({
     default: false,
   },
 });
+
+const emit = defineEmits<{
+  (event: "sendIsVisibleCarouselElement", currentSlideIndex: number): void;
+}>();
+
+const seenCarouselIndexes = ref<number[]>([]);
+
+const handleInit = () => {
+  const currentSlideIndex = 0;
+  seenCarouselIndexes.value.push(currentSlideIndex);
+  emit("sendIsVisibleCarouselElement", currentSlideIndex);
+};
+
+const handleSlideEnd = (data: {
+  currentSlideIndex: number;
+  prevSlideIndex: number;
+  slidesCount: number;
+}) => {
+  const currentSlideIndex = data.currentSlideIndex;
+
+  const isCurrentSlideIndexInArray =
+    seenCarouselIndexes.value.findIndex(
+      (seenCarouselIndex) => seenCarouselIndex === currentSlideIndex
+    ) !== -1;
+  if (isCurrentSlideIndexInArray) {
+    return;
+  }
+
+  seenCarouselIndexes.value.push(currentSlideIndex);
+  emit("sendIsVisibleCarouselElement", currentSlideIndex);
+};
 </script>
 
 <style lang="scss">
