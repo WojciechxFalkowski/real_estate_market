@@ -10,8 +10,7 @@ export interface CallConfig {
     isClient?: boolean
     method?: string
     body?: string | undefined | FormData
-    contentType?: ContentType | null
-    requestOptions?: any
+    contentType?: ContentType
 }
 
 export const useCall = () => {
@@ -24,21 +23,15 @@ export const useCall = () => {
         isClient = false,
         method = 'GET',
         body = undefined,
-        contentType = null,
-        requestOptions = {}
+        contentType = ContentType["application/json"],
     }: CallConfig) => {
-        const headers = {
-            ...requestOptions,
-        }
-        if (contentType) {
-            headers['Content-Type'] = contentType
-        }
+
 
         if (isClient) {
             try {
                 const data = await $fetch<T>(`${url}${endpoint}`, {
-                    headers,
                     onRequest({ request, options }) {
+                        options.headers = options.headers || { authorization: '' }
                         options.method = method
                         options.body = body
                         if (isAuth && options.headers) {
@@ -64,8 +57,8 @@ export const useCall = () => {
 
         try {
             const { data, pending } = await useFetch<T>(`${url}${endpoint}`, {
-                headers,
                 onRequest({ request, options }) {
+                    options.headers = options.headers || { authorization: '' }
                     options.method = method
                     options.body = body
                     if (isAuth && options.headers) {
@@ -75,6 +68,10 @@ export const useCall = () => {
                             options.headers.authorization = userToken
                         }
                     }
+                },
+                onResponseError({ request, response, options }) {
+                    console.log('error')
+                    console.log(response)
                 }
             });
 
