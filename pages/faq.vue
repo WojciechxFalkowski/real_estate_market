@@ -36,15 +36,11 @@ onMounted(async () => {
 });
 
 const isOpenFirstTimeAccordionElement = (accordionElementIndex: number) => {
-  console.log("isOpenFirstTimeAccordionElement");
-  console.log(accordionElementIndex);
   const accordionElement = faqCollection.value[accordionElementIndex];
   if (!accordionElement || !accordionElement.title) {
     return;
   }
-  console.log(accordionElement);
 
   trackClick("FAQ", accordionElement.title);
-  //
 };
 </script>

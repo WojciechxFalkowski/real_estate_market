@@ -40,8 +40,13 @@ const { teamMembers, getTeamMembers } = useTeamMember();
 const isFetchingTeamMembers = ref(false);
 
 onMounted(async () => {
-  isFetchingTeamMembers.value = true;
-  await getTeamMembers({ isAuth: true, isClient: true });
-  isFetchingTeamMembers.value = false;
+  try {
+    isFetchingTeamMembers.value = true;
+    await getTeamMembers({ isAuth: true, isClient: true });
+  } catch (error) {
+    console.log(error);
+  } finally {
+    isFetchingTeamMembers.value = false;
+  }
 });
 </script>

@@ -19,6 +19,8 @@
     "@tiptap/vue-3": "^2.3.0",
     "@vee-validate/nuxt": "^4.12.6",
     "@vee-validate/yup": "^4.12.6",
+    "chart.js": "^4.4.3",
+    "chartjs-adapter-date-fns": "^3.0.0",
     "device-detector-js": "^3.0.3",
     "nuxt": "^3.10.3",
     "nuxt-simple-robots": "^4.0.0-rc.17",

@@ -1,4 +1,3 @@
-// composables/useAnalytics.ts
 import { useCall } from './useCall';
 
 export enum EventType {
@@ -9,6 +8,11 @@ export enum EventType {
     SCROLL = 'scroll',
     VISIBILITY = 'visibility',
     CUSTOM_EVENT = 'custom_event',
+}
+
+export interface AnalyticsEvent {
+    date: string;
+    count: number;
 }
 
 export const useAnalytics = () => {
@@ -75,6 +79,119 @@ export const useAnalytics = () => {
         await sendEvent(EventType.CUSTOM_EVENT, { eventName, eventData });
     };
 
+    // const analyticsData = ref<AnalyticsEvent[]>([]);
+    // const excludedVisitors = ref<string[]>([
+    //     "0055d51d-18cc-40d7-93b4-c8f5e6169c07",
+    //     "2e60b785-57e0-43cd-bade-d83d3a55c5f9",
+    //     "f3d03709-bc74-4ab1-9f93-50afaf88c654"
+    // ]);
+
+    const analyticsData = ref<AnalyticsEvent[]>([]);
+    const excludedVisitors = ref<string[]>([]);
+
+    const fetchAnalyticsData = async (groupBy: 'day' | 'month' = 'day', unique: boolean = false) => {
+        await fetchExcludedVisitors()
+        console.log(excludedVisitors.value)
+
+
+        const { data } = await call<AnalyticsEvent[]>({
+            endpoint: `/analytics-events/page-views?groupBy=${groupBy}&excludedVisitors=${excludedVisitors.value.join(',')}&unique=${unique}`,
+            method: 'GET',
+            isAuth: true,
+            isClient: true,
+        });
+
+        if (!data) {
+            return;
+        }
+        analyticsData.value = data || [];
+    };
+
+    const fetchExcludedVisitors = async () => {
+        const { data } = await call<string[]>({
+            endpoint: `/analytics-events/excluded-visitors`,
+            method: 'GET',
+            isAuth: true,
+            isClient: true,
+        });
+
+        if (!data) {
+            return;
+        }
+        excludedVisitors.value = data || [];
+    };
+
+    const addExcludedVisitor = async (visitorId: string) => {
+        // await call({
+        //     endpoint: `/analytics-events/exclude-visitor`,
+        //     method: 'POST',
+        //     isAuth: true,
+        //     isClient: true,
+        //     body: JSON.stringify({ visitorId }),
+        // });
+        await fetchExcludedVisitors(); // Refresh the excluded visitors list
+    };
+
+    const addExcludedVisitorPermanently = async (visitorId: string) => {
+        await call({
+            endpoint: `/analytics-events/exclude-visitor`,
+            method: 'POST',
+            isAuth: true,
+            isClient: true,
+            body: JSON.stringify({ visitorId }),
+        });
+        await fetchAnalyticsData(); // Refresh the excluded visitors list
+    };
+
+    const removeExcludedVisitor = async (visitorId: string) => {
+        // await call({
+        //     endpoint: `/analytics-events/exclude-visitor`,
+        //     method: 'DELETE',
+        //     isAuth: true,
+        //     isClient: true,
+        //     body: JSON.stringify({ visitorId })
+        // });
+        fetchExcludedVisitors(); // Refresh the excluded visitors list
+    };
+
+    const removeExcludedVisitorPermanently = async (visitorId: string) => {
+        await call({
+            endpoint: `/analytics-events/exclude-visitor`,
+            method: 'DELETE',
+            isAuth: true,
+            isClient: true,
+            body: JSON.stringify({ visitorId })
+        });
+        await fetchAnalyticsData(); // Refresh the excluded visitors list
+    };
+
+    const toggleVisitorExclusion = async (visitorId: string) => {
+        if (excludedVisitors.value.includes(visitorId)) {
+            await removeExcludedVisitor(visitorId);
+        } else {
+            await addExcludedVisitor(visitorId);
+        }
+        fetchAnalyticsData(); // Refresh data when exclusion list changes
+    };
+
+    const updateExcludedVisitors = (visitors: string[]) => {
+        excludedVisitors.value = visitors;
+        // fetchAnalyticsData();
+    };
+
+    // const toggleVisitor = async (visitorId: string) => {
+    //     if (excludedVisitors.value.includes(visitorId)) {
+    //         // excludedVisitors.value = excludedVisitors.value.filter(
+    //         //     (id) => id !== visitorId
+    //         // );
+    //         await removeExcludedVisitorPermanently(visitorId)
+    //     }
+    //     else {
+    //         // excludedVisitors.value.push(visitorId);
+    //         await addExcludedVisitorPermanently(visitorId)
+    //     }
+    // }
+
     return {
         trackPageView,
         trackClick,
@@ -84,5 +201,13 @@ export const useAnalytics = () => {
         trackVisibility,
         trackCustomEvent,
         sendOnMountedEvent,
+        analyticsData,
+        fetchAnalyticsData,
+        excludedVisitors,
+        toggleVisitorExclusion,
+        fetchExcludedVisitors,
+        updateExcludedVisitors,
+        removeExcludedVisitorPermanently,
+        addExcludedVisitorPermanently,
     };
 };

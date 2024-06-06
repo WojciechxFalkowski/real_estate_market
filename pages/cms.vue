@@ -42,6 +42,7 @@ import {
   NewsletterIcon,
   FaqIcon,
   ContactIcon,
+  AnalyticsIcon,
 } from "~/components/icons";
 
 definePageMeta({
@@ -83,6 +84,11 @@ const links = [
     to: { name: "cms-kontakt" },
     icon: ContactIcon,
     name: "Kontakt",
+  },
+  {
+    to: { name: "cms-analytics" },
+    icon: AnalyticsIcon,
+    name: "Analityka",
   },
 ];
 </script>
