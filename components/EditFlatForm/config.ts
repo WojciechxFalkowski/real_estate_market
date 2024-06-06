@@ -24,16 +24,17 @@ export const editTableFormConfiguration: {
             type: "text",
             initialValue: "",
             validation: yup.string().required("Pole jest wymagane"),
-            class: "col-span-12 md:col-span-6",
+            class: "col-span-12",
         },
         {
             id: "description",
             name: "Opis",
-            as: FieldType.input,
+            as: FieldType.textarea,
             type: "description",
             initialValue: "",
             validation: yup.string().required("Pole jest wymagane"),
-            class: "col-span-12 md:col-span-6",
+            class: "col-span-12",
+            inputClass: 'h-32'
         },
         {
             id: "url",
