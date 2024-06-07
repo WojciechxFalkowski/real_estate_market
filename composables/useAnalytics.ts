@@ -15,6 +15,11 @@ export interface AnalyticsEvent {
     count: number;
 }
 
+export interface DeviceCount {
+    deviceType: string;
+    count: number;
+}
+
 export const useAnalytics = () => {
     const { call } = useCall();
     const { setVisitorId } = useVisitor();
@@ -179,6 +184,17 @@ export const useAnalytics = () => {
         // fetchAnalyticsData();
     };
 
+    const fetchUserCountByDevice = async () => {
+        const { data } = await call<DeviceCount[]>({
+            endpoint: '/analytics-events/user-count-by-device',
+            method: 'GET',
+            isAuth: true,
+            isClient: true,
+        });
+
+        return data || [];
+    };
+
     // const toggleVisitor = async (visitorId: string) => {
     //     if (excludedVisitors.value.includes(visitorId)) {
     //         // excludedVisitors.value = excludedVisitors.value.filter(
@@ -209,5 +225,6 @@ export const useAnalytics = () => {
         updateExcludedVisitors,
         removeExcludedVisitorPermanently,
         addExcludedVisitorPermanently,
+        fetchUserCountByDevice
     };
 };

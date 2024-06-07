@@ -227,8 +227,6 @@ watch(newIndexNextValue, async () => {
 // };
 
 const uploadImages = async () => {
-  console.log("uploadImages");
-
   try {
     await emit("submit");
   } catch (error) {

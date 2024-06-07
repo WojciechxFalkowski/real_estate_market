@@ -2,10 +2,10 @@
   <div>
     <div class="flex gap-5">
       <div>
-        <label for="groupBy">Group By: </label>
+        <label for="groupBy">Grupuj według: </label>
         <select id="groupBy" v-model="groupBy" @change="emitFetchAnalyticsData">
-          <option value="day">Day</option>
-          <option value="month">Month</option>
+          <option value="day">Dzień</option>
+          <option value="month">Miesiąc</option>
         </select>
       </div>
 
@@ -15,7 +15,7 @@
           v-model="unique"
           @change="emitFetchAnalyticsData"
         />
-        Unique Visits
+        Unikatowi użytkownicy
       </label>
     </div>
 
@@ -59,7 +59,7 @@ const updateChart = () => {
         labels: props.analyticsData.map((item) => item.date),
         datasets: [
           {
-            label: "Page Views",
+            label: "Wejścia na stronę",
             data: props.analyticsData.map((item) => item.count),
             backgroundColor: "rgba(75, 192, 192, 0.2)",
             borderColor: "rgba(75, 192, 192, 1)",

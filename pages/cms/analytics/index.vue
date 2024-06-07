@@ -7,7 +7,10 @@
     :excludedVisitors="excludedVisitors"
     @fetchAnalyticsData="fetchAnalyticsData"
     @toggleVisitorExclusion="toggleVisitorExclusion"
+    class="mt-8"
   />
+
+  <UserCountByDeviceChart class="mt-8" />
 
   <VisitorExclusionManager
     class="my-8"
