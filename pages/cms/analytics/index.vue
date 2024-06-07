@@ -12,9 +12,11 @@
 
   <UserCountByDeviceChart class="mt-8" />
 
-  <UserCountByOSChart class="mt-8"/>
+  <UserCountByOSChart class="mt-8" />
 
-  <UserCountByBrowserChart class="mt-8"/>
+  <UserCountByBrowserChart class="mt-8" />
+
+  <UserActivityByHourChart class="mt-8" />
 
   <VisitorExclusionManager
     class="my-8"

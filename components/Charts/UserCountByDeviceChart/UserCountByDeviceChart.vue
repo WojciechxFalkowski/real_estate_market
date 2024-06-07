@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import {
-  Chart,
+  Chart as ChartJS,
   BarElement,
   CategoryScale,
   LinearScale,
@@ -15,31 +15,36 @@ import {
 } from "chart.js";
 import { useAnalytics } from "@/composables/useAnalytics";
 
-// Rejestracja elementów Chart.js
-Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
+// Register Chart.js components
+ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 interface DeviceCount {
   deviceType: string;
   count: number;
 }
 
-// Dane wykresu
+// Chart data
 const chartData = ref<DeviceCount[]>([]);
+const totalUsers = ref(0);
 
-// Opcje wykresu
+// Chart options
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
 };
 
 const chartCanvas = ref<HTMLCanvasElement | null>(null);
-let chartInstance: Chart | null = null;
+let chartInstance: ChartJS | null = null;
 
 const { fetchUserCountByDevice } = useAnalytics();
 
 const loadUserCountByDevice = async () => {
   try {
     chartData.value = await fetchUserCountByDevice();
+    totalUsers.value = chartData.value.reduce(
+      (sum, item) => sum + Number(item.count),
+      0
+    );
     renderChart();
   } catch (error) {
     console.error(
@@ -55,13 +60,13 @@ const renderChart = () => {
   }
 
   if (chartCanvas.value) {
-    chartInstance = new Chart(chartCanvas.value, {
+    chartInstance = new ChartJS(chartCanvas.value, {
       type: "bar",
       data: {
         labels: chartData.value.map((item) => item.deviceType),
         datasets: [
           {
-            label: "Liczba użytkowników według urządzeń",
+            label: `Liczba użytkowników według urządzeń (${totalUsers.value})`,
             backgroundColor: "rgba(75, 192, 192, 0.2)",
             data: chartData.value.map((item) => item.count),
           },

@@ -19,21 +19,39 @@
       </label>
     </div>
 
-    <canvas ref="chart" class="chart-canvas"></canvas>
+    <div class="chart-container">
+      <canvas ref="chart"></canvas>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
 import {
   Chart,
   registerables,
   TimeScale,
+  LineElement,
+  PointElement,
+  LineController,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend,
   type ChartConfiguration,
 } from "chart.js";
 import "chartjs-adapter-date-fns";
 
-Chart.register(...registerables, TimeScale);
+Chart.register(
+  ...registerables,
+  TimeScale,
+  LineElement,
+  PointElement,
+  LineController,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend
+);
 
 const props = defineProps<{
   analyticsData: AnalyticsEvent[];
@@ -47,23 +65,32 @@ let chartInstance: Chart | null = null;
 const groupBy = ref<"day" | "month">("day");
 const unique = ref<boolean>(false);
 
+const totalUsers = ref(0);
+
 const updateChart = () => {
   if (chartInstance) {
     chartInstance.destroy();
   }
 
   if (chart.value) {
-    const config: ChartConfiguration<"bar"> = {
-      type: "bar",
+    totalUsers.value = props.analyticsData.reduce(
+      (sum, item) => sum + Number(item.count),
+      0
+    );
+
+    const config: ChartConfiguration<"line"> = {
+      type: "line",
       data: {
         labels: props.analyticsData.map((item) => item.date),
         datasets: [
           {
-            label: "Wejścia na stronę",
+            label: `Wejścia na stronę (${totalUsers.value})`,
             data: props.analyticsData.map((item) => item.count),
             backgroundColor: "rgba(75, 192, 192, 0.2)",
             borderColor: "rgba(75, 192, 192, 1)",
             borderWidth: 1,
+            fill: true,
+            tension: 0.1,
           },
         ],
       },
@@ -77,13 +104,15 @@ const updateChart = () => {
             },
             title: {
               display: true,
-              text: groupBy.value === "day" ? "Day" : "Month",
+              text: groupBy.value === "day" ? "Dzień" : "Miesiąc",
             },
           },
           y: {
             beginAtZero: true,
           },
         },
+        responsive: true,
+        maintainAspectRatio: false,
       },
     };
 
@@ -114,7 +143,8 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.chart-canvas {
-  min-height: 200px;
+.chart-container {
+  width: 100%;
+  height: 200px;
 }
 </style>

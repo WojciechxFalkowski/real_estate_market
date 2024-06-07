@@ -12,46 +12,45 @@ import {
   LinearScale,
   Tooltip,
   Legend,
+  type ChartOptions,
 } from "chart.js";
 import { useAnalytics } from "@/composables/useAnalytics";
 
 // Register Chart.js components
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-interface OSCount {
-  osName: string;
+interface ActivityByHour {
+  hour: number;
   count: number;
 }
 
 // Chart data
-const chartData = ref<OSCount[]>([]);
+const chartData = ref<ActivityByHour[]>([]);
 const totalUsers = ref(0);
 
 // Chart options
-const chartOptions = {
+const chartOptions: ChartOptions<"bar"> = {
   responsive: true,
   maintainAspectRatio: false,
+  scales: {
+    x: {
+      type: "category",
+      labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
+    },
+    y: {
+      beginAtZero: true,
+    },
+  },
 };
 
 const chartCanvas = ref<HTMLCanvasElement | null>(null);
-let chartInstance: ChartJS | null = null;
+let chartInstance: ChartJS<"bar"> | null = null;
 
-const { fetchUserCountByOS } = useAnalytics();
+const { fetchUserActivityByHour } = useAnalytics();
 
-const translateOSName = (osName: string): string => {
-  const translations: { [key: string]: string } = {
-    Windows: "Windows",
-    macOS: "macOS",
-    Linux: "Linux",
-    Android: "Android",
-    iOS: "iOS",
-  };
-  return translations[osName] || osName;
-};
-
-const loadUserCountByOS = async () => {
+const loadUserActivityByHour = async () => {
   try {
-    chartData.value = await fetchUserCountByOS();
+    chartData.value = await fetchUserActivityByHour();
     totalUsers.value = chartData.value.reduce(
       (sum, item) => sum + Number(item.count),
       0
@@ -59,7 +58,7 @@ const loadUserCountByOS = async () => {
     renderChart();
   } catch (error) {
     console.error(
-      "Błąd podczas pobierania liczby użytkowników według systemów operacyjnych:",
+      "Błąd podczas pobierania aktywności użytkowników w ciągu dnia:",
       error
     );
   }
@@ -71,15 +70,19 @@ const renderChart = () => {
   }
 
   if (chartCanvas.value) {
+    const activityData = Array.from({ length: 24 }, (_, hour) => {
+      const data = chartData.value.find((item) => item.hour === hour);
+      return data ? data.count : 0;
+    });
+
     chartInstance = new ChartJS(chartCanvas.value, {
       type: "bar",
       data: {
-        labels: chartData.value.map((item) => translateOSName(item.osName)),
         datasets: [
           {
-            label: `Liczba użytkowników według systemów operacyjnych (${totalUsers.value})`,
+            label: `Aktywność użytkowników w ciągu dnia (${totalUsers.value})`,
             backgroundColor: "rgba(75, 192, 192, 0.2)",
-            data: chartData.value.map((item) => item.count),
+            data: activityData,
           },
         ],
       },
@@ -88,13 +91,11 @@ const renderChart = () => {
   }
 };
 
-onMounted(() => {
-  loadUserCountByOS();
-});
+onMounted(loadUserActivityByHour);
 </script>
 
 <style scoped>
 .chart-canvas {
-  min-height: 200px;
+  min-height: 200px; /* Adjust the height as needed */
 }
 </style>

@@ -5,9 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
 import {
-  Chart,
+  Chart as ChartJS,
   BarElement,
   CategoryScale,
   LinearScale,
@@ -16,29 +15,30 @@ import {
 } from "chart.js";
 import { useAnalytics } from "@/composables/useAnalytics";
 
-// Rejestracja elementów Chart.js
-Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
+// Register Chart.js components
+ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 interface BrowserCount {
   clientName: string;
   count: number;
 }
 
-// Dane wykresu
+// Chart data
 const chartData = ref<BrowserCount[]>([]);
+const totalUsers = ref(0);
 
-// Opcje wykresu
+// Chart options
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
 };
 
 const chartCanvas = ref<HTMLCanvasElement | null>(null);
-let chartInstance: Chart | null = null;
+let chartInstance: ChartJS | null = null;
 
 const { fetchUserCountByBrowser } = useAnalytics();
 
-// Funkcja do tłumaczenia nazw przeglądarek na język polski
+// Function to translate browser names to Polish
 const translateBrowserName = (clientName: string): string => {
   const translations: { [key: string]: string } = {
     Chrome: "Chrome",
@@ -56,6 +56,7 @@ const translateBrowserName = (clientName: string): string => {
 const loadUserCountByBrowser = async () => {
   try {
     chartData.value = await fetchUserCountByBrowser();
+    totalUsers.value = chartData.value.reduce((sum, item) => sum + Number(item.count), 0);
     renderChart();
   } catch (error) {
     console.error(
@@ -71,7 +72,7 @@ const renderChart = () => {
   }
 
   if (chartCanvas.value) {
-    chartInstance = new Chart(chartCanvas.value, {
+    chartInstance = new ChartJS(chartCanvas.value, {
       type: "bar",
       data: {
         labels: chartData.value.map((item) =>
@@ -79,7 +80,7 @@ const renderChart = () => {
         ),
         datasets: [
           {
-            label: "Liczba użytkowników według przeglądarek",
+            label: `Liczba użytkowników według przeglądarek (${totalUsers.value})`,
             backgroundColor: "rgba(75, 192, 192, 0.2)",
             data: chartData.value.map((item) => item.count),
           },

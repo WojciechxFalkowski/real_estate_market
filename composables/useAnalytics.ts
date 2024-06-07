@@ -30,6 +30,11 @@ export interface BrowserCount {
     count: number;
 }
 
+export interface ActivityByHour {
+    hour: number;
+    count: number;
+}
+
 export const useAnalytics = () => {
     const { call } = useCall();
     const { setVisitorId } = useVisitor();
@@ -227,6 +232,17 @@ export const useAnalytics = () => {
         return data || [];
     };
 
+    const fetchUserActivityByHour = async () => {
+        const { data } = await call<ActivityByHour[]>({
+            endpoint: '/analytics-events/user-activity-by-hour',
+            method: 'GET',
+            isAuth: true,
+            isClient: true,
+        });
+
+        return data || [];
+    };
+
     // const toggleVisitor = async (visitorId: string) => {
     //     if (excludedVisitors.value.includes(visitorId)) {
     //         // excludedVisitors.value = excludedVisitors.value.filter(
@@ -260,5 +276,6 @@ export const useAnalytics = () => {
         fetchUserCountByDevice,
         fetchUserCountByOS,
         fetchUserCountByBrowser,
+        fetchUserActivityByHour,
     };
 };
