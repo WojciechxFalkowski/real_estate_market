@@ -1,7 +1,7 @@
 <template>
   <nav class="pt-5 sticky top-0 z-50 bg-white">
     <div class="flex flex-wrap justify-between items-center mx-auto container">
-      <WellRentLogo />
+      <WellRentLogo componentPlacement="Nawigacja"/>
       <!-- Mobile menu button -->
       <Hamburger
         @toggleMobileMenu="toggleMobileMenu"
@@ -22,7 +22,7 @@
       <div class="hidden lg:flex md:items-center md:w-auto w-full">
         <Instagram class="w-4" />
 
-        <PhoneNumber class="ms-4 py-2" />
+        <PhoneNumber class="ms-4 py-2" componentPlacement="Nawigacja"/>
       </div>
       <!-- </div> -->
     </div>
