@@ -2,18 +2,16 @@
   <footer>
     <div class="sm:flex sm:items-center sm:justify-between">
       <div class="mb-6 md:mb-0 flex justify-center">
-        <WellRentLogo/>
+        <WellRentLogo componentPlacement="Footer"/>
       </div>
       <ul
-        class="flex flex-wrap items-center mb-6 text-sm sm:mb-0 mt-3 font-medium sm:mt-0 flex flex-wrap mb-6 text-sm sm:mb-0 justify-between"
+        class="flex flex-wrap items-center mb-6 text-sm sm:mb-0 mt-3 font-medium sm:mt-0 justify-between"
       >
         <li class="mr-4 md:mr-6 last:mr-0">
-          <a href="mailto:michal.krawczycki@outlook.com"
-            >michal.krawczycki@outlook.com</a
-          >
+          <a @click="handleClickEmail" :href="`mailto:${email}`">{{ email }}</a>
         </li>
         <li class="mr-4 md:mr-6 last:mr-0">
-          <PhoneNumber class="ms-4 py-2" />
+          <PhoneNumber class="ms-4 py-2" componentPlacement="Footer" />
         </li>
       </ul>
     </div>
@@ -34,9 +32,13 @@
 </template>
 
 <script setup lang="ts">
-// Define your composition functions and reactive variables here
+const { trackClick } = useAnalytics();
+
+const email = ref("michal.krawczycki@outlook.com");
+
+const handleClickEmail = () => {
+  trackClick(`email`, `email: ${email.value} położenie: footer}`);
+};
 </script>
 
-<style>
-/* You can add extra styles here if needed */
-</style>
+<style></style>
