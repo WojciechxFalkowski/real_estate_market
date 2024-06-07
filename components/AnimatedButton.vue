@@ -1,5 +1,5 @@
 <template>
-  <RouterLink to="/kontakt" class="btn btn-1">
+  <RouterLink @click="handleClickContactUs" to="/kontakt" class="btn btn-1">
     <svg>
       <rect x="0" y="0" fill="none" width="100%" height="100%" />
     </svg>
@@ -7,6 +7,19 @@
     <span class="py-2 px-4">Skontaktuj się z nami</span>
   </RouterLink>
 </template>
+
+<script setup lang="ts">
+const props = defineProps({
+  componentPlacement: {
+    type: String,
+  },
+});
+const { trackClick } = useAnalytics();
+
+const handleClickContactUs = () => {
+  trackClick(`skontaktuj się z nami`, `przycisk`);
+};
+</script>
 
 <style lang="scss">
 .btn {
