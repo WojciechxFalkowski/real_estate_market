@@ -23,7 +23,12 @@ export interface DeviceCount {
 export interface OSCount {
     osName: string;
     count: number;
-  }
+}
+
+export interface BrowserCount {
+    clientName: string;
+    count: number;
+}
 
 export const useAnalytics = () => {
     const { call } = useCall();
@@ -211,6 +216,17 @@ export const useAnalytics = () => {
         return data || [];
     };
 
+    const fetchUserCountByBrowser = async () => {
+        const { data } = await call<BrowserCount[]>({
+            endpoint: '/analytics-events/user-count-by-browser',
+            method: 'GET',
+            isAuth: true,
+            isClient: true,
+        });
+
+        return data || [];
+    };
+
     // const toggleVisitor = async (visitorId: string) => {
     //     if (excludedVisitors.value.includes(visitorId)) {
     //         // excludedVisitors.value = excludedVisitors.value.filter(
@@ -243,5 +259,6 @@ export const useAnalytics = () => {
         addExcludedVisitorPermanently,
         fetchUserCountByDevice,
         fetchUserCountByOS,
+        fetchUserCountByBrowser,
     };
 };

@@ -14,6 +14,8 @@
 
   <UserCountByOSChart class="mt-8"/>
 
+  <UserCountByBrowserChart class="mt-8"/>
+
   <VisitorExclusionManager
     class="my-8"
     :excludedVisitors="excludedVisitors"
