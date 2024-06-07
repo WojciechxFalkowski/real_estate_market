@@ -5,6 +5,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from "vue";
 import {
   Chart,
   BarElement,
@@ -18,13 +19,13 @@ import { useAnalytics } from "@/composables/useAnalytics";
 // Rejestracja elementów Chart.js
 Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-interface DeviceCount {
-  deviceType: string;
+interface OSCount {
+  osName: string;
   count: number;
 }
 
 // Dane wykresu
-const chartData = ref<DeviceCount[]>([]);
+const chartData = ref<OSCount[]>([]);
 
 // Opcje wykresu
 const chartOptions = {
@@ -35,15 +36,26 @@ const chartOptions = {
 const chartCanvas = ref<HTMLCanvasElement | null>(null);
 let chartInstance: Chart | null = null;
 
-const { fetchUserCountByDevice } = useAnalytics();
+const { fetchUserCountByOS } = useAnalytics();
 
-const loadUserCountByDevice = async () => {
+const translateOSName = (osName: string): string => {
+  const translations: { [key: string]: string } = {
+    Windows: "Windows",
+    macOS: "macOS",
+    Linux: "Linux",
+    Android: "Android",
+    iOS: "iOS",
+  };
+  return translations[osName] || osName;
+};
+
+const loadUserCountByOS = async () => {
   try {
-    chartData.value = await fetchUserCountByDevice();
+    chartData.value = await fetchUserCountByOS();
     renderChart();
   } catch (error) {
     console.error(
-      "Błąd podczas pobierania liczby użytkowników według urządzeń:",
+      "Błąd podczas pobierania liczby użytkowników według systemów operacyjnych:",
       error
     );
   }
@@ -58,10 +70,10 @@ const renderChart = () => {
     chartInstance = new Chart(chartCanvas.value, {
       type: "bar",
       data: {
-        labels: chartData.value.map((item) => item.deviceType),
+        labels: chartData.value.map((item) => translateOSName(item.osName)),
         datasets: [
           {
-            label: "Liczba użytkowników według urządzeń",
+            label: "Liczba użytkowników według systemów operacyjnych",
             backgroundColor: "rgba(75, 192, 192, 0.2)",
             data: chartData.value.map((item) => item.count),
           },
@@ -73,7 +85,7 @@ const renderChart = () => {
 };
 
 onMounted(() => {
-  loadUserCountByDevice();
+  loadUserCountByOS();
 });
 </script>
 

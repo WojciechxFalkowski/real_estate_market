@@ -19,7 +19,7 @@
       </label>
     </div>
 
-    <canvas ref="chart"></canvas>
+    <canvas ref="chart" class="chart-canvas"></canvas>
   </div>
 </template>
 
@@ -114,8 +114,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-canvas {
-  width: 100%;
-  height: 400px;
+.chart-canvas {
+  min-height: 200px;
 }
 </style>

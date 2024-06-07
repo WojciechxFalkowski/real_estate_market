@@ -12,6 +12,8 @@
 
   <UserCountByDeviceChart class="mt-8" />
 
+  <UserCountByOSChart class="mt-8"/>
+
   <VisitorExclusionManager
     class="my-8"
     :excludedVisitors="excludedVisitors"
