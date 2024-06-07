@@ -1,5 +1,6 @@
 <template>
   <a
+    @click="handleClickInstagram"
     href="https://www.instagram.com/well.rent/"
     target="_blank"
     rel="noopener noreferrer"
@@ -10,4 +11,10 @@
 </template>
 <script setup lang="ts">
 import InstagramIcon from "./icons/InstagramIcon.vue";
+
+const { trackClick } = useAnalytics();
+
+const handleClickInstagram = () => {
+  trackClick("instagram", "ikona");
+};
 </script>
