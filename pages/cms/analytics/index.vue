@@ -20,6 +20,8 @@
 
   <StepsViewsChart class="mt-8" />
 
+  <FaqClicksChart class="mt-8" />
+
   <VisitorExclusionManager
     class="my-8"
     :excludedVisitors="excludedVisitors"

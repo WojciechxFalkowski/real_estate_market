@@ -33,7 +33,6 @@ const chartOptions = {
   maintainAspectRatio: false,
   scales: {
     x: {
-      type: "category",
       title: {
         display: true,
         text: "Przeglądarka",

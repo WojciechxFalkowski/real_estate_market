@@ -40,6 +40,11 @@ export interface StepView {
     views: number;
 }
 
+export interface FaqClick {
+    faq: string;
+    clicks: number;
+}
+
 export const useAnalytics = () => {
     const { call } = useCall();
     const { setVisitorId } = useVisitor();
@@ -262,6 +267,16 @@ export const useAnalytics = () => {
     };
 
 
+    const fetchFaqClicks = async (): Promise<FaqClick[]> => {
+        const response = await call<FaqClick[]>({
+            endpoint: "/analytics-events/faq-clicks",
+            method: 'GET',
+            isClient: true,
+            isAuth: true,
+        });
+        return response.data || [];
+    };
+
     // const toggleVisitor = async (visitorId: string) => {
     //     if (excludedVisitors.value.includes(visitorId)) {
     //         // excludedVisitors.value = excludedVisitors.value.filter(
@@ -297,5 +312,6 @@ export const useAnalytics = () => {
         fetchUserCountByBrowser,
         fetchUserActivityByHour,
         fetchStepsViews,
+        fetchFaqClicks
     };
 };
