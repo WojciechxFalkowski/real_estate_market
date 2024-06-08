@@ -7,7 +7,9 @@
 <script setup lang="ts">
 import {
   Chart as ChartJS,
-  BarElement,
+  LineElement,
+  PointElement,
+  LineController,
   CategoryScale,
   LinearScale,
   Tooltip,
@@ -17,7 +19,15 @@ import {
 import { useAnalytics } from "@/composables/useAnalytics";
 
 // Register Chart.js components
-ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
+ChartJS.register(
+  LineElement,
+  PointElement,
+  LineController,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend
+);
 
 interface ActivityByHour {
   hour: number;
@@ -29,7 +39,7 @@ const chartData = ref<ActivityByHour[]>([]);
 const totalUsers = ref(0);
 
 // Chart options
-const chartOptions: ChartOptions<"bar"> = {
+const chartOptions: ChartOptions<"line"> = {
   responsive: true,
   maintainAspectRatio: false,
   scales: {
@@ -44,7 +54,7 @@ const chartOptions: ChartOptions<"bar"> = {
 };
 
 const chartCanvas = ref<HTMLCanvasElement | null>(null);
-let chartInstance: ChartJS<"bar"> | null = null;
+let chartInstance: ChartJS<"line"> | null = null;
 
 const { fetchUserActivityByHour } = useAnalytics();
 
@@ -76,13 +86,17 @@ const renderChart = () => {
     });
 
     chartInstance = new ChartJS(chartCanvas.value, {
-      type: "bar",
+      type: "line",
       data: {
         datasets: [
           {
             label: `Aktywność użytkowników w ciągu dnia (${totalUsers.value})`,
             backgroundColor: "rgba(75, 192, 192, 0.2)",
+            borderColor: "rgba(75, 192, 192, 1)",
             data: activityData,
+            fill: true,
+            tension: 0.1,
+            borderWidth: 1, // Make the line thinner
           },
         ],
       },
