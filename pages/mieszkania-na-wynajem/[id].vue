@@ -1,5 +1,7 @@
 <template>
-  <HeroCarousel v-if="flatModel" :pictures="flatModel.images" />
+  <div class="2xl:container 2xl:mx-auto md:mt-4">
+    <HeroCarousel v-if="flatModel" :pictures="flatModel.images" />
+  </div>
 
   <section class="container mx-auto">
     <FlatHeader

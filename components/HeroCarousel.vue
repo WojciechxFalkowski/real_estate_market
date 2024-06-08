@@ -25,7 +25,7 @@
 
     <template #addons>
       <Navigation />
-      <Pagination />
+      <Pagination class="flex-wrap"/>
     </template>
   </Carousel>
 </template>
