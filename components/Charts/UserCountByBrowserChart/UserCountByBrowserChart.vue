@@ -31,6 +31,22 @@ const totalUsers = ref(0);
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
+  scales: {
+    x: {
+      type: "category",
+      title: {
+        display: true,
+        text: "Przeglądarka",
+      },
+    },
+    y: {
+      beginAtZero: true,
+      title: {
+        display: true,
+        text: "Liczba użytkowników",
+      },
+    },
+  },
 };
 
 const chartCanvas = ref<HTMLCanvasElement | null>(null);
@@ -56,7 +72,10 @@ const translateBrowserName = (clientName: string): string => {
 const loadUserCountByBrowser = async () => {
   try {
     chartData.value = await fetchUserCountByBrowser();
-    totalUsers.value = chartData.value.reduce((sum, item) => sum + Number(item.count), 0);
+    totalUsers.value = chartData.value.reduce(
+      (sum, item) => sum + Number(item.count),
+      0
+    );
     renderChart();
   } catch (error) {
     console.error(

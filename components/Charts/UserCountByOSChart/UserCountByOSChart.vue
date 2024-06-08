@@ -31,6 +31,22 @@ const totalUsers = ref(0);
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
+  scales: {
+    x: {
+      type: "category",
+      title: {
+        display: true,
+        text: "System operacyjny",
+      },
+    },
+    y: {
+      beginAtZero: true,
+      title: {
+        display: true,
+        text: "Liczba użytkowników",
+      },
+    },
+  },
 };
 
 const chartCanvas = ref<HTMLCanvasElement | null>(null);

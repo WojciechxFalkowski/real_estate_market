@@ -46,9 +46,17 @@ const chartOptions: ChartOptions<"line"> = {
     x: {
       type: "category",
       labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
+      title: {
+        display: true,
+        text: "Godzina",
+      },
     },
     y: {
       beginAtZero: true,
+      title: {
+        display: true,
+        text: "Liczba wyświetleń",
+      },
     },
   },
 };

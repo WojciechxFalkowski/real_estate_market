@@ -35,6 +35,11 @@ export interface ActivityByHour {
     count: number;
 }
 
+export interface StepView {
+    step: string;
+    views: number;
+}
+
 export const useAnalytics = () => {
     const { call } = useCall();
     const { setVisitorId } = useVisitor();
@@ -241,6 +246,22 @@ export const useAnalytics = () => {
         return data || [];
     };
 
+    const fetchStepsViews = async () => {
+        try {
+            const { data } = await call<StepView[]>({
+                endpoint: '/analytics-events/steps-views',
+                method: 'GET',
+                isClient: true,
+                isAuth: true,
+            });
+            return data || [];
+        } catch (error) {
+            console.error('Error fetching steps views data:', error);
+            return [];
+        }
+    };
+
+
     // const toggleVisitor = async (visitorId: string) => {
     //     if (excludedVisitors.value.includes(visitorId)) {
     //         // excludedVisitors.value = excludedVisitors.value.filter(
@@ -275,5 +296,6 @@ export const useAnalytics = () => {
         fetchUserCountByOS,
         fetchUserCountByBrowser,
         fetchUserActivityByHour,
+        fetchStepsViews,
     };
 };

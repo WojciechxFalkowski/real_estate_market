@@ -109,6 +109,10 @@ const updateChart = () => {
           },
           y: {
             beginAtZero: true,
+            title: {
+              display: true,
+              text: "Liczba wejść",
+            },
           },
         },
         responsive: true,

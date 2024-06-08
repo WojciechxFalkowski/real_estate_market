@@ -18,6 +18,8 @@
 
   <UserActivityByHourChart class="mt-8" />
 
+  <StepsViewsChart class="mt-8" />
+
   <VisitorExclusionManager
     class="my-8"
     :excludedVisitors="excludedVisitors"
