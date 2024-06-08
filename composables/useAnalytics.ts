@@ -50,7 +50,6 @@ export const useAnalytics = () => {
         const visitorId = visitorStore.visitorId
 
         if (!visitorId) {
-            console.log("??")
             return
         }
 
@@ -111,7 +110,6 @@ export const useAnalytics = () => {
 
     const fetchAnalyticsData = async (groupBy: 'day' | 'month' = 'day', unique: boolean = false) => {
         await fetchExcludedVisitors()
-        console.log(excludedVisitors.value)
 
 
         const { data } = await call<AnalyticsEvent[]>({

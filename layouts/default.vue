@@ -8,6 +8,8 @@
   <AnimatedVisibility @sendIsVisibleEvent="sendIsVisibleFooter">
     <Footer class="container mx-auto my-8 lg:mt-16" />
   </AnimatedVisibility>
+
+  <CookieBanner />
 </template>
 <script setup lang="ts">
 const { trackVisibility } = useAnalytics();
