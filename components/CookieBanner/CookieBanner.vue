@@ -32,13 +32,10 @@ import { COOKIE_BANNER_KEY } from "./config";
 
 const { getLocalStorageValueByKey, setLocalStorageValueByKey } =
   useLocalStorage();
-const isVisible = ref(true);
+const isVisible = ref(false);
 
 const checkBannerStatus = () => {
-  const dismissed = getLocalStorageValueByKey(COOKIE_BANNER_KEY);
-  if (dismissed) {
-    isVisible.value = false;
-  }
+  isVisible.value = !getLocalStorageValueByKey(COOKIE_BANNER_KEY);
 };
 
 const hideBanner = () => {
