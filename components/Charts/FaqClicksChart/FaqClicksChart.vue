@@ -42,9 +42,10 @@ const renderChart = () => {
     const labels = faqClicksData.value.map((_, index) => `Q${index + 1}`);
     const data = faqClicksData.value.map((item) => item.count);
     const totalClicks = data.reduce((sum, count) => sum + Number(count), 0);
-    const tooltips = faqClicksData.value.map(
-      (item, index) => `Q${index + 1}: ${item.elementDescription}`
-    );
+    const tooltips = faqClicksData.value.map((item, index) => ({
+      title: `Q${index + 1}: ${item.elementDescription}`,
+      label: `${item.count}`,
+    }));
 
     chartInstance = new ChartJS(chartCanvas.value, {
       type: "bar",
@@ -69,8 +70,11 @@ const renderChart = () => {
           },
           tooltip: {
             callbacks: {
+              title: function (context) {
+                return tooltips[context[0].dataIndex].title;
+              },
               label: function (context) {
-                return tooltips[context.dataIndex];
+                return tooltips[context.dataIndex].label;
               },
             },
           },
@@ -87,6 +91,9 @@ const renderChart = () => {
             title: {
               display: true,
               text: "Liczba kliknięć",
+            },
+            ticks: {
+              stepSize: 1,
             },
           },
         },

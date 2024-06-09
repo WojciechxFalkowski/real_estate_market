@@ -59,6 +59,19 @@ const chartOptions: ChartOptions<"line"> = {
       },
     },
   },
+  plugins: {
+    tooltip: {
+      callbacks: {
+        //@ts-ignore
+        label: function (context) {
+          return context.raw;
+        },
+      },
+    },
+    legend: {
+      position: "top",
+    },
+  },
 };
 
 const chartCanvas = ref<HTMLCanvasElement | null>(null);

@@ -12,6 +12,7 @@ import {
   LinearScale,
   Tooltip,
   Legend,
+  type ChartOptions,
 } from "chart.js";
 import { useAnalytics } from "@/composables/useAnalytics";
 
@@ -26,27 +27,6 @@ interface BrowserCount {
 // Chart data
 const chartData = ref<BrowserCount[]>([]);
 const totalUsers = ref(0);
-
-// Chart options
-const chartOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-  scales: {
-    x: {
-      title: {
-        display: true,
-        text: "Przeglądarka",
-      },
-    },
-    y: {
-      beginAtZero: true,
-      title: {
-        display: true,
-        text: "Liczba użytkowników",
-      },
-    },
-  },
-};
 
 const chartCanvas = ref<HTMLCanvasElement | null>(null);
 let chartInstance: ChartJS | null = null;
@@ -84,6 +64,38 @@ const loadUserCountByBrowser = async () => {
   }
 };
 
+const chartOptions: ChartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  scales: {
+    x: {
+      title: {
+        display: true,
+        text: "Przeglądarka",
+      },
+    },
+    y: {
+      beginAtZero: true,
+      title: {
+        display: true,
+        text: "Liczba użytkowników",
+      },
+    },
+  },
+  plugins: {
+    tooltip: {
+      callbacks: {
+        label: function (context) {
+          return `${context.raw}`;
+        },
+      },
+    },
+    legend: {
+      position: "top",
+    },
+  },
+};
+
 const renderChart = () => {
   if (chartInstance) {
     chartInstance.destroy();
@@ -98,7 +110,7 @@ const renderChart = () => {
         ),
         datasets: [
           {
-            label: `Liczba użytkowników według przeglądarek (${totalUsers.value})`,
+            label: `Liczba użytkowników według przeglądarek`,
             backgroundColor: "rgba(75, 192, 192, 0.2)",
             data: chartData.value.map((item) => item.count),
           },

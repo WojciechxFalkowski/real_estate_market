@@ -38,6 +38,7 @@ import {
   Tooltip,
   Legend,
   type ChartConfiguration,
+  type ChartOptions,
 } from "chart.js";
 import "chartjs-adapter-date-fns";
 
@@ -67,6 +68,46 @@ const unique = ref<boolean>(false);
 
 const totalUsers = ref(0);
 
+const chartOptions: ChartOptions<"line"> = {
+  scales: {
+    x: {
+      type: "time",
+      time: {
+        unit: groupBy.value === "day" ? "day" : "month",
+        tooltipFormat: "yyyy-MM-dd",
+      },
+      title: {
+        display: true,
+        text: groupBy.value === "day" ? "Dzień" : "Miesiąc",
+      },
+    },
+    y: {
+      beginAtZero: true,
+      title: {
+        display: true,
+        text: "Liczba wejść",
+      },
+      ticks: {
+        stepSize: 1,
+      },
+    },
+  },
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    tooltip: {
+      callbacks: {
+        label: function (context) {
+          return `${context.raw}`;
+        },
+      },
+    },
+    legend: {
+      position: "top",
+    },
+  },
+};
+
 const updateChart = () => {
   if (chartInstance) {
     chartInstance.destroy();
@@ -94,30 +135,7 @@ const updateChart = () => {
           },
         ],
       },
-      options: {
-        scales: {
-          x: {
-            type: "time",
-            time: {
-              unit: groupBy.value === "day" ? "day" : "month",
-              tooltipFormat: "yyyy-MM-dd",
-            },
-            title: {
-              display: true,
-              text: groupBy.value === "day" ? "Dzień" : "Miesiąc",
-            },
-          },
-          y: {
-            beginAtZero: true,
-            title: {
-              display: true,
-              text: "Liczba wejść",
-            },
-          },
-        },
-        responsive: true,
-        maintainAspectRatio: false,
-      },
+      options: chartOptions,
     };
 
     chartInstance = new Chart(chart.value, config);

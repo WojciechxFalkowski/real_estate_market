@@ -39,11 +39,14 @@ const renderChart = () => {
   }
 
   if (chartCanvas.value) {
-    const labels = stepsViewsData.value.map((item, index) => index + 1);
-    const data = stepsViewsData.value.map((item) => item.views);
-    const tooltips = stepsViewsData.value.map(
-      (item) => `${item.step}: ${item.views}`
+    const labels = stepsViewsData.value.map(
+      (item, index) => `${index + 1}`
     );
+    const data = stepsViewsData.value.map((item) => item.views);
+    const tooltips = stepsViewsData.value.map((item) => ({
+      title: `${item.step}`,
+      label: `${item.views}`,
+    }));
     const totalViews = data.reduce((sum, views) => sum + Number(views), 0);
 
     chartInstance = new ChartJS(chartCanvas.value, {
@@ -52,7 +55,7 @@ const renderChart = () => {
         labels: labels,
         datasets: [
           {
-            label: `Zarządzania najmem (${totalViews})`,
+            label: `Zarządzanie najmem (${totalViews})`,
             backgroundColor: "rgba(75, 192, 192, 0.2)",
             borderColor: "rgba(75, 192, 192, 1)",
             borderWidth: 1,
@@ -71,8 +74,11 @@ const renderChart = () => {
           },
           tooltip: {
             callbacks: {
+              title: function (context) {
+                return tooltips[context[0].dataIndex].title;
+              },
               label: function (context) {
-                return tooltips[context.dataIndex];
+                return tooltips[context.dataIndex].label;
               },
             },
           },
@@ -81,7 +87,7 @@ const renderChart = () => {
           x: {
             title: {
               display: true,
-              text: "Numer kroku",
+              text: "Krok",
             },
           },
           y: {

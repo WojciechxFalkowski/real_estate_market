@@ -12,6 +12,7 @@ import {
   LinearScale,
   Tooltip,
   Legend,
+  type ChartOptions,
 } from "chart.js";
 import { useAnalytics } from "@/composables/useAnalytics";
 
@@ -28,7 +29,7 @@ const chartData = ref<DeviceCount[]>([]);
 const totalUsers = ref(0);
 
 // Chart options
-const chartOptions = {
+const chartOptions: ChartOptions = {
   responsive: true,
   maintainAspectRatio: false,
   scales: {
@@ -45,6 +46,18 @@ const chartOptions = {
         display: true,
         text: "Liczba użytkowników",
       },
+    },
+  },
+  plugins: {
+    tooltip: {
+      callbacks: {
+        label: function (context) {
+          return `${context.raw}`;
+        },
+      },
+    },
+    legend: {
+      position: "top",
     },
   },
 };
