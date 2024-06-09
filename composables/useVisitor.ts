@@ -46,8 +46,8 @@ export const useVisitor = () => {
             // problem with "call"
             // const ipResponse = await call<{ ip: string }>({ url: 'https://api.ipify.org?format=json', endpoint: ``, method: 'GET', isAuth: false, isClient: true })
             // ipAddress: ipResponse.data?.ip
-            const ipResponse = await $fetch('https://api.ipify.org?format=json')
-            const { data } = await call<{ visitorId: string }>({ endpoint: `/visitor`, method: 'POST', isAuth: false, isClient: true, body: JSON.stringify({ deviceInfo: deviceInfoData, ipAddress: ipResponse }) })
+            const ipResponse = await $fetch<{ ip: string }>('https://api.ipify.org?format=json')
+            const { data } = await call<{ visitorId: string }>({ endpoint: `/visitor`, method: 'POST', isAuth: false, isClient: true, body: JSON.stringify({ deviceInfo: deviceInfoData, ipAddress: ipResponse.ip }) })
             visitorStore.setVisitor(data?.visitorId ?? null)
             //a9063e85-70ab-4712-8f60-bac32d874a60
             if (!data?.visitorId) {
