@@ -4,7 +4,10 @@
   <div class="container m-auto">
     <div class="grid grid-cols-12 gap-8">
       <div class="col-span-12 flex justify-center">
-        <ul class="flex gap-8 overflow-x-auto pb-3" v-if="locations">
+        <ul
+          class="flex gap-8 overflow-x-auto pb-3"
+          v-if="locations && locations.length > 1"
+        >
           <li v-for="(location, index) in locations" :key="index">
             <router-link
               :to="{ query: { location } }"
@@ -76,10 +79,17 @@ const locations = computed(() => {
     return [];
   }
 
-  return [
+  const locations = [
     ALL,
-    ...new Set(flatsModel.value?.map((flat: FlatModel) => flat.location) ?? []),
+    ...(new Set(flatsModel.value?.map((flat: FlatModel) => flat.location)) ??
+      []),
   ];
+
+  if (locations.length < 3) {
+    return [];
+  }
+
+  return locations;
 });
 
 const activeLocation = computed(
