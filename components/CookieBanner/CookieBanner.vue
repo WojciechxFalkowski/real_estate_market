@@ -1,19 +1,19 @@
 <template>
   <div
     v-if="isVisible"
-    class="fixed bottom-0 w-full bg-white bg-opacity-90 text-gray-800 p-4 shadow-lg z-50"
+    class="fixed bottom-0 w-full bg-white bg-opacity-90 text-gray-800 shadow-lg z-50"
   >
-    <div class="container mx-auto flex justify-between items-center">
-      <p class="text-sm flex-1">
+    <div
+      class="container mx-auto flex justify-between items-center flex-col py-4 lg:flex-row"
+    >
+      <p class="text-sm text-justify">
         Ta strona wykorzystuje pliki cookie. Używamy informacji zapisanych za
-        pomocą plików cookies w celach statystycznych i w celu dostosowania
-        naszej strony do indywidualnych potrzeb użytkowników. Korzystając ze
-        strony wyrażasz zgodę na używanie plików cookies, zgodnie z aktualnymi
-        ustawieniami przeglądarki.
+        pomocą plików cookies w celach statystycznych. Korzystając ze
+        strony wyrażasz zgodę na używanie plików cookies.
       </p>
 
       <Button
-        class="ml-4"
+        class="mt-4 lg:ml-4 lg:mt-0"
         :componentType="ComponentType.Button"
         :theme="Theme.Primary"
         @click="hideBanner"

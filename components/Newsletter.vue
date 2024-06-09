@@ -16,7 +16,7 @@
       :initial-values="initialValues"
     >
       <div
-        class="flex border-0 border-b-2 border-black dark:border-black focus:border-orange"
+        class="flex border-0 border-b-2 border-black focus:border-orange"
       >
         <div class="relative grow">
           <Field
@@ -24,12 +24,12 @@
             id="email"
             type="email"
             v-slot="{ field }"
-            class="block pe-2.5 pb-2.5 pt-5 w-full text-sm text-black dark:bg-gray-700 appearance-none dark:text-white peer focus:outline-none focus:ring-0"
+            class="block pe-2.5 pb-2.5 pt-5 w-full text-sm text-black appearance-none peer focus:outline-none focus:ring-0"
             placeholder=""
           />
           <label
             for="email"
-            class="absolute text-sm text-black dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
+            class="absolute text-sm text-black duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
           >
             Twój e-mail
           </label>
