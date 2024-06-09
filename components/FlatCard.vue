@@ -1,6 +1,6 @@
 <template>
   <router-link
-    class="flex flex-col bg-white border-collapse shadow dark:bg-gray-800 dark:border-gray-700"
+    class="flex flex-col bg-white border-collapse shadow"
     :to="{ name: routerName, params: { id: url } }"
   >
     <div class="h-64 sm:h-80 md:h-64 2xl:h-80">
