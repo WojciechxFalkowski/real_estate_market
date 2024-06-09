@@ -39,8 +39,12 @@ const renderChart = () => {
   }
 
   if (chartCanvas.value) {
-    const labels = faqClicksData.value.map((item) => item.elementDescription);
+    const labels = faqClicksData.value.map((_, index) => `Q${index + 1}`);
     const data = faqClicksData.value.map((item) => item.count);
+    const totalClicks = data.reduce((sum, count) => sum + Number(count), 0);
+    const tooltips = faqClicksData.value.map(
+      (item, index) => `Q${index + 1}: ${item.elementDescription}`
+    );
 
     chartInstance = new ChartJS(chartCanvas.value, {
       type: "bar",
@@ -48,7 +52,7 @@ const renderChart = () => {
         labels: labels,
         datasets: [
           {
-            label: "Liczba kliknięć FAQ",
+            label: `FAQ (${totalClicks})`,
             backgroundColor: "rgba(75, 192, 192, 0.2)",
             borderColor: "rgba(75, 192, 192, 1)",
             borderWidth: 1,
@@ -66,7 +70,7 @@ const renderChart = () => {
           tooltip: {
             callbacks: {
               label: function (context) {
-                return `${context.dataset.label}: ${context.raw}`;
+                return tooltips[context.dataIndex];
               },
             },
           },
@@ -75,7 +79,7 @@ const renderChart = () => {
           x: {
             title: {
               display: true,
-              text: "Pytanie FAQ",
+              text: "Pytanie",
             },
           },
           y: {

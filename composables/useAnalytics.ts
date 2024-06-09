@@ -41,8 +41,8 @@ export interface StepView {
 }
 
 export interface FaqClick {
-    faq: string;
-    clicks: number;
+    elementDescription: string;
+    count: number;
 }
 
 export const useAnalytics = () => {
