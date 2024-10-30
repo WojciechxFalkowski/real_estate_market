@@ -131,6 +131,6 @@ onMounted(loadUserActivityByHour);
 
 <style scoped>
 .chart-canvas {
-  min-height: 200px; /* Adjust the height as needed */
+  min-height: 300px; /* Adjust the height as needed */
 }
 </style>

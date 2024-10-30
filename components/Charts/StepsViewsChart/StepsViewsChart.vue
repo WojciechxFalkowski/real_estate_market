@@ -111,7 +111,7 @@ onMounted(async () => {
 
 <style scoped>
 .chart-canvas {
-  height: 200px;
+  height: 300px;
   width: 100%;
 }
 </style>

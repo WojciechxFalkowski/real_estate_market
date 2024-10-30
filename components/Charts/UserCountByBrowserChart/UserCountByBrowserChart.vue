@@ -128,6 +128,6 @@ onMounted(() => {
 
 <style scoped>
 .chart-canvas {
-  min-height: 200px;
+  min-height: 300px;
 }
 </style>

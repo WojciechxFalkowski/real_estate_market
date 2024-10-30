@@ -47,7 +47,7 @@ const { getPageConfiguration, pageConfiguration } = usePageConfiguration();
 await getPageConfiguration();
 
 useHead({
-  title: "wellrent-nieruchomosci.pl | Mieszkania na wynajem Warszawa",
+  title: "wellrent-nieruchomosci.pl | Zarządzanie mieszkaniami na wynajem",
   meta: [
     {
       name: "description",
@@ -55,7 +55,7 @@ useHead({
     },
     {
       property: "og:title",
-      content: "wellrent-nieruchomosci.pl | Mieszkania na wynajem Warszawa",
+      content: "wellrent-nieruchomosci.pl | Zarządzanie mieszkaniami na wynajem",
     },
     {
       property: "og:description",
