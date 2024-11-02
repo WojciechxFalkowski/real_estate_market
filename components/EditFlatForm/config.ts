@@ -1,4 +1,4 @@
-import { FieldType, TransactionType, type ExtendedButtonProps, type FieldConfig } from "../GenericForm/contracts";
+import { FieldType, StatusType, StatusTypee, TransactionType, type ExtendedButtonProps, type FieldConfig } from "../GenericForm/contracts";
 import * as yup from "yup";
 import { Theme, ComponentType } from "@/components/Button/Button.props";
 
@@ -119,7 +119,7 @@ export const editTableFormConfiguration: {
             type: "text",
             initialValue: "",
             validation: yup.string().required("Pole jest wymagane"),
-            class: "col-span-12 md:col-span-6 lg:col-span-4",
+            class: "col-span-6 md:col-span-3 lg:col-span-2",
         },
         {
             id: "currency",
@@ -128,7 +128,7 @@ export const editTableFormConfiguration: {
             type: "text",
             initialValue: "PLN",
             validation: yup.string().required("Pole jest wymagane"),
-            class: "col-span-12 md:col-span-6 lg:col-span-4",
+            class: "col-span-6 md:col-span-3 lg:col-span-2",
             options: [
                 { value: "PLN", label: "PLN" },
                 { value: "EURO", label: "EURO" },
@@ -142,7 +142,21 @@ export const editTableFormConfiguration: {
             type: "text",
             initialValue: "",
             validation: yup.string().required("Pole jest wymagane"),
-            class: "col-span-12 md:col-span-6 lg:col-span-4",
+            class: "col-span-6 md:col-span-3 lg:col-span-2",
+        },
+        {
+            id: "status",
+            name: "Status",
+            as: FieldType.select,
+            type: "text",
+            initialValue: 'available',
+            validation: yup.string().required("Pole jest wymagane"),
+            class: "col-span-6 md:col-span-3 lg:col-span-2",
+            options: [
+                { value: 'available', label: StatusType.available },
+                { value: 'rented', label: StatusType.rented },
+                { value: 'reserved', label: StatusType.reserved },
+            ]
         },
     ],
 };

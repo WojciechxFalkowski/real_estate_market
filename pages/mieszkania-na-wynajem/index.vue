@@ -37,6 +37,7 @@
         :url="flat.url"
         :key="flat.id"
         :flatDetails="flat.flatDetails"
+        :status="flat.status"
         class="col-span-12 md:col-span-6 xl:col-span-4"
       />
     </TransitionGroup>

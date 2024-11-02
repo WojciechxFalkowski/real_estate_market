@@ -17,6 +17,13 @@ export enum TransactionType {
     zakup = "Zakup"
 }
 
+export enum StatusType {
+    available = "Dostępne",
+    rented = "Wynajęte",
+    reserved = "Zarezerwowane"
+
+}
+
 export interface InitialFieldConfig {
     id: string;
     initialValue: string | number;

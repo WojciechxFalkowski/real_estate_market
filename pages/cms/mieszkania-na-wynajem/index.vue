@@ -31,6 +31,7 @@
         :key="flat.id"
         :flatDetails="flat.flatDetails"
         :isDetailsVisible="false"
+         :status="flat.status"
         :routerName="'cms-mieszkania-na-wynajem-id'"
         class="col-span-12 md:col-span-6 xl:col-span-4"
       />

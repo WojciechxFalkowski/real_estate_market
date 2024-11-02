@@ -37,6 +37,7 @@ export interface ExtendedFlatDetail extends FlatDetail {
 export interface FlatModel {
     id: number;
     isActive: boolean;
+    status: string;
     url: string;
     title: string;
     description: string;
@@ -67,6 +68,7 @@ export interface FlatImageResponse {
 export interface Flat {
     id: number;
     isActive: boolean;
+    status: string
     url: string;
     title: string;
     description: string;
@@ -82,6 +84,7 @@ export interface Flat {
 
 export interface SaveFlat {
     isActive: boolean;
+    status: string;
     area: string;
     bedroom: string;
     currency: string;
